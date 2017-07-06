@@ -11,6 +11,9 @@ $routeProvider.when('/', {
  $locationProvider.html5Mode(true); 
 }]);
 
+app.loadedGames = [];
+app.didLoad = false;
+
 
 
 
