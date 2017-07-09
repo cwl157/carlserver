@@ -1,54 +1,13 @@
-var FPS = 30;
-
-
-
-/*var SOURCE_BACKGROUND_IMAGE = "/webgames/allenfoodfrenzy/images/background.png";
-var SOURCE_BRICK_IMAGE = "/webgames/allenfoodfrenzy/images/brick.png";
-//var SOURCE_APPLE_IMAGE = "/webgames/allenfoodfrenzy/images/apple.png";
-var SOURCE_SNAKEHEAD_IMAGE = "/webgames/allenfoodfrenzy/images/snakeHead.png";
-var SOURCE_SNAKEBODY_IMAGE = "/webgames/allenfoodfrenzy/images/snakeBody.png";
-
-var SOURCE_BLOCK_BEERCAN_IMAGE = "/webgames/allenfoodfrenzy/images/block_beercan.png";
-var SOURCE_BLOCK_BREAD_IMAGE = "/webgames/allenfoodfrenzy/images/block_bread.png";
-var SOURCE_BLOCK_CAKE_IMAGE = "/webgames/allenfoodfrenzy/images/block_cake.png";
-var SOURCE_BLOCK_COOKIE_IMAGE = "/webgames/allenfoodfrenzy/images/block_cookie.png";
-var SOURCE_BLOCK_COTTONCANDY_IMAGE = "/webgames/allenfoodfrenzy/images/block_cottonCandy.png";
-var SOURCE_BLOCK_EGG_IMAGE = "/webgames/allenfoodfrenzy/images/block_egg.png";
-var SOURCE_BLOCK_GROCERIES_IMAGE = "/webgames/allenfoodfrenzy/images/block_groceries.png";
-var SOURCE_BLOCK_HOTDOG_IMAGE = "/webgames/allenfoodfrenzy/images/block_hotdog.png";
-var SOURCE_BLOCK_MILK_IMAGE = "/webgames/allenfoodfrenzy/images/block_milk.png";
-var SOURCE_BLOCK_PIE_IMAGE = "/webgames/allenfoodfrenzy/images/block_pie.png";
-var SOURCE_BLOCK_PIZZA_IMAGE = "/webgames/allenfoodfrenzy/images/block_pizza.png";
-var SOURCE_BLOCK_POP_IMAGE = "/webgames/allenfoodfrenzy/images/block_pop.png";
-var SOURCE_BLOCK_POPCORN_IMAGE = "/webgames/allenfoodfrenzy/images/block_popcorn.png";
-var SOURCE_BLOCK_RUMROLL_IMAGE = "/webgames/allenfoodfrenzy/images/block_rumroll.png";
-var SOURCE_BLOCK_WATERMELON_IMAGE = "/webgames/allenfoodfrenzy/images/block_watermelon.png";
-*/
-var allenFoodFrenzy = function() {
+var allenAppleEater = function() {
 	var exports = {};
-var SNAKE_BODY_INDEX = 3;
-var BG_INDEX = 0;
-var SNAKE_HEAD_INDEX = 2;
-var BRICK_INDEX = 1;
-var imageSourcesAr = new Array("/js/app/webgames/allenfoodfrenzy/images/background.png",
-                               "/js/app/webgames/allenfoodfrenzy/images/brick.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/snakeHead.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/snakeBody.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_beercan.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_bread.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_cake.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_cookie.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_cottonCandy.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_egg.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_groceries.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_hotdog.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_milk.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_pie.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_pizza.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_pop.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_popcorn.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_rumroll.png",
-							   "/js/app/webgames/allenfoodfrenzy/images/block_watermelon.png");
+	var FPS = 30;
+
+var SOURCE_BACKGROUND_IMAGE = "/js/app/webgames/allentheappleeater/images/background.png";
+var SOURCE_BRICK_IMAGE = "/js/app/webgames/allentheappleeater/images/brick.png";
+var SOURCE_APPLE_IMAGE = "/js/app/webgames/allentheappleeater/images/apple.png";
+var SOURCE_SNAKEHEAD_IMAGE = "/js/app/webgames/allentheappleeater/images/snakeHead.png";
+var SOURCE_SNAKEBODY_IMAGE = "/js/app/webgames/allentheappleeater/images/snakeBody.png";
+
 var WINDOW_WIDTH = 800;
 var WINDOW_HEIGHT = 600;
 
@@ -72,23 +31,7 @@ var EMPTY_ID = 0;
 var BRICK_ID = 1;
 var SNAKE_HEAD_ID = 2;
 var SNAKE_BODY_ID = 3;
-
-var BLOCK_BEERCAN_ID = 4;
-var BLOCK_BREAD_ID = 5;
-var BLOCK_CAKE_ID = 6;
-var BLOCK_COOKIE_ID = 7;
-var BLOCK_COTTONCANDY_ID = 8
-var BLOCK_EGG_ID = 9;
-var BLOCK_GROCERIES_ID = 10;
-var BLOCK_HOTDOG_ID = 11;
-var BLOCK_MILK_ID = 12;
-var BLOCK_PIE_ID = 13;
-var BLOCK_PIZZA_ID = 14;
-var BLOCK_POP_ID = 15;
-var BLOCK_POPCORN_ID = 16;
-var BLOCK_RUMROLL_ID = 17;
-var BLOCK_WATERMELON_ID = 18;
-//var APPLE_ID = 4;
+var APPLE_ID = 4;
 
 var SNAKE_STARTING_LENGTH = 2;
 var SNAKE_MAX_LENGTH = 20;
@@ -102,26 +45,11 @@ var STARTING_BRICKS = 1;
 var canvas = null;
 var context2D = null;
 
-/*var bgImage = null;
+var bgImage = null;
 var brickImage = null;
 var snakeBodyImage = null;
 var snakeHeadImage = null;
-var beercanImage = null;
-var breadImage = null;
-var cakeImage = null;
-var cookieImage = null;
-var cottonCandyImage = null;
-var eggImage = null;
-var groceriesImage = null;
-var hotdogImage = null;
-var milkImage = null;
-var pieImage = null;
-var pizzaImage = null;
-var popImage = null;
-var popcornImage = null;
-var rumrollImage = null;
-var watermelonImage = null;*/
-var imagesAr = null; // Array to hold all images, drawn based on image index
+var appleImage = null;
 
 var snakeBody = null;
 var snakeHead = null;
@@ -292,8 +220,7 @@ function placeApple()
 {
 	if (isDying == false)
 	{
-		//if (board[apple.y][apple.x] == APPLE_ID)
-		if (board[apple.y][apple.x] > 3)
+		if (board[apple.y][apple.x] == APPLE_ID)
 			board[apple.y][apple.x] = EMPTY_ID
 		var placeX = randomFromTo(1, BLOCKS_ACROSS-1);
 		var placeY = randomFromTo(2, BLOCKS_DOWN-1);
@@ -306,7 +233,7 @@ function placeApple()
 			}
 			apple.x = placeX;
 			apple.y = placeY;
-			board[placeY][placeX] = randomFromTo(4, 18);
+			board[placeY][placeX] = APPLE_ID;
 		}
 	}
 }
@@ -351,26 +278,17 @@ exports.loadGame = function()
 {
 	canvas = document.getElementById('gameBoard');
 	context2D = canvas.getContext('2d');
-	imagesAr = new Array();
-	for (var i = 0; i < imageSourcesAr.length; i++)
-	{
-		imagesAr[i] = new Image();
-		imagesAr[i].src = imageSourcesAr[i];
-	}
-	//bgImage = new Image();
-	//bgImage.src = SOURCE_BACKGROUND_IMAGE
 	
-//	snakeHeadImage = new Image();
-//	snakeHeadImage.src = SOURCE_SNAKEHEAD_IMAGE;
+	bgImage = new Image();
+	bgImage.src = SOURCE_BACKGROUND_IMAGE
 	
-//	snakeBodyImage = new Image();
-//	snakeBodyImage.src = SOURCE_SNAKEBODY_IMAGE;
+	snakeHeadImage = new Image();
+	snakeHeadImage.src = SOURCE_SNAKEHEAD_IMAGE;
 	
-//	beercanImage = new Image():
-//	beercanImage.src = SOURCE_BLOCK_BEERCAN_IMAGE;
-	
-	//appleImage = new Image();
-	//appleImage.src = SOURCE_APPLE_IMAGE;
+	snakeBodyImage = new Image();
+	snakeBodyImage.src = SOURCE_SNAKEBODY_IMAGE;
+	appleImage = new Image();
+	appleImage.src = SOURCE_APPLE_IMAGE;
 	
 	snakeHead = new Sprite(SNAKE_STARTING_X, SNAKE_STARTING_Y, BLOCK_WIDTH, BLOCK_HEIGHT, true);
 	
@@ -382,8 +300,8 @@ exports.loadGame = function()
 	
 	apple = new Sprite(0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, true);
 	
-	//brickImage = new Image();
-	//brickImage.src = './images/brick.png';
+	brickImage = new Image();
+	brickImage.src = SOURCE_BRICK_IMAGE;
 	
 	if (intervalId != -1) // This means an interval has been set
 		clearInterval(intervalId);
@@ -393,7 +311,7 @@ exports.loadGame = function()
 function mainLoop()
 {
 	context2D.fillStyle="black";
-	context2D.drawImage(imagesAr[BG_INDEX], 0, 0);
+	context2D.drawImage(bgImage, 0, 0);
 	
 	getInput();
 	if (gameState == GAME_STATE_START)
@@ -573,7 +491,7 @@ function moveSnake()
 		if (board[snakeHead.y][snakeHead.x] == BRICK_ID || board[snakeHead.y][snakeHead.x] == SNAKE_BODY_ID)
 			isDying = true;
 		
-		else if (board[snakeHead.y][snakeHead.x] > 3)
+		else if (board[snakeHead.y][snakeHead.x] == APPLE_ID)
 		{
 			if (snakeLength < SNAKE_MAX_LENGTH)
 			{
@@ -598,7 +516,7 @@ function moveSnake()
 		snakeHead.x++;
 		if (board[snakeHead.y][snakeHead.x] == BRICK_ID || board[snakeHead.y][snakeHead.x] == SNAKE_BODY_ID)
 			isDying = true;
-		else if (board[snakeHead.y][snakeHead.x] > 3)
+		else if (board[snakeHead.y][snakeHead.x] == APPLE_ID)
 		{
 			if (snakeLength < SNAKE_MAX_LENGTH)
 			{
@@ -623,7 +541,7 @@ function moveSnake()
 		snakeHead.y++;
 		if (board[snakeHead.y][snakeHead.x] == BRICK_ID || board[snakeHead.y][snakeHead.x] == SNAKE_BODY_ID)
 			isDying = true;
-		else if (board[snakeHead.y][snakeHead.x] > 3)
+		else if (board[snakeHead.y][snakeHead.x] == APPLE_ID)
 		{
 			if (snakeLength < SNAKE_MAX_LENGTH)
 			{
@@ -648,7 +566,7 @@ function moveSnake()
 		snakeHead.x--;
 		if (board[snakeHead.y][snakeHead.x] == BRICK_ID || board[snakeHead.y][snakeHead.x] == SNAKE_BODY_ID)
 			isDying = true;
-		else if (board[snakeHead.y][snakeHead.x] > 3)
+		else if (board[snakeHead.y][snakeHead.x] == APPLE_ID)
 		{
 			if (snakeLength < SNAKE_MAX_LENGTH)
 			{
@@ -676,7 +594,7 @@ function moveSnakeBody()
 	{
 		if (snakeBody[i].direction == DIRECTION_UP)
 		{
-			if (snakeBody[i].alive == true && board[snakeBody[i].y][snakeBody[i].x] != BRICK_ID && board[snakeBody[i].y][snakeBody[i].x] < 4)
+			if (snakeBody[i].alive == true && board[snakeBody[i].y][snakeBody[i].x] != BRICK_ID && board[snakeBody[i].y][snakeBody[i].x] != APPLE_ID)
 				board[snakeBody[i].y][snakeBody[i].x] = EMPTY_ID;
 			snakeBody[i].y--;
 			if (snakeBody[i].alive == true)
@@ -684,7 +602,7 @@ function moveSnakeBody()
 		}
 		if (snakeBody[i].direction == DIRECTION_RIGHT)
 		{
-			if (snakeBody[i].alive == true && board[snakeBody[i].y][snakeBody[i].x] != BRICK_ID && board[snakeBody[i].y][snakeBody[i].x] < 4)
+			if (snakeBody[i].alive == true && board[snakeBody[i].y][snakeBody[i].x] != BRICK_ID && board[snakeBody[i].y][snakeBody[i].x] != APPLE_ID)
 				board[snakeBody[i].y][snakeBody[i].x] = EMPTY_ID;
 			snakeBody[i].x++;
 			if (snakeBody[i].alive == true)
@@ -692,7 +610,7 @@ function moveSnakeBody()
 		}
 		if (snakeBody[i].direction == DIRECTION_DOWN)
 		{
-			if (snakeBody[i].alive == true && board[snakeBody[i].y][snakeBody[i].x] != BRICK_ID && board[snakeBody[i].y][snakeBody[i].x] < 4)
+			if (snakeBody[i].alive == true && board[snakeBody[i].y][snakeBody[i].x] != BRICK_ID && board[snakeBody[i].y][snakeBody[i].x] != APPLE_ID)
 				board[snakeBody[i].y][snakeBody[i].x] = EMPTY_ID;
 			snakeBody[i].y++;
 			if (snakeBody[i].alive == true)
@@ -700,7 +618,7 @@ function moveSnakeBody()
 		}
 		if (snakeBody[i].direction == DIRECTION_LEFT)
 		{
-			if (snakeBody[i].alive == true && board[snakeBody[i].y][snakeBody[i].x] != BRICK_ID && board[snakeBody[i].y][snakeBody[i].x] < 4)
+			if (snakeBody[i].alive == true && board[snakeBody[i].y][snakeBody[i].x] != BRICK_ID && board[snakeBody[i].y][snakeBody[i].x] != APPLE_ID)
 				board[snakeBody[i].y][snakeBody[i].x] = EMPTY_ID;
 			snakeBody[i].x--;
 			if (snakeBody[i].alive == true)
@@ -768,9 +686,7 @@ function drawBoard()
 	{
 		for (var x = 0; x < BLOCKS_ACROSS; x++)
 		{
-			//context2D.drawImage(imagesAr[board[y][x]], x*BLOCK_WIDTH, y*BLOCK_HEIGHT);
-			context2D.drawImage(imagesAr[board[y][x]], 0, 0, imagesAr[board[y][x]].width, imagesAr[board[y][x]].height, x*BLOCK_WIDTH, y*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
-			/*if (board[y][x] == BRICK_ID)
+			if (board[y][x] == BRICK_ID)
 				context2D.drawImage(brickImage, x*BLOCK_WIDTH, y*BLOCK_HEIGHT);
 				
 			else if (board[y][x] == SNAKE_HEAD_ID)
@@ -780,7 +696,6 @@ function drawBoard()
 				context2D.drawImage(snakeBodyImage, x*BLOCK_WIDTH, y*BLOCK_HEIGHT);
 			else if (board[y][x] == APPLE_ID)
 				context2D.drawImage(appleImage, x*BLOCK_WIDTH, y*BLOCK_WIDTH);
-			*/
 		}
 	}
 }
@@ -789,27 +704,27 @@ function drawStartScreen()
 {
 	context2D.filleStyle="black";
 	context2D.fillRect(100, 100, 600, 400);
-	drawCanvasText(context2D, "Allen's Food Frenzy", 300, 200, "white", "16px courier new");
+	drawCanvasText(context2D, "Allen The Apple Eater", 300, 200, "white", "16px courier new");
 	drawCanvasText(context2D, "Press Enter to Start", 200, 300, "white", "16px courier new");
 	drawCanvasText(context2D, "Press I for Instructions", 420, 360, "white", "16px courier new");
 	var startx = 268;
 	var starty = 150;
 	while (startx < 500)
 	{
-		context2D.drawImage(imagesAr[SNAKE_BODY_INDEX], startx+BLOCK_WIDTH, 150);
+		context2D.drawImage(snakeBodyImage, startx+BLOCK_WIDTH, 150);
 		startx += BLOCK_WIDTH;
 	}
 	while (starty < 300)
 	{
-		context2D.drawImage(imagesAr[SNAKE_BODY_INDEX], startx, starty+BLOCK_HEIGHT);
+		context2D.drawImage(snakeBodyImage, startx, starty+BLOCK_HEIGHT);
 		starty += BLOCK_HEIGHT;
 	}
 	while (startx > 264)
 	{
-		context2D.drawImage(imagesAr[SNAKE_BODY_INDEX], startx-BLOCK_WIDTH, starty);
+		context2D.drawImage(snakeBodyImage, startx-BLOCK_WIDTH, starty);
 		startx -= BLOCK_WIDTH;
 	}
-	context2D.drawImage(imagesAr[SNAKE_HEAD_INDEX], startx-BLOCK_WIDTH, starty);
+	context2D.drawImage(snakeHeadImage, startx-BLOCK_WIDTH, starty);
 }
 
 function drawEndScreen()
@@ -823,20 +738,20 @@ function drawEndScreen()
 	var starty = 150;
 	while (startx < 500)
 	{
-		context2D.drawImage(imagesAr[SNAKE_BODY_INDEX], startx+BLOCK_WIDTH, 150);
+		context2D.drawImage(snakeBodyImage, startx+BLOCK_WIDTH, 150);
 		startx += BLOCK_WIDTH;
 	}
 	while (starty < 300)
 	{
-		context2D.drawImage(imagesAr[SNAKE_BODY_INDEX], startx, starty+BLOCK_HEIGHT);
+		context2D.drawImage(snakeBodyImage, startx, starty+BLOCK_HEIGHT);
 		starty += BLOCK_HEIGHT;
 	}
 	while (startx > 264)
 	{
-		context2D.drawImage(imagesAr[SNAKE_BODY_INDEX], startx-BLOCK_WIDTH, starty);
+		context2D.drawImage(snakeBodyImage, startx-BLOCK_WIDTH, starty);
 		startx -= BLOCK_WIDTH;
 	}
-	context2D.drawImage(imagesAr[SNAKE_HEAD_INDEX], startx-BLOCK_WIDTH, starty);
+	context2D.drawImage(snakeHeadImage, startx-BLOCK_WIDTH, starty);
 }
 
 function drawInstructionsScreen()
@@ -844,7 +759,7 @@ function drawInstructionsScreen()
 	context2D.filleStyle="black";
 	context2D.fillRect(100, 100, 600, 400);
 	drawCanvasText(context2D, "Use the arrow keys to move Allen around the field", 114, 116, "white", "16px courier new");
-	drawCanvasText(context2D, "collecting food.", 114, 136, "white", "16px courier new");
+	drawCanvasText(context2D, "collecting apples.", 114, 136, "white", "16px courier new");
 	drawCanvasText(context2D, "Be sure to avoid the bricks and yourself!", 114, 156, "white", "16px courier new");
 	drawCanvasText(context2D, "This sounds simple right...", 124, 196, "white", "16px courier new");
 	drawCanvasText(context2D, "Press B to go back", 450, 450, "white", "16px courier new");
@@ -853,21 +768,21 @@ function drawInstructionsScreen()
 	var starty = 300;
 	while (startx < 332)
 	{
-		context2D.drawImage(imagesAr[SNAKE_BODY_INDEX], startx+BLOCK_WIDTH, starty);
+		context2D.drawImage(snakeBodyImage, startx+BLOCK_WIDTH, starty);
 		startx += BLOCK_WIDTH;
 	}
-	context2D.drawImage(imagesAr[SNAKE_HEAD_INDEX], startx+BLOCK_WIDTH, starty);
-	context2D.drawImage(imagesAr[BRICK_INDEX], startx+BLOCK_WIDTH, starty-(BLOCK_WIDTH*2));
-	context2D.drawImage(imagesAr[BRICK_INDEX], startx+(BLOCK_WIDTH*3), starty);
-	context2D.drawImage(imagesAr[BRICK_INDEX], startx-(BLOCK_WIDTH*3), starty+(BLOCK_WIDTH*3));
-	context2D.drawImage(imagesAr[6], 0, 0, imagesAr[6].width, imagesAr[6].height, startx+(BLOCK_WIDTH*3), starty+(BLOCK_WIDTH*2), BLOCK_WIDTH, BLOCK_HEIGHT);
+	context2D.drawImage(snakeHeadImage, startx+BLOCK_WIDTH, starty);
+	context2D.drawImage(brickImage, startx+BLOCK_WIDTH, starty-(BLOCK_WIDTH*2));
+	context2D.drawImage(brickImage, startx+(BLOCK_WIDTH*3), starty);
+	context2D.drawImage(brickImage, startx-(BLOCK_WIDTH*3), starty+(BLOCK_WIDTH*3));
+	context2D.drawImage(appleImage, startx+(BLOCK_WIDTH*3), starty+(BLOCK_WIDTH*2));
 }
 
 function drawHeading()
 {
 	context2D.fillStyle="black";
 	context2D.fillRect(0, 0, WINDOW_WIDTH, BLOCK_HEIGHT);
-	drawCanvasText(context2D, "Allen's Food Frenzy", 4, 20, "white", "16px courier new");
+	drawCanvasText(context2D, "Allen The Apple Eater", 4, 20, "white", "16px courier new");
 	drawCanvasText(context2D, "Score: "+score, 400, 20, "white", "16px courier new");
 } // end drawHeading
 
@@ -890,6 +805,6 @@ function copyObject(lhs,rhs)
 		lhs[i] = rhs[i];
 	}
 }
-exports.title = "Allen Food Frenzy";
+exports.title = "Allen The Apple Eater";
 return exports;
 }
