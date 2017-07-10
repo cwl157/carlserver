@@ -64,6 +64,9 @@ var BONUS_HEIGHT = 24;
 
 var SCORE_MULTIPLIER = 2;
 
+var canvas = null;
+var context2D = null;
+
 var playerFireRate = START_MAX_BULLETS;
 var playerShip = null;
 
@@ -113,9 +116,11 @@ document.addEventListener('keydown',keyDown,true);
 document.addEventListener('keyup',keyUp,true);
 function keyDown(evt){
  keys[evt.keyCode] = true;
+ evt.returnValue = false;
 }
 function keyUp(evt){
  keys[evt.keyCode] = false;
+ evt.returnValue = false;
 }
 
 //window.onload = loadGame;

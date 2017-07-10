@@ -109,10 +109,12 @@ window.addEventListener('keyup',keyUp,true);
 function keyDown(evt)
 {
 	keys[evt.keyCode] = true;
+	evt.returnValue = false;
 }
 function keyUp(evt)
 {
 	keys[evt.keyCode] = false;
+	evt.returnValue = false;
 }
 
 //window.onload = loadGame;
@@ -306,6 +308,8 @@ exports.loadGame = function()
 	if (intervalId != -1) // This means an interval has been set
 		clearInterval(intervalId);
 	intervalId = setInterval(mainLoop, 1000 / FPS);
+
+	gameState = GAME_STATE_START;
 } // end loadGame
 
 function mainLoop()

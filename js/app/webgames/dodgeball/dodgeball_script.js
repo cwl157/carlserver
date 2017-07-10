@@ -96,12 +96,12 @@ document.addEventListener('keyup',keyUp,true);
 function keyDown(evt)
 {
 	keys[evt.keyCode] = true;
-	return false;
+	evt.returnValue = false;
 }
 function keyUp(evt)
 {
 	keys[evt.keyCode] = false;
-	return false;
+	evt.returnValue = false;
 }
 
 //window.onload = loadGame;

@@ -216,9 +216,11 @@ window.addEventListener('keydown',keyDown,true);
 window.addEventListener('keyup',keyUp,true);
 function keyDown(evt){
  keys[evt.keyCode] = true;
+ evt.returnValue = false;
 }
 function keyUp(evt){
  keys[evt.keyCode] = false;
+ evt.returnValue = false;
 }
 
 //window.onload = loadGame;

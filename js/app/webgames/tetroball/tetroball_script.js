@@ -37,6 +37,9 @@ var DECREASE_DOWN_DELAY = 3;
 var MIN_DOWN_DELAY = 2;
 var DYING_VALUE = 12;
 
+var canvas = null;
+var context2D = null;
+
 var i_image = null;
 var j_image = null;
 var l_image = null;
@@ -117,9 +120,9 @@ function keyUp(evt){
 
 //window.onload = loadGame;
 
-window.addEventListener('mousemove', mouseMoved, true);
-window.addEventListener('mouseup', clicked, true);
-window.addEventListener('mousedown', onMouseDown, true);
+document.addEventListener('mousemove', mouseMoved, true);
+document.addEventListener('mouseup', clicked, true);
+document.addEventListener('mousedown', onMouseDown, true);
 var mouseX = 0;
 var mouseY = 0;
 
@@ -490,6 +493,7 @@ exports.loadGame = function()
 		clearInterval(intervalId);
 		
 	intervalId = setInterval(mainLoop, 1000 / FPS);
+	gameState = GAME_STATE_START;
 } // end loadGame
 
 function resetGameBoard()
