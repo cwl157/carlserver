@@ -91,8 +91,8 @@ var timeIntervalId = -1;
 
 var keys = new Array();
 
-window.addEventListener('keydown',keyDown,true);
-window.addEventListener('keyup',keyUp,true);
+document.addEventListener('keydown',keyDown,true);
+document.addEventListener('keyup',keyUp,true);
 function keyDown(evt)
 {
 	keys[evt.keyCode] = true;
@@ -170,7 +170,7 @@ function loadGameValues()
 {
 	if (timeIntervalId != -1)
 		clearInterval(timeIntervalId);
-	intervalId = setInterval(countSeconds, 1000);
+	timeIntervalId = setInterval(countSeconds, 1000);
 		
 	currentBullets = 1;
 	fireCounter = 0;
