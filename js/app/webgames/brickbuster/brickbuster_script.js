@@ -691,7 +691,7 @@ function drawStart()
 
 function drawInstructions()
 {
-	drawCanvasText(context2D, "Instructions:", 10, 30, "99ff00", "16px courier new");
+	drawCanvasText(context2D, "Instructions:", 10, 30, "white", "16px courier new");
 	drawCanvasText(context2D, "Use the left and right arrow keys to move", 12, 60, "99ff00", "16px courier new");
 	drawCanvasText(context2D, "the paddle. Hit the ball with the paddle to", 12, 90, "99ff00", "16px courier new");
 	drawCanvasText(context2D, "break the bricks and collect points. Don't", 12, 120, "99ff00", "16px courier new");

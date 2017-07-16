@@ -1,7 +1,5 @@
 <div ng-controller="webgameCtrl" id="webgameTmpl" class="container-fluid" ng-init="init()">
 <ng-include src="'/templates/partials/topnav.html'"></ng-include>
-{{name}}
-{{id}}
 <div ng-if="id == 1">
 <ng-include src="'/templates/partials/webgames/asciiinvaders.html'" onload="loadGame(1);"></ng-include>
 </div>
