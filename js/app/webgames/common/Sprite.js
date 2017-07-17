@@ -1,13 +1,3 @@
-//var DIR_NONE = 0;
-//var DIR_UP = 1;
-//var DIR_RIGHT = 2;
-//var DIR_DOWN = 3;
-//var DIR_LEFT = 4;
-
-//var FACING_UP = 0;
-//var FACING_RIGHT = 1;
-//var FACING_DOWN = 2;
-//var FACING_LEFT = 3;
 /*****************************************************************************************************
  * Object: Sprite                                                                                    *
  * Description: Handles updating position, animation, and drawing of objects. All objects that are   *

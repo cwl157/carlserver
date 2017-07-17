@@ -16,11 +16,56 @@ function Button(x, y, width, height, upImage, downImage, isPressed, isActive, cu
 	this.currentState = currentState;
 	
 	// Methods
-	this.update = update;
-	this.draw = draw;
+	this.update = function(mx, my, mpressed, prev_mpressed) {
+		if (this.isActive)
+    	{
+			if (inside(mx, my, this.x, this.y, this.x+this.width, this.y+this.height))
+        	{
+				//alert("inside button");
+				if (mpressed)
+            	{
+					// mouse is currently down
+                	this.currentState = STATE_DOWN;
+					//alert("Button Pressed test");
+            	}
+            	else if (!mpressed && prev_mpressed)
+            	{
+					// mouse was just released
+                	if (this.currentState == STATE_DOWN)
+                	{
+						// button was just down
+                    	this.currentState = STATE_RELEASED;
+						//alert("Button activated");
+               	 	}
+           		 }
+
+            	else
+            	{
+					this.currentState = STATE_UP;
+            	}
+			} // end is collision
+		
+        	else
+        	{
+				this.currentState = STATE_UP;
+        	}
+
+        	if (this.currentState == STATE_RELEASED)
+        	{
+				this.isPressed = true;
+        	}	
+    	} // end is button active
+	};
+	this.draw = function(context2D) {
+		if (this.currentState == STATE_DOWN) // If the button is pressed.
+		context2D.drawImage(this.downImage,this.x, this.y, this.width, this.height);
+
+    else // If the button is not pressed.
+		context2D.drawImage(this.upImage,this.x, this.y, this.width, this.height);
+	};
 } // end Button
 
-function update(mx, my, mpressed, prev_mpressed)
+/*function update(mx, my, mpressed, prev_mpressed)
 {
 	if (this.isActive)
     {
