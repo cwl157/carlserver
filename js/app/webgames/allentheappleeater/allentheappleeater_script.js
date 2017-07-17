@@ -104,8 +104,10 @@ var pointIncrementInterval = -1;
 
 var keys = new Array();
 
-window.addEventListener('keydown',keyDown,true);
-window.addEventListener('keyup',keyUp,true);
+var utilities = gameUtilities();
+
+document.addEventListener('keydown',keyDown,true);
+document.addEventListener('keyup',keyUp,true);
 function keyDown(evt)
 {
 	keys[evt.keyCode] = true;
@@ -194,14 +196,14 @@ function placeAllen()
 
 function placeBricks()
 {
-	var placeX = randomFromTo(1, BLOCKS_ACROSS-1);
-	var placeY = randomFromTo(2, BLOCKS_DOWN-1);
+	var placeX = utilities.randomFromTo(1, BLOCKS_ACROSS-1);
+	var placeY = utilities.randomFromTo(2, BLOCKS_DOWN-1);
 	for (var i = 0; i < totalBricks; i++)
 	{
 		while (board[placeY][placeX] == BRICK_ID || board[placeY][placeX] == SNAKE_HEAD_ID || board[placeY][placeX] == SNAKE_BODY_ID)
 		{
-			placeX = randomFromTo(1, BLOCKS_ACROSS-1);
-			placeY = randomFromTo(2, BLOCKS_DOWN-1);
+			placeX = utilities.randomFromTo(1, BLOCKS_ACROSS-1);
+			placeY = utilities.randomFromTo(2, BLOCKS_DOWN-1);
 		}
 		board[placeY][placeX] = BRICK_ID;
 	}
@@ -224,14 +226,14 @@ function placeApple()
 	{
 		if (board[apple.y][apple.x] == APPLE_ID)
 			board[apple.y][apple.x] = EMPTY_ID
-		var placeX = randomFromTo(1, BLOCKS_ACROSS-1);
-		var placeY = randomFromTo(2, BLOCKS_DOWN-1);
+		var placeX = utilities.randomFromTo(1, BLOCKS_ACROSS-1);
+		var placeY = utilities.randomFromTo(2, BLOCKS_DOWN-1);
 		for (var i = 0; i < totalBricks; i++)
 		{
 			while (board[placeY][placeX] == BRICK_ID || board[placeY][placeX] == SNAKE_HEAD_ID || board[placeY][placeX] == SNAKE_BODY_ID)
 			{
-				placeX = randomFromTo(1, BLOCKS_ACROSS-1);
-				placeY = randomFromTo(2, BLOCKS_DOWN-1);
+				placeX = utilities.randomFromTo(1, BLOCKS_ACROSS-1);
+				placeY = utilities.randomFromTo(2, BLOCKS_DOWN-1);
 			}
 			apple.x = placeX;
 			apple.y = placeY;
@@ -708,9 +710,9 @@ function drawStartScreen()
 {
 	context2D.filleStyle="black";
 	context2D.fillRect(100, 100, 600, 400);
-	drawCanvasText(context2D, "Allen The Apple Eater", 300, 200, "white", "16px courier new");
-	drawCanvasText(context2D, "Press Enter to Start", 200, 300, "white", "16px courier new");
-	drawCanvasText(context2D, "Press I for Instructions", 420, 360, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Allen The Apple Eater", 300, 200, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Press Enter to Start", 200, 300, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Press I for Instructions", 420, 360, "white", "16px courier new");
 	var startx = 268;
 	var starty = 150;
 	while (startx < 500)
@@ -735,9 +737,9 @@ function drawEndScreen()
 {
 	context2D.filleStyle="black";
 	context2D.fillRect(100, 100, 600, 400);
-	drawCanvasText(context2D, "Thanks for Playing!", 300, 200, "white", "16px courier new");
-	drawCanvasText(context2D, "Final Score: "+score, 200, 300, "white", "16px courier new");
-	drawCanvasText(context2D, "Press E to end game", 420, 360, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Thanks for Playing!", 300, 200, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Final Score: "+score, 200, 300, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Press E to end game", 420, 360, "white", "16px courier new");
 	var startx = 268;
 	var starty = 150;
 	while (startx < 500)
@@ -762,11 +764,11 @@ function drawInstructionsScreen()
 {
 	context2D.filleStyle="black";
 	context2D.fillRect(100, 100, 600, 400);
-	drawCanvasText(context2D, "Use the arrow keys to move Allen around the field", 114, 116, "white", "16px courier new");
-	drawCanvasText(context2D, "collecting apples.", 114, 136, "white", "16px courier new");
-	drawCanvasText(context2D, "Be sure to avoid the bricks and yourself!", 114, 156, "white", "16px courier new");
-	drawCanvasText(context2D, "This sounds simple right...", 124, 196, "white", "16px courier new");
-	drawCanvasText(context2D, "Press B to go back", 450, 450, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Use the arrow keys to move Allen around the field", 114, 116, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "collecting apples.", 114, 136, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Be sure to avoid the bricks and yourself!", 114, 156, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "This sounds simple right...", 124, 196, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Press B to go back", 450, 450, "white", "16px courier new");
 	
 	var startx = 140;
 	var starty = 300;
@@ -786,8 +788,8 @@ function drawHeading()
 {
 	context2D.fillStyle="black";
 	context2D.fillRect(0, 0, WINDOW_WIDTH, BLOCK_HEIGHT);
-	drawCanvasText(context2D, "Allen The Apple Eater", 4, 20, "white", "16px courier new");
-	drawCanvasText(context2D, "Score: "+score, 400, 20, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Allen The Apple Eater", 4, 20, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Score: "+score, 400, 20, "white", "16px courier new");
 } // end drawHeading
 
 function printDebug()
@@ -795,8 +797,8 @@ function printDebug()
 	
 	var startX = 10;
 	var startY = 10;
-	drawCanvasText(context2D, "Length: "+snakeLength, startX, startY, "white", "16px courier new");
-	drawCanvasText(context2D, "Max Length: "+SNAKE_MAX_LENGTH, startX, startY+40, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Length: "+snakeLength, startX, startY, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Max Length: "+SNAKE_MAX_LENGTH, startX, startY+40, "white", "16px courier new");
 }
 
 // Takes 2 object references and assigns all values in rhs to lhs

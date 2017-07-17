@@ -1,31 +1,6 @@
-var FPS = 30;
-
-
-
-/*var SOURCE_BACKGROUND_IMAGE = "/webgames/allenfoodfrenzy/images/background.png";
-var SOURCE_BRICK_IMAGE = "/webgames/allenfoodfrenzy/images/brick.png";
-//var SOURCE_APPLE_IMAGE = "/webgames/allenfoodfrenzy/images/apple.png";
-var SOURCE_SNAKEHEAD_IMAGE = "/webgames/allenfoodfrenzy/images/snakeHead.png";
-var SOURCE_SNAKEBODY_IMAGE = "/webgames/allenfoodfrenzy/images/snakeBody.png";
-
-var SOURCE_BLOCK_BEERCAN_IMAGE = "/webgames/allenfoodfrenzy/images/block_beercan.png";
-var SOURCE_BLOCK_BREAD_IMAGE = "/webgames/allenfoodfrenzy/images/block_bread.png";
-var SOURCE_BLOCK_CAKE_IMAGE = "/webgames/allenfoodfrenzy/images/block_cake.png";
-var SOURCE_BLOCK_COOKIE_IMAGE = "/webgames/allenfoodfrenzy/images/block_cookie.png";
-var SOURCE_BLOCK_COTTONCANDY_IMAGE = "/webgames/allenfoodfrenzy/images/block_cottonCandy.png";
-var SOURCE_BLOCK_EGG_IMAGE = "/webgames/allenfoodfrenzy/images/block_egg.png";
-var SOURCE_BLOCK_GROCERIES_IMAGE = "/webgames/allenfoodfrenzy/images/block_groceries.png";
-var SOURCE_BLOCK_HOTDOG_IMAGE = "/webgames/allenfoodfrenzy/images/block_hotdog.png";
-var SOURCE_BLOCK_MILK_IMAGE = "/webgames/allenfoodfrenzy/images/block_milk.png";
-var SOURCE_BLOCK_PIE_IMAGE = "/webgames/allenfoodfrenzy/images/block_pie.png";
-var SOURCE_BLOCK_PIZZA_IMAGE = "/webgames/allenfoodfrenzy/images/block_pizza.png";
-var SOURCE_BLOCK_POP_IMAGE = "/webgames/allenfoodfrenzy/images/block_pop.png";
-var SOURCE_BLOCK_POPCORN_IMAGE = "/webgames/allenfoodfrenzy/images/block_popcorn.png";
-var SOURCE_BLOCK_RUMROLL_IMAGE = "/webgames/allenfoodfrenzy/images/block_rumroll.png";
-var SOURCE_BLOCK_WATERMELON_IMAGE = "/webgames/allenfoodfrenzy/images/block_watermelon.png";
-*/
 var allenFoodFrenzy = function() {
 	var exports = {};
+	var FPS = 30;
 var SNAKE_BODY_INDEX = 3;
 var BG_INDEX = 0;
 var SNAKE_HEAD_INDEX = 2;
@@ -176,6 +151,8 @@ var pointIncrementInterval = -1;
 
 var keys = new Array();
 
+var utilities = gameUtilities();
+
 document.addEventListener('keydown',keyDown,true);
 document.addEventListener('keyup',keyUp,true);
 function keyDown(evt)
@@ -266,14 +243,14 @@ function placeAllen()
 
 function placeBricks()
 {
-	var placeX = randomFromTo(1, BLOCKS_ACROSS-1);
-	var placeY = randomFromTo(2, BLOCKS_DOWN-1);
+	var placeX = utilities.randomFromTo(1, BLOCKS_ACROSS-1);
+	var placeY = utilities.randomFromTo(2, BLOCKS_DOWN-1);
 	for (var i = 0; i < totalBricks; i++)
 	{
 		while (board[placeY][placeX] == BRICK_ID || board[placeY][placeX] == SNAKE_HEAD_ID || board[placeY][placeX] == SNAKE_BODY_ID)
 		{
-			placeX = randomFromTo(1, BLOCKS_ACROSS-1);
-			placeY = randomFromTo(2, BLOCKS_DOWN-1);
+			placeX = utilities.randomFromTo(1, BLOCKS_ACROSS-1);
+			placeY = utilities.randomFromTo(2, BLOCKS_DOWN-1);
 		}
 		board[placeY][placeX] = BRICK_ID;
 	}
@@ -297,18 +274,18 @@ function placeApple()
 		//if (board[apple.y][apple.x] == APPLE_ID)
 		if (board[apple.y][apple.x] > 3)
 			board[apple.y][apple.x] = EMPTY_ID
-		var placeX = randomFromTo(1, BLOCKS_ACROSS-1);
-		var placeY = randomFromTo(2, BLOCKS_DOWN-1);
+		var placeX = utilities.randomFromTo(1, BLOCKS_ACROSS-1);
+		var placeY = utilities.randomFromTo(2, BLOCKS_DOWN-1);
 		for (var i = 0; i < totalBricks; i++)
 		{
 			while (board[placeY][placeX] == BRICK_ID || board[placeY][placeX] == SNAKE_HEAD_ID || board[placeY][placeX] == SNAKE_BODY_ID)
 			{
-				placeX = randomFromTo(1, BLOCKS_ACROSS-1);
-				placeY = randomFromTo(2, BLOCKS_DOWN-1);
+				placeX = utilities.randomFromTo(1, BLOCKS_ACROSS-1);
+				placeY = utilities.randomFromTo(2, BLOCKS_DOWN-1);
 			}
 			apple.x = placeX;
 			apple.y = placeY;
-			board[placeY][placeX] = randomFromTo(4, 18);
+			board[placeY][placeX] = utilities.randomFromTo(4, 18);
 		}
 	}
 }
@@ -793,9 +770,9 @@ function drawStartScreen()
 {
 	context2D.filleStyle="black";
 	context2D.fillRect(100, 100, 600, 400);
-	drawCanvasText(context2D, "Allen's Food Frenzy", 300, 200, "white", "16px courier new");
-	drawCanvasText(context2D, "Press Enter to Start", 200, 300, "white", "16px courier new");
-	drawCanvasText(context2D, "Press I for Instructions", 420, 360, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Allen's Food Frenzy", 300, 200, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Press Enter to Start", 200, 300, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Press I for Instructions", 420, 360, "white", "16px courier new");
 	var startx = 268;
 	var starty = 150;
 	while (startx < 500)
@@ -820,9 +797,9 @@ function drawEndScreen()
 {
 	context2D.filleStyle="black";
 	context2D.fillRect(100, 100, 600, 400);
-	drawCanvasText(context2D, "Thanks for Playing!", 300, 200, "white", "16px courier new");
-	drawCanvasText(context2D, "Final Score: "+score, 200, 300, "white", "16px courier new");
-	drawCanvasText(context2D, "Press E to end game", 420, 360, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Thanks for Playing!", 300, 200, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Final Score: "+score, 200, 300, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Press E to end game", 420, 360, "white", "16px courier new");
 	var startx = 268;
 	var starty = 150;
 	while (startx < 500)
@@ -847,11 +824,11 @@ function drawInstructionsScreen()
 {
 	context2D.filleStyle="black";
 	context2D.fillRect(100, 100, 600, 400);
-	drawCanvasText(context2D, "Use the arrow keys to move Allen around the field", 114, 116, "white", "16px courier new");
-	drawCanvasText(context2D, "collecting food.", 114, 136, "white", "16px courier new");
-	drawCanvasText(context2D, "Be sure to avoid the bricks and yourself!", 114, 156, "white", "16px courier new");
-	drawCanvasText(context2D, "This sounds simple right...", 124, 196, "white", "16px courier new");
-	drawCanvasText(context2D, "Press B to go back", 450, 450, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Use the arrow keys to move Allen around the field", 114, 116, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "collecting food.", 114, 136, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Be sure to avoid the bricks and yourself!", 114, 156, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "This sounds simple right...", 124, 196, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Press B to go back", 450, 450, "white", "16px courier new");
 	
 	var startx = 140;
 	var starty = 300;
@@ -871,8 +848,8 @@ function drawHeading()
 {
 	context2D.fillStyle="black";
 	context2D.fillRect(0, 0, WINDOW_WIDTH, BLOCK_HEIGHT);
-	drawCanvasText(context2D, "Allen's Food Frenzy", 4, 20, "white", "16px courier new");
-	drawCanvasText(context2D, "Score: "+score, 400, 20, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Allen's Food Frenzy", 4, 20, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Score: "+score, 400, 20, "white", "16px courier new");
 } // end drawHeading
 
 function printDebug()
@@ -880,8 +857,8 @@ function printDebug()
 	
 	var startX = 10;
 	var startY = 10;
-	drawCanvasText(context2D, "Length: "+snakeLength, startX, startY, "white", "16px courier new");
-	drawCanvasText(context2D, "Max Length: "+SNAKE_MAX_LENGTH, startX, startY+40, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Length: "+snakeLength, startX, startY, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Max Length: "+SNAKE_MAX_LENGTH, startX, startY+40, "white", "16px courier new");
 }
 
 // Takes 2 object references and assigns all values in rhs to lhs

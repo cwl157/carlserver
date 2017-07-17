@@ -105,6 +105,8 @@ var intervalId = -1; // used to control if there is already an interval set or n
 
 var keys = new Array();
 
+var utilities = gameUtilities();
+
 document.addEventListener('keydown',keyDown,true);
 document.addEventListener('keyup',keyUp,true);
 function keyDown(evt){
@@ -379,8 +381,8 @@ function loadShapes()
 
 function loadGameValues()
 {
-	currentShape = randomFromTo(0,6);
-	previewShape = randomFromTo(0,6);
+	currentShape = utilities.randomFromTo(0,6);
+	previewShape = utilities.randomFromTo(0,6);
 	currentRotation = 0;
 
 	posX = MIDDLE_COL;
@@ -832,7 +834,7 @@ function increaseLevel()
 function nextTetromino()
 {
 	currentShape = previewShape;
-	previewShape = randomFromTo(0,6);
+	previewShape = utilities.randomFromTo(0,6);
     currentRotation = 0;
     posX = MIDDLE_COL;
     posY = 0;
@@ -1155,9 +1157,9 @@ function drawInstructionsScreen()
 	context2D.fillStyle="black";
 	context2D.fillRect(322, 0, 130, canvas.height);
 	
-	drawCanvasText(context2D, "Instructions:", 10, 30, "ffffff", "16px Tahoma");
-	drawCanvasText(context2D, "A new twist on an old classic.", 12, 60, "ffffff", "16px Tahoma");
-	drawCanvasText(context2D, "You already know how to play, trust me!", 12, 90, "lime", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "Instructions:", 10, 30, "ffffff", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "A new twist on an old classic.", 12, 60, "ffffff", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "You already know how to play, trust me!", 12, 90, "lime", "16px Tahoma");
 	button_Back.draw(context2D);
 } // end drawInstructionsScreen
 
@@ -1173,7 +1175,7 @@ function drawGameOverScreen()
 	context2D.fillStyle="black";
 	context2D.fillRect(322, 0, 130, canvas.height);
 	
-	drawCanvasText(context2D, "Thanks for Playing!", 20, 200, "lime", "34px Tahoma");
+	utilities.drawCanvasText(context2D, "Thanks for Playing!", 20, 200, "lime", "34px Tahoma");
 	button_End.draw(context2D);
 } // end drawGameOverScreen
 
@@ -1187,13 +1189,13 @@ function drawHeading()
 	context2D.fillStyle="black";
 	context2D.fillRect(322, 0, 130, canvas.height);
 	
-	drawCanvasText(context2D, "Tetro-Ball", 335, 30, "lime", "22px Tahoma");
-	drawCanvasText(context2D, "Total Bases: "+lines, 325, 70, "white", "16px Tahoma");
-	drawCanvasText(context2D, "Inning: "+level, 325, 100, "white", "16px Tahoma");
-	drawCanvasText(context2D, "Runs: "+score, 325, 130, "white", "16px Tahoma");
-	drawCanvasText(context2D, "On Deck:", 325, 340, "white", "16px Tahoma");
-	drawCanvasText(context2D, "Last Hit: "+lastHitDesc, 325, 290, "white", "16px Tahoma");
-	drawCanvasText(context2D, "          "+lastHitDesc1, 325, 310, "white", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "Tetro-Ball", 335, 30, "lime", "22px Tahoma");
+	utilities.drawCanvasText(context2D, "Total Bases: "+lines, 325, 70, "white", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "Inning: "+level, 325, 100, "white", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "Runs: "+score, 325, 130, "white", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "On Deck:", 325, 340, "white", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "Last Hit: "+lastHitDesc, 325, 290, "white", "16px Tahoma");
+	utilities.drawCanvasText(context2D, "          "+lastHitDesc1, 325, 310, "white", "16px Tahoma");
 } // end drawHeading()
 exports.title = "Tetroball";
 return exports;

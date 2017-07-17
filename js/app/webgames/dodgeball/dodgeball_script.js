@@ -91,6 +91,8 @@ var timeIntervalId = -1;
 
 var keys = new Array();
 
+var utilities = gameUtilities();
+
 document.addEventListener('keydown',keyDown,true);
 document.addEventListener('keyup',keyUp,true);
 function keyDown(evt)
@@ -434,15 +436,15 @@ function placeEnemies()
 
 function placeEnemy(enemy)
 {
-	enemy.x = randomFromTo(2, WINDOW_WIDTH-enemy.width-2);		
-	enemy.y = randomFromTo(0, ENEMY_MIN_STARTING_Y);
+	enemy.x = utilities.randomFromTo(2, WINDOW_WIDTH-enemy.width-2);		
+	enemy.y = utilities.randomFromTo(0, ENEMY_MIN_STARTING_Y);
 	enemy.y *= -1;
-	enemy.type = randomFromTo(0, 1);
+	enemy.type = utilities.randomFromTo(0, 1);
 	if (enemy.type == ENEMY_TYPE_1)
 	{
 		enemy.health = ENEMY_TYPE_1_HEALTH;
 		enemy.points = ENEMY_TYPE_1_POINTS;
-		enemy.yVel = randomFromTo(ENEMY_TYPE_1_MIN_VEL, ENEMY_TYPE_1_MAX_VEL);
+		enemy.yVel = utilities.randomFromTo(ENEMY_TYPE_1_MIN_VEL, ENEMY_TYPE_1_MAX_VEL);
 		enemy.yDirection = DIRECTION_DOWN;
 		enemy.alive = true;
 	}
@@ -450,9 +452,9 @@ function placeEnemy(enemy)
 	{
 		enemy.health = ENEMY_TYPE_2_HEALTH;
 		enemy.points = ENEMY_TYPE_2_POINTS;
-		enemy.yVel = randomFromTo(ENEMY_TYPE_2_MIN_VEL, ENEMY_TYPE_2_MAX_VEL);
+		enemy.yVel = utilities.randomFromTo(ENEMY_TYPE_2_MIN_VEL, ENEMY_TYPE_2_MAX_VEL);
 		enemy.yDirection = DIRECTION_DOWN;
-		enemy.xVel = randomFromTo(0, 5);
+		enemy.xVel = utilities.randomFromTo(0, 5);
 		if (enemy.x > playerShip.x) // enemy must be to the right of the player, so move him left
 			enemy.xDirection = DIRECTION_LEFT;
 		if (enemy.x < playerShip.x) // enemy must be to the left of the player, so move him right
@@ -525,10 +527,10 @@ function drawHeading()
 {
 	context2D.fillStyle = "black";
 	context2D.fillRect(0, 0, canvas.width, HEADING_BUFFER);
-	drawCanvasText(context2D, "Dodgeball", 4, 20, "white", "16px Courier new");
-	drawCanvasText(context2D, "Score: "+score, 220, 20, "orange", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Dodgeball", 4, 20, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Score: "+score, 220, 20, "orange", "16px Courier new");
 	context2D.drawImage(bulletImg, 600, 10);
-	drawCanvasText(context2D, " X: "+ currentBullets, 625, 20, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, " X: "+ currentBullets, 625, 20, "white", "16px Courier new");
 	context2D.fillStyle="white";
 	context2D.fillRect(4,34,canvas.width-8,4);
 	drawHealth();
@@ -536,25 +538,25 @@ function drawHeading()
 
 function drawStart()
 {
-	drawCanvasText(context2D, "Dodgeball", 300, 250, "white", "32px Courier new");
-	drawCanvasText(context2D, "Press Enter To Start", 225, 300, "white", "28px Courier new");
-	drawCanvasText(context2D, "Press I For Instructions", 200, 350, "white", "28px Courier new");
+	utilities.drawCanvasText(context2D, "Dodgeball", 300, 250, "white", "32px Courier new");
+	utilities.drawCanvasText(context2D, "Press Enter To Start", 225, 300, "white", "28px Courier new");
+	utilities.drawCanvasText(context2D, "Press I For Instructions", 200, 350, "white", "28px Courier new");
 }
 
 function drawInstructions()
 {
-	drawCanvasText(context2D, "Dodge and destroy in this fast paced, vertical scrolling, arcade shooter!", 50, 100, "white", "16px Courier new");
-	drawCanvasText(context2D, "Use the arrow keys to move and the spacebar to shoot as you blast", 50, 140, "white", "16px Courier new");
-	drawCanvasText(context2D, "your way through endless waves of enemies.", 50, 180, "white", "16px Courier new");
-	drawCanvasText(context2D, "Dodge, Duck, Dip, Dive, and Dodge!", 175, 280, "white", "22 Courier new");
-	drawCanvasText(context2D, "Press B to go back", 250, 400, "white", "22 Courier new");
+	utilities.drawCanvasText(context2D, "Dodge and destroy in this fast paced, vertical scrolling, arcade shooter!", 50, 100, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Use the arrow keys to move and the spacebar to shoot as you blast", 50, 140, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "your way through endless waves of enemies.", 50, 180, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Dodge, Duck, Dip, Dive, and Dodge!", 175, 280, "white", "22 Courier new");
+	utilities.drawCanvasText(context2D, "Press B to go back", 250, 400, "white", "22 Courier new");
 }
 
 function drawEnd()
 {
-	drawCanvasText(context2D, "Thanks for Playing!", 200, 250, "white", "32px Courier new");
-	drawCanvasText(context2D, "Final Score: "+score, 275, 300, "white", "22px Courier new");
-	drawCanvasText(context2D, "Press E to end game", 250, 350, "white", "22 Courier new");
+	utilities.drawCanvasText(context2D, "Thanks for Playing!", 200, 250, "white", "32px Courier new");
+	utilities.drawCanvasText(context2D, "Final Score: "+score, 275, 300, "white", "22px Courier new");
+	utilities.drawCanvasText(context2D, "Press E to end game", 250, 350, "white", "22 Courier new");
 }
 
 function drawHealth()
@@ -654,10 +656,10 @@ function incrementEnemies()
 
 function drawDebug()
 {
-	drawCanvasText(context2D, "Score Counter "+currentScoreCounter, 5, 120, "white", "10px Courier new");
-	drawCanvasText(context2D, "Current Enemies Counter "+currentEnemyCounter, 5, 140, "white", "10px Courier new");
-	drawCanvasText(context2D, "powerup alive: " + powerup.alive, 5, 180, "white", "10px Courier new");
-	drawCanvasText(context2D, "Total Enemies: " + currentEnemies, 5, 200, "white", "10px Courier new");
+	utilities.drawCanvasText(context2D, "Score Counter "+currentScoreCounter, 5, 120, "white", "10px Courier new");
+	utilities.drawCanvasText(context2D, "Current Enemies Counter "+currentEnemyCounter, 5, 140, "white", "10px Courier new");
+	utilities.drawCanvasText(context2D, "powerup alive: " + powerup.alive, 5, 180, "white", "10px Courier new");
+	utilities.drawCanvasText(context2D, "Total Enemies: " + currentEnemies, 5, 200, "white", "10px Courier new");
 	
 }
 exports.title = "Dodgeball";

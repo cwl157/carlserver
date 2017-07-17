@@ -212,6 +212,8 @@ var intervalId = -1;
 
 var keys = new Array();
 
+var utilities = gameUtilities();
+
 window.addEventListener('keydown',keyDown,true);
 window.addEventListener('keyup',keyUp,true);
 function keyDown(evt){
@@ -654,7 +656,7 @@ function mainLoop()
 			curTheme = "Grocery Store";
 		else if (currentTheme == THEME_BAKERY)
 			curTheme = "Bakery";
-		drawCanvasText(context2D, "Current Theme: "+curTheme, ((canvas.width/2)-200)+10, 30, "yellow", "14px Courier new");
+		utilities.drawCanvasText(context2D, "Current Theme: "+curTheme, ((canvas.width/2)-200)+10, 30, "yellow", "14px Courier new");
 	}
 	if (isThemeChange)
 	{
@@ -669,7 +671,7 @@ function mainLoop()
 		context2D.fillStyle = "rgba(0, 0, 0, 0.7)";
 		context2D.fillRect(0, 0, 800, 600);
 		context2D.restore();
-		drawCanvasText(context2D, "Thanks For Playing!", 280, 250, "White", "34px Arial");
+		utilities.drawCanvasText(context2D, "Thanks For Playing!", 280, 250, "White", "34px Arial");
 		playAgainButton.draw(context2D);
 	}
 } // end main loop
@@ -753,16 +755,16 @@ function amountToString(amount)
 
 function drawBettingArea()
 {
-	drawCanvasText(context2D, "Credits: "+remainingCredits, 480, 525, "yellow", "14px Courier new");
-    drawCanvasText(context2D, "Bet: "+totalBet, 650, 525, "yellow", "14px Courier new");
+	utilities.drawCanvasText(context2D, "Credits: "+remainingCredits, 480, 525, "yellow", "14px Courier new");
+    utilities.drawCanvasText(context2D, "Bet: "+totalBet, 650, 525, "yellow", "14px Courier new");
 	if (winAmount > 0)
-		drawCanvasText(context2D, "Win: "+winAmount, 480, 575, "yellow", "14px Courier new");
+		utilities.drawCanvasText(context2D, "Win: "+winAmount, 480, 575, "yellow", "14px Courier new");
 	else
-		drawCanvasText(context2D, "Win: "+originalWonInRound, 480, 575, "yellow", "14px Courier new");
-    drawCanvasText(context2D, "Line Bet: "+lineBet, 650, 575, "yellow", "14px Courier new");
+		utilities.drawCanvasText(context2D, "Win: "+originalWonInRound, 480, 575, "yellow", "14px Courier new");
+    utilities.drawCanvasText(context2D, "Line Bet: "+lineBet, 650, 575, "yellow", "14px Courier new");
 	if (insufficientFundsFl)
 	{
-		drawCanvasText(context2D, "Insufficient Credits!", 500, 550, "red", "18px Courier new");
+		utilities.drawCanvasText(context2D, "Insufficient Credits!", 500, 550, "red", "18px Courier new");
 		if (insufficientFundsCounter > insufficientFundsDelay)
 		{
 			insufficientFundsCounter = 0;
@@ -843,10 +845,10 @@ function updateBlocks()
             else // all cols not stopped
             {
                 // Find a column to increase speed
-                var rand = randomFromTo(0, TOTAL_COLS-1);
+                var rand = utilities.randomFromTo(0, TOTAL_COLS-1);
                 while (isColStopped(rand))
                 {
-                    rand = randomFromTo(0, TOTAL_COLS-1);
+                    rand = utilities.randomFromTo(0, TOTAL_COLS-1);
                 }
                 for (var r = 0; r < TOTAL_ROWS; r++)
                 {
@@ -864,7 +866,7 @@ function updateBlocks()
                 blocks[r][c].posY += blocks[r][c].velY;
                 if (blocks[r][c].posY > 504) // bottom edge
                 {
-                    blocks[r][c].id = randomFromTo(0, TOTAL_BLOCKS-1);
+                    blocks[r][c].id = utilities.randomFromTo(0, TOTAL_BLOCKS-1);
                     blocks[r][c].posY = STARTING_Y;
                     if (r == 1) // its the first row so increment it
                         spinCounter[c]++;
@@ -940,17 +942,17 @@ function spin()
     for (var i = 0; i < TOTAL_COLS; i++)
     {
        if (i == 0)
-            colSpeed[i] = randomFromTo(15, 30);
+            colSpeed[i] = utilities.randomFromTo(15, 30);
         else
-            colSpeed[i] = randomFromTo(spinSpeed[i-1]+5, 30);
+            colSpeed[i] = utilities.randomFromTo(spinSpeed[i-1]+5, 30);
     }
        
     for (var i = 0; i < TOTAL_COLS; i++)
     {
         if (i == 0)
-            spinDuration[i] = randomFromTo(3, 10);
+            spinDuration[i] = utilities.randomFromTo(3, 10);
         else       
-            spinDuration[i] = randomFromTo(spinDuration[i-1]+1, 15);
+            spinDuration[i] = utilities.randomFromTo(spinDuration[i-1]+1, 15);
     }
 
     for (var row = 0; row < TOTAL_ROWS; row++)
@@ -1278,7 +1280,7 @@ function loadGameValues()
         {
             blocks[row][col].posX = STARTING_X+(col*(72+COL_BUFFER));
             blocks[row][col].posY = STARTING_Y+(row*(72+ROW_BUFFER));
-            blocks[row][col].id = randomFromTo(0, TOTAL_BLOCKS-1);
+            blocks[row][col].id = utilities.randomFromTo(0, TOTAL_BLOCKS-1);
 			blocks[row][col].row = row;
         }
     }
@@ -1301,7 +1303,7 @@ function loadGameValues()
     spinCounter = new Array();
     for (var i = 0; i < TOTAL_COLS; i++)
     {
-        spinDuration[i] = randomFromTo(1, 10);
+        spinDuration[i] = utilities.randomFromTo(1, 10);
         spinCounter[i] = 0;
     }
     stoppedCols = new Array();
@@ -1401,7 +1403,7 @@ function drawChangeTheme()
 		curTheme = "Bakery";
 	context2D.fillStyle="black";
 	context2D.fillRect((canvas.width/2)-200,30, 400, 300);
-	drawCanvasText(context2D, "Current Theme: "+curTheme, ((canvas.width/2)-200)+10, 100, "yellow", "14px Courier new");
+	utilities.drawCanvasText(context2D, "Current Theme: "+curTheme, ((canvas.width/2)-200)+10, 100, "yellow", "14px Courier new");
 	//drawCanvasText("Concession Stand", ((canvas.width/2)-200)+10, 150, "yellow", "14px Courier new");
 	//drawCanvasText("Grocery Store", ((canvas.width/2)-200)+10, 200, "yellow", "14px Courier new");
 	//drawCanvasText("Bakery", ((canvas.width/2)-200)+10, 250, "yellow", "14px Courier new");

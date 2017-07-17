@@ -75,6 +75,8 @@ var prev_mpressed = false;
 
 //window.onload = loadGame;
 
+var utilities = gameUtilities();
+
 //window.addEventListener('mousemove', mouseMoved, true);
 //window.addEventListener('mouseup', onMouseUp, true);
 //window.addEventListener('mousedown', onMouseDown, true);
@@ -165,7 +167,7 @@ function clicked(e)
 	{
 		if (balls[i].alive == true)
 		{
-			if (inside(crosshairMiddleX, crosshairMiddleY, balls[i].posX, balls[i].posY, balls[i].posX+balls[i].scaleX, balls[i].posY+balls[i].scaleY))
+			if (utilities.inside(crosshairMiddleX, crosshairMiddleY, balls[i].posX, balls[i].posY, balls[i].posX+balls[i].scaleX, balls[i].posY+balls[i].scaleY))
 			{
 				balls[i].alive = false;
 				ballsDestroyed++;
@@ -505,8 +507,8 @@ function generateNextBall(index)
 {
 	if (balls[index].alive == false)
 	{
-		balls[index].posX = randomFromTo(0, canvas.width-MAX_SCALE);
-		balls[index].posY = randomFromTo(30, canvas.height-MAX_SCALE);
+		balls[index].posX = utilities.randomFromTo(0, canvas.width-MAX_SCALE);
+		balls[index].posY = utilities.randomFromTo(30, canvas.height-MAX_SCALE);
 		balls[index].scaleX = BALL_DEFAULT_SCALE;
 		balls[index].scaleY = BALL_DEFAULT_SCALE;
 		balls[index].velY = 0;
@@ -539,8 +541,8 @@ function drawButtonBalls(startIndex, endLength)
 
 function loadGameValues()
 {
-	balls[0].posX = randomFromTo(0, canvas.width-MAX_SCALE);
-	balls[0].posY = randomFromTo(30, canvas.height-MAX_SCALE);
+	balls[0].posX = utilities.randomFromTo(0, canvas.width-MAX_SCALE);
+	balls[0].posY = utilities.randomFromTo(30, canvas.height-MAX_SCALE);
 	balls[0].scaleX = BALL_DEFAULT_SCALE;
 	balls[0].scaleY = BALL_DEFAULT_SCALE;
 	balls[0].velY = 0;
@@ -548,8 +550,8 @@ function loadGameValues()
 	balls[0].frameY = 0;
 	balls[0].alive = true;
 	
-	balls[1].posX = randomFromTo(0, canvas.width-MAX_SCALE);
-	balls[1].posY = randomFromTo(30, canvas.height-MAX_SCALE);
+	balls[1].posX = utilities.randomFromTo(0, canvas.width-MAX_SCALE);
+	balls[1].posY = utilities.randomFromTo(30, canvas.height-MAX_SCALE);
 	balls[1].scaleX = BALL_DEFAULT_SCALE;
 	balls[1].scaleY = BALL_DEFAULT_SCALE;
 	balls[1].velY = 0;
@@ -569,9 +571,9 @@ function drawHeading()
 {
 	context2D.fillStyle="black";
 	context2D.fillRect(0, 0, canvas.width, 30);
-	drawCanvasText(context2D, "Circus Shooter", 4, 20, "white", "14px Comic Sans MS");
-	drawCanvasText(context2D, "Lives: "+livesLeft, 150, 20, "red", "14px comic sans ms");
-	drawCanvasText(context2D, "Score: "+score, 250, 20, "orange", "14px comic sans ms");
+	utilities.drawCanvasText(context2D, "Circus Shooter", 4, 20, "white", "14px Comic Sans MS");
+	utilities.drawCanvasText(context2D, "Lives: "+livesLeft, 150, 20, "red", "14px comic sans ms");
+	utilities.drawCanvasText(context2D, "Score: "+score, 250, 20, "orange", "14px comic sans ms");
 	//drawCanvasText("Scale Velocity: "+scaleIncrement, 20, 300, "red", "14px courier new");
 	//drawCanvasText("Balls Destroyed: "+ballsDestroyed, 20, 330, "red", "14px courier new");
 	//drawCanvasText("Total Balls: "+totalBalls, 20, 360, "red", "14px courier new");
@@ -581,7 +583,7 @@ function drawHeading()
 
 function drawStart()
 {
-	drawCanvasText(context2D, "Circus Shooter", 100, 100, "white", "38px Comic Sans MS");
+	utilities.drawCanvasText(context2D, "Circus Shooter", 100, 100, "white", "38px Comic Sans MS");
 	button_PlayGame.draw(context2D);
 	button_Instructions.draw(context2D);
 	drawButtonBalls(0, 4);
@@ -589,20 +591,20 @@ function drawStart()
 
 function drawInstructions()
 {
-	drawCanvasText(context2D, "Instructions:", 10, 30, "white", "26px Comic Sans MS");
-	drawCanvasText(context2D, "Point and click to destroy the", 10, 70, "white", "26px Comic Sans MS");
-    drawCanvasText(context2D, "attacking Circus Balls, while racking", 10, 110, "white", "26px Comic Sans MS");
-    drawCanvasText(context2D, "up points. How many points can you", 10, 150, "white", "26px Comic Sans MS");
-	drawCanvasText(context2D, "earn?", 10, 190, "white", "26px Comic Sans MS");
+	utilities.drawCanvasText(context2D, "Instructions:", 10, 30, "white", "26px Comic Sans MS");
+	utilities.drawCanvasText(context2D, "Point and click to destroy the", 10, 70, "white", "26px Comic Sans MS");
+    utilities.drawCanvasText(context2D, "attacking Circus Balls, while racking", 10, 110, "white", "26px Comic Sans MS");
+    utilities.drawCanvasText(context2D, "up points. How many points can you", 10, 150, "white", "26px Comic Sans MS");
+	utilities.drawCanvasText(context2D, "earn?", 10, 190, "white", "26px Comic Sans MS");
 	button_Back.draw(context2D);
 	drawButtonBalls(4, 2);
 } // end drawInstructions
 
 function drawGameEnd()
 {
-	drawCanvasText(context2D, "Circus Shooter", 100, 100, "white", "38px Comic Sans MS");
-	drawCanvasText(context2D, "Thanks for Playing!", 10, 200, "white", "38px Comic Sans MS");
-	drawCanvasText(context2D, "Score: "+score, 50, 280, "orange", "28px arial");
+	utilities.drawCanvasText(context2D, "Circus Shooter", 100, 100, "white", "38px Comic Sans MS");
+	utilities.drawCanvasText(context2D, "Thanks for Playing!", 10, 200, "white", "38px Comic Sans MS");
+	utilities.drawCanvasText(context2D, "Score: "+score, 50, 280, "orange", "28px arial");
 	button_End.draw(context2D);
 	drawButtonBalls(6, 2);
 } // end drawGameEnd

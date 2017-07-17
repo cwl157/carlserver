@@ -118,6 +118,8 @@ var intervalId = -1; // used to control if there is already an interval set or n
 
 var keys = new Array();
 
+var utilities = gameUtilities();
+
 //window.onload = loadGame;
 
 document.addEventListener('keydown',keyDown,true);
@@ -385,24 +387,24 @@ function collideBlock()
 	// If the current direction is up, it can move down, down-right, down-left
     if (ballDirection == DIRECTION_UP || ballDirection == DIRECTION_UPLEFT || ballDirection == DIRECTION_UPRIGHT)
 	{
-		ballDirection = randomFromTo(DIRECTION_DOWN, DIRECTION_DOWNRIGHT);
+		ballDirection = utilities.randomFromTo(DIRECTION_DOWN, DIRECTION_DOWNRIGHT);
 	} 
 	
 	else if (ballDirection == DIRECTION_DOWN || ballDirection == DIRECTION_DOWNLEFT || ballDirection == DIRECTION_DOWNRIGHT)
 	{
-		ballDirection = randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
+		ballDirection = utilities.randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
 	}
 } // end collideBlock
 
 
 function collideBottom()
 {
-	ballDirection = randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
+	ballDirection = utilities.randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
 } // end collideBottom
 
 function collideTop()
 {
-	ballDirection = randomFromTo(DIRECTION_DOWN, DIRECTION_DOWNRIGHT);
+	ballDirection = utilities.randomFromTo(DIRECTION_DOWN, DIRECTION_DOWNRIGHT);
 } // end collideTop
 
 function collideLeft()
@@ -428,14 +430,14 @@ function collidePaddle()
 			ballDirection = DIRECTION_UPLEFT;
 		
 		else // Paddle is not moving
-			ballDirection = randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
+			ballDirection = utilities.randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
 			//ballDirection = DIRECTION_UP;
 	} // end if ball is moving straight down
 	
 	else if (ballDirection == DIRECTION_DOWNRIGHT) // Ball is moving diagonally
 	{
 		if (paddleVelX == 0) // Paddle is not moving
-			ballDirection = randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
+			ballDirection = utilities.randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
 			//ballDirection = DIRECTION_UP;
 		else
 			ballDirection = DIRECTION_UPRIGHT;
@@ -444,7 +446,7 @@ function collidePaddle()
 	else if (ballDirection == DIRECTION_DOWNLEFT) // Ball is moving down and left
 	{
 		if (paddleVelX == 0) // Paddle is not moving
-			ballDirection = randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
+			ballDirection = utilities.randomFromTo(DIRECTION_UP, DIRECTION_UPRIGHT);
 			//ballDirection = DIRECTION_UP;
 		else
 			ballDirection = DIRECTION_UPLEFT;
@@ -495,12 +497,12 @@ function updateBlocks()
 				if (blocks[i][j].isDying == false)
 				{
 					// Detect collision with paddle
-					if ((inside(ballLeft, ballBottom, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Bottom Left part of ball
-						(inside(ballMiddle, ballBottom, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Bottom middle part of ball
-						(inside(ballRight, ballBottom, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Bottom right part of ball
-						(inside(ballLeft, ballTop, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Top left part of ball
-						(inside(ballMiddle, ballTop, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Top middle part of ball
-						(inside(ballRight, ballTop, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height))) // Top right part of ball
+					if ((utilities.inside(ballLeft, ballBottom, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Bottom Left part of ball
+						(utilities.inside(ballMiddle, ballBottom, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Bottom middle part of ball
+						(utilities.inside(ballRight, ballBottom, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Bottom right part of ball
+						(utilities.inside(ballLeft, ballTop, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Top left part of ball
+						(utilities.inside(ballMiddle, ballTop, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height)) || // Top middle part of ball
+						(utilities.inside(ballRight, ballTop, blocks[i][j].x, blocks[i][j].y, blocks[i][j].x+block1Image.width,blocks[i][j].y+block1Image.height))) // Top right part of ball
 					{
 						wasThereCollision = true;
 						blocks[i][j].isDying = true;
@@ -562,12 +564,12 @@ function updateBall()
 	var ballBottom = ballPosY + ballImage.height;
 	
 	// Detect collision with paddle
-	if ((inside(ballLeft, ballBottom, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height)) || // Bottom Left part of ball
-		(inside(ballMiddle, ballBottom, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height)) || // Bottom middle part of ball
-		(inside(ballRight, ballBottom, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height)) || // Bottom right part of ball
-		(inside(ballLeft, ballTop, paddlePosX, paddlePosY, paddlePosX+paddleWidth, paddlePosY+paddleImage.height)) || // Top left part of ball
-		(inside(ballMiddle, ballTop, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height)) || // Top middle part of ball
-		(inside(ballRight, ballTop, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height))) // Top right part of ball
+	if ((utilities.inside(ballLeft, ballBottom, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height)) || // Bottom Left part of ball
+		(utilities.inside(ballMiddle, ballBottom, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height)) || // Bottom middle part of ball
+		(utilities.inside(ballRight, ballBottom, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height)) || // Bottom right part of ball
+		(utilities.inside(ballLeft, ballTop, paddlePosX, paddlePosY, paddlePosX+paddleWidth, paddlePosY+paddleImage.height)) || // Top left part of ball
+		(utilities.inside(ballMiddle, ballTop, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height)) || // Top middle part of ball
+		(utilities.inside(ballRight, ballTop, paddlePosX, paddlePosY, paddlePosX+paddleWidth,paddlePosY+paddleImage.height))) // Top right part of ball
 	{
 	    collidePaddle();
 	}
@@ -675,36 +677,36 @@ function drawBall()
 
 function drawHeading()
 {
-	drawCanvasText(context2D, "Brick Buster", 4, 20, "99ff00", "16px courier new");
-	drawCanvasText(context2D, "Lives: "+livesLeft, 150, 20, "red", "16px courier new");
-	drawCanvasText(context2D, "Score: "+score, 250, 20, "orange", "16px courier new");
+	utilities.drawCanvasText(context2D, "Brick Buster", 4, 20, "99ff00", "16px courier new");
+	utilities.drawCanvasText(context2D, "Lives: "+livesLeft, 150, 20, "red", "16px courier new");
+	utilities.drawCanvasText(context2D, "Score: "+score, 250, 20, "orange", "16px courier new");
 	context2D.fillStyle="white";
 	context2D.fillRect(4,30,canvas.width-8,4);
 } // end drawHeading
 
 function drawStart()
 {
-	drawCanvasText(context2D, "Brick Buster", 100, 100, "99ff00", "38px courier new");
+	utilities.drawCanvasText(context2D, "Brick Buster", 100, 100, "99ff00", "38px courier new");
 	button_PlayGame.draw(context2D);
 	button_Instructions.draw(context2D);
 } // end drawStart
 
 function drawInstructions()
 {
-	drawCanvasText(context2D, "Instructions:", 10, 30, "white", "16px courier new");
-	drawCanvasText(context2D, "Use the left and right arrow keys to move", 12, 60, "99ff00", "16px courier new");
-	drawCanvasText(context2D, "the paddle. Hit the ball with the paddle to", 12, 90, "99ff00", "16px courier new");
-	drawCanvasText(context2D, "break the bricks and collect points. Don't", 12, 120, "99ff00", "16px courier new");
-	drawCanvasText(context2D, "let the ball fall below the paddle. How", 12, 150, "99ff00", "16px courier new");
-	drawCanvasText(context2D, "many points can you earn?", 12, 180, "99ff00", "16px courier new");
+	utilities.drawCanvasText(context2D, "Instructions:", 10, 30, "white", "16px courier new");
+	utilities.drawCanvasText(context2D, "Use the left and right arrow keys to move", 12, 60, "99ff00", "16px courier new");
+	utilities.drawCanvasText(context2D, "the paddle. Hit the ball with the paddle to", 12, 90, "99ff00", "16px courier new");
+	utilities.drawCanvasText(context2D, "break the bricks and collect points. Don't", 12, 120, "99ff00", "16px courier new");
+	utilities.drawCanvasText(context2D, "let the ball fall below the paddle. How", 12, 150, "99ff00", "16px courier new");
+	utilities.drawCanvasText(context2D, "many points can you earn?", 12, 180, "99ff00", "16px courier new");
 	button_Back.draw(context2D);
 } // end drawInstructions
 
 function drawGameEnd()
 {
-	drawCanvasText(context2D, "Brick Buster", 100, 100, "99ff00", "38px courier new");
-	drawCanvasText(context2D, "Thanks for Playing!", 10, 200, "99ff00", "38px courier new");
-	drawCanvasText(context2D, "Score: "+score, 50, 280, "orange", "28px arial");
+	utilities.drawCanvasText(context2D, "Brick Buster", 100, 100, "99ff00", "38px courier new");
+	utilities.drawCanvasText(context2D, "Thanks for Playing!", 10, 200, "99ff00", "38px courier new");
+	utilities.drawCanvasText(context2D, "Score: "+score, 50, 280, "orange", "28px arial");
 	button_End.draw(context2D);
 } // end drawGameEnd
 

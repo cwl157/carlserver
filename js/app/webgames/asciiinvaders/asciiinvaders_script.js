@@ -112,6 +112,8 @@ var intervalId = -1;
 
 var keys = new Array();
 
+var utilities = gameUtilities();
+
 document.addEventListener('keydown',keyDown,true);
 document.addEventListener('keyup',keyUp,true);
 function keyDown(evt){
@@ -170,7 +172,7 @@ function resetEnemies()
 	{
 		for (var j = 0; j < TOTAL_COLS; j++)
 		{
-            enemies[i][j].id = randomFromTo(ENEMY_ONE, ENEMY_THREE);
+            enemies[i][j].id = utilities.randomFromTo(ENEMY_ONE, ENEMY_THREE);
             if (enemies[i][j].id == ENEMY_ONE)
             {
                 enemies[i][j].color = "white";
@@ -473,12 +475,12 @@ function updatePlayerShip()
 			var enemyBulletTop = enemyBullets[r].posY;
 			var enemyBulletBottom = enemyBullets[r].posY + ENEMY_BULLETS_HEIGHT;
 			//inside(x, y, left, top, right, bottom)
-			if ((inside(enemyBulletLeft, enemyBulletTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, top
-				(inside(enemyBulletMiddle, enemyBulletTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, top
-				(inside(enemyBulletRight, enemyBulletTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // right, top
-				(inside(enemyBulletLeft, enemyBulletBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, bottom
-				(inside(enemyBulletMiddle, enemyBulletBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, bottom
-				(inside(enemyBulletRight, enemyBulletBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT))) // right, bottom
+			if ((utilities.inside(enemyBulletLeft, enemyBulletTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, top
+				(utilities.inside(enemyBulletMiddle, enemyBulletTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, top
+				(utilities.inside(enemyBulletRight, enemyBulletTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // right, top
+				(utilities.inside(enemyBulletLeft, enemyBulletBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, bottom
+				(utilities.inside(enemyBulletMiddle, enemyBulletBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, bottom
+				(utilities.inside(enemyBulletRight, enemyBulletBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH-22, playerShip.posY+PLAYER_SHIP_HEIGHT))) // right, bottom
 			{
 				livesLeft--;
 				if (livesLeft <= 0)
@@ -502,12 +504,12 @@ function updatePlayerShip()
 		var bonusBottom = bonus.posY + BONUS_HEIGHT;
 		
 		//inside(x, y, left, top, right, bottom)
-		if ((inside(bonusLeft, bonusTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, top
-			(inside(bonusMiddle, bonusTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, top
-			(inside(bonusRight, bonusTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // right, top
-			(inside(bonusLeft, bonusBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, bottom
-			(inside(bonusMiddle, bonusBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, bottom
-			(inside(bonusRight, bonusBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT))) // right, bottom
+		if ((utilities.inside(bonusLeft, bonusTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, top
+			(utilities.inside(bonusMiddle, bonusTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, top
+			(utilities.inside(bonusRight, bonusTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // right, top
+			(utilities.inside(bonusLeft, bonusBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, bottom
+			(utilities.inside(bonusMiddle, bonusBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, bottom
+			(utilities.inside(bonusRight, bonusBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT))) // right, bottom
 		{
 			bonus.alive = false;
 			playerFireRate++;
@@ -524,11 +526,11 @@ function updatePlayerShip()
 
 function drawPlayerShip()
 {
-    drawCanvasText(context2D, "   ########", playerShip.posX, playerShip.posY, "white", "12px Courier new");
-    drawCanvasText(context2D, "  #   ^^   #",playerShip.posX, playerShip.posY+12, "white", "12px Courier new");
-    drawCanvasText(context2D, " #  -----   #",playerShip.posX, playerShip.posY+24, "white", "12px Courier new");
-    drawCanvasText(context2D, "#    ZZZZ    #",playerShip.posX, playerShip.posY+36, "white", "12px Courier new");
-    drawCanvasText(context2D, " ############", playerShip.posX, playerShip.posY+48, "white", "12px Courier new");
+    utilities.drawCanvasText(context2D, "   ########", playerShip.posX, playerShip.posY, "white", "12px Courier new");
+    utilities.drawCanvasText(context2D, "  #   ^^   #",playerShip.posX, playerShip.posY+12, "white", "12px Courier new");
+    utilities.drawCanvasText(context2D, " #  -----   #",playerShip.posX, playerShip.posY+24, "white", "12px Courier new");
+    utilities.drawCanvasText(context2D, "#    ZZZZ    #",playerShip.posX, playerShip.posY+36, "white", "12px Courier new");
+    utilities.drawCanvasText(context2D, " ############", playerShip.posX, playerShip.posY+48, "white", "12px Courier new");
 }
 
 function initiateBonus(x,y)
@@ -557,8 +559,8 @@ function drawBonus()
 {
 	if (bonus.alive)
     {
-        drawCanvasText(context2D, "***", bonus.posX, bonus.posY, "yellow", "12px Courier new");
-        drawCanvasText(context2D, "***", bonus.posX, bonus.posY+12, "yellow", "12px Courier new");
+        utilities.drawCanvasText(context2D, "***", bonus.posX, bonus.posY, "yellow", "12px Courier new");
+        utilities.drawCanvasText(context2D, "***", bonus.posX, bonus.posY+12, "yellow", "12px Courier new");
 	}
 } // end drawBonus
 
@@ -606,7 +608,7 @@ function drawPlayerBullets()
 	for (var i = 0; i < MAX_BULLETS; i++)
 	{
 		if (playerBullets[i].alive)
-            drawCanvasText(context2D, "^ ^", playerBullets[i].posX+15, playerBullets[i].posY, "white", "12px Courier new");
+            utilities.drawCanvasText(context2D, "^ ^", playerBullets[i].posX+15, playerBullets[i].posY, "white", "12px Courier new");
 	}
 } // end drawPlayerBullets
 
@@ -669,12 +671,12 @@ function updateEnemyBullets()
 						var playerBulletBottom = playerBullets[r].posY + PLAYER_BULLETS_HEIGHT;
 				
 						//inside(x, y, left, top, right, bottom)
-						if ((inside(enemyBulletLeft, enemyBulletTop, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // left, top
-							(inside(enemyBulletMiddle, enemyBulletTop, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // middle, top
-							(inside(enemyBulletRight, enemyBulletTop, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // right, top
-							(inside(enemyBulletLeft, enemyBulletBottom, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // left, bottom
-							(inside(enemyBulletMiddle, enemyBulletBottom, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // middle, bottom
-							(inside(enemyBulletRight, enemyBulletBottom, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom))) // right, bottom
+						if ((utilities.inside(enemyBulletLeft, enemyBulletTop, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // left, top
+							(utilities.inside(enemyBulletMiddle, enemyBulletTop, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // middle, top
+							(utilities.inside(enemyBulletRight, enemyBulletTop, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // right, top
+							(utilities.inside(enemyBulletLeft, enemyBulletBottom, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // left, bottom
+							(utilities.inside(enemyBulletMiddle, enemyBulletBottom, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom)) || // middle, bottom
+							(utilities.inside(enemyBulletRight, enemyBulletBottom, playerBulletLeft, playerBulletTop, playerBulletRight, playerBulletBottom))) // right, bottom
 						{
 							enemyBullets[i].alive = false;
 							playerBullets[r].alive = false;
@@ -716,7 +718,7 @@ function drawEnemyBullets()
 	{
 		if (enemyBullets[i].alive)
         {
-            drawCanvasText(context2D, enemyBullets[i].text, enemyBullets[i].posX+15, enemyBullets[i].posY, enemyBullets[i].color, "12px Courier new");
+            utilities.drawCanvasText(context2D, enemyBullets[i].text, enemyBullets[i].posX+15, enemyBullets[i].posY, enemyBullets[i].color, "12px Courier new");
         }
 	}
 } // end drawEnemyBullets
@@ -725,21 +727,21 @@ function enemyFire()
 {
 	if (enemyFireCounter > enemyFireDelay)
 	{
-		var selectedEnemyRow = randomFromTo(0, TOTAL_ROWS-1);
-		var selectedEnemyCol = randomFromTo(0, TOTAL_COLS-1);
+		var selectedEnemyRow = utilities.randomFromTo(0, TOTAL_ROWS-1);
+		var selectedEnemyCol = utilities.randomFromTo(0, TOTAL_COLS-1);
 		if (enemies[selectedEnemyRow][selectedEnemyCol].alive == false) // If chosen enemy is not alive, find one that is
 		{
 			while (enemies[selectedEnemyRow][selectedEnemyCol].alive == false)
 			{
 				if (enemiesKilled == TOTAL_ENEMIES)
 					return;
-				selectedEnemyRow = randomFromTo(0, TOTAL_ROWS-1);
-				selectedEnemyCol = randomFromTo(0, TOTAL_COLS-1);
+				selectedEnemyRow = utilities.randomFromTo(0, TOTAL_ROWS-1);
+				selectedEnemyCol = utilities.randomFromTo(0, TOTAL_COLS-1);
 			}
 		}
 		initiateEnemyBullet(selectedEnemyRow, selectedEnemyCol);
 		enemyFireCounter = 0;
-		enemyFireDelay = randomFromTo(4, 20);
+		enemyFireDelay = utilities.randomFromTo(4, 20);
 	}
 	else
 		enemyFireCounter++;
@@ -770,7 +772,7 @@ function drawExplosion()
     {
         for (var i = 0; i < explosionText[0].length; i++)
         {
-            drawCanvasText(context2D, explosionText[0][i], explosion.posX, explosion.posY+(i*explosion.frameX*12), "orange", "12px Courier new");
+            utilities.drawCanvasText(context2D, explosionText[0][i], explosion.posX, explosion.posY+(i*explosion.frameX*12), "orange", "12px Courier new");
         }
     }
 } // end drawExplosion
@@ -800,7 +802,7 @@ function drawBigExplosion()
     {
         for (var i = 0; i < explosionText[0].length; i++)
         {
-            drawCanvasText(context2D, explosionText[0][i], bigExplosion.posX, bigExplosion.posY+(i*bigExplosion.frameX*16), "orange", "16px Courier new");
+            utilities.drawCanvasText(context2D, explosionText[0][i], bigExplosion.posX, bigExplosion.posY+(i*bigExplosion.frameX*16), "orange", "16px Courier new");
         }
     }
 } // end drawBigExplosion
@@ -861,7 +863,7 @@ function drawBonusPickup()
     {
         for (var l = 0; l < bonusPickupText[bonusPickup.frameX].length; l++)
         {
-            drawCanvasText(context2D, bonusPickupText[bonusPickup.frameX][l], bonusPickup.posX, bonusPickup.posY+(l*14), "yellow", "14px Courier new");
+           utilities.drawCanvasText(context2D, bonusPickupText[bonusPickup.frameX][l], bonusPickup.posX, bonusPickup.posY+(l*14), "yellow", "14px Courier new");
         }
     }
 } // end drawBonusPickup
@@ -1016,12 +1018,12 @@ function updateEnemies()
 						var playerBulletBottom = playerBullets[r].posY + PLAYER_BULLETS_HEIGHT;
 				
 						//inside(x, y, left, top, right, bottom)
-						if ((inside(playerBulletLeft, playerBulletTop, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // left, top
-							(inside(playerBulletMiddle, playerBulletTop, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // middle, top
-							(inside(playerBulletRight, playerBulletTop, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // right, top
-							(inside(playerBulletLeft, playerBulletBottom, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // left, bottom
-							(inside(playerBulletMiddle, playerBulletBottom, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // middle, bottom
-							(inside(playerBulletRight, playerBulletBottom, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT))) // right, bottom
+						if ((utilities.inside(playerBulletLeft, playerBulletTop, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // left, top
+							(utilities.inside(playerBulletMiddle, playerBulletTop, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // middle, top
+							(utilities.inside(playerBulletRight, playerBulletTop, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // right, top
+							(utilities.inside(playerBulletLeft, playerBulletBottom, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // left, bottom
+							(utilities.inside(playerBulletMiddle, playerBulletBottom, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT)) || // middle, bottom
+							(utilities.inside(playerBulletRight, playerBulletBottom, enemies[i][j].posX, enemies[i][j].posY, enemies[i][j].posX+ENEMY_WIDTH, enemies[i][j].posY+ENEMY_HEIGHT))) // right, bottom
 						{
 							enemies[i][j].alive = false;
 							playerBullets[r].alive = false;
@@ -1032,7 +1034,7 @@ function updateEnemies()
 							
 							if (!bonus.alive) // if the bonus currently isn't alive
 							{
-								if (randomFromTo(0, 2) == 1) // If 1 is returned, initiate a bonus
+								if (utilities.randomFromTo(0, 2) == 1) // If 1 is returned, initiate a bonus
 									initiateBonus(enemies[i][j].posX, enemies[i][j].posY);
 							}
 								
@@ -1051,12 +1053,12 @@ function updateEnemies()
 				var enemyTop = enemies[i][j].posY;
 				var enemyBottom = enemies[i][j].posY+ENEMY_HEIGHT;
 				//inside(x, y, left, top, right, bottom)
-				if ((inside(enemyLeft, enemyTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, top
-					(inside(enemyMiddle, enemyTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, top
-					(inside(enemyRight, enemyTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // right, top
-					(inside(enemyLeft, enemyBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, bottom
-					(inside(enemyMiddle, enemyBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, bottom
-					(inside(enemyRight, enemyBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT))) // right, bottom
+				if ((utilities.inside(enemyLeft, enemyTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, top
+					(utilities.inside(enemyMiddle, enemyTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, top
+					(utilities.inside(enemyRight, enemyTop, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // right, top
+					(utilities.inside(enemyLeft, enemyBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // left, bottom
+					(utilities.inside(enemyMiddle, enemyBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT)) || // middle, bottom
+					(utilities.inside(enemyRight, enemyBottom, playerShip.posX, playerShip.posY, playerShip.posX+PLAYER_SHIP_WIDTH, playerShip.posY+PLAYER_SHIP_HEIGHT))) // right, bottom
 				{
 					enemies[i][j].alive = false;
 					livesLeft--;
@@ -1084,25 +1086,25 @@ function drawEnemies()
 			{
                 if (enemies[i][j].id == ENEMY_ONE)
                 {
-                    drawCanvasText(context2D, " ------", enemies[i][j].posX, enemies[i][j].posY, "white", "12px Courier new");
-                    drawCanvasText(context2D, " \\ {} /", enemies[i][j].posX, enemies[i][j].posY+12, "white", "12px Courier new");
-                    drawCanvasText(context2D, " \\ {} /", enemies[i][j].posX, enemies[i][j].posY+24, "white", "12px Courier new");
-                    drawCanvasText(context2D, "  \\--/", enemies[i][j].posX, enemies[i][j].posY+36, "white", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " ------", enemies[i][j].posX, enemies[i][j].posY, "white", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " \\ {} /", enemies[i][j].posX, enemies[i][j].posY+12, "white", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " \\ {} /", enemies[i][j].posX, enemies[i][j].posY+24, "white", "12px Courier new");
+                    utilities.drawCanvasText(context2D, "  \\--/", enemies[i][j].posX, enemies[i][j].posY+36, "white", "12px Courier new");
                 }
                 else if (enemies[i][j].id == ENEMY_TWO)
                 {
-                    drawCanvasText(context2D, " ------", enemies[i][j].posX, enemies[i][j].posY, "yellow", "12px Courier new");
-                    drawCanvasText(context2D, " \\ [] /", enemies[i][j].posX, enemies[i][j].posY+12, "yellow", "12px Courier new");
-                    drawCanvasText(context2D, " \\ [] /", enemies[i][j].posX, enemies[i][j].posY+24, "yellow", "12px Courier new");
-                    drawCanvasText(context2D, "  \\--/", enemies[i][j].posX, enemies[i][j].posY+36, "yellow", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " ------", enemies[i][j].posX, enemies[i][j].posY, "yellow", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " \\ [] /", enemies[i][j].posX, enemies[i][j].posY+12, "yellow", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " \\ [] /", enemies[i][j].posX, enemies[i][j].posY+24, "yellow", "12px Courier new");
+                    utilities.drawCanvasText(context2D, "  \\--/", enemies[i][j].posX, enemies[i][j].posY+36, "yellow", "12px Courier new");
                 }
                 
                 else if (enemies[i][j].id == ENEMY_THREE)
                 {
-                    drawCanvasText(context2D, " ------", enemies[i][j].posX, enemies[i][j].posY, "red", "12px Courier new");
-                    drawCanvasText(context2D, " \\ () /", enemies[i][j].posX, enemies[i][j].posY+12, "red", "12px Courier new");
-                    drawCanvasText(context2D, " \\ () /", enemies[i][j].posX, enemies[i][j].posY+24, "red", "12px Courier new");
-                    drawCanvasText(context2D, "  \\--/", enemies[i][j].posX, enemies[i][j].posY+36, "red", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " ------", enemies[i][j].posX, enemies[i][j].posY, "red", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " \\ () /", enemies[i][j].posX, enemies[i][j].posY+12, "red", "12px Courier new");
+                    utilities.drawCanvasText(context2D, " \\ () /", enemies[i][j].posX, enemies[i][j].posY+24, "red", "12px Courier new");
+                    utilities.drawCanvasText(context2D, "  \\--/", enemies[i][j].posX, enemies[i][j].posY+36, "red", "12px Courier new");
                 }
 			}
 		}
@@ -1114,11 +1116,11 @@ function drawHeading()
 {
 	context2D.fillStyle = "black";
 	context2D.fillRect(0, 0, canvas.width, 38);
-	drawCanvasText(context2D, "ASCII Invaders", 4, 20, "white", "16px Courier new");
-	drawCanvasText(context2D, "Lives: "+livesLeft, 450, 20, "red", "16px Courier new");
-	drawCanvasText(context2D, "Score: "+score, 220, 20, "orange", "16px Courier new");
-    drawCanvasText(context2D, "^ ^", 640, 25, "white", "16px Courier new");
-	drawCanvasText(context2D, " X "+playerFireRate, 670, 25, "white", "bold 16px Courier new");
+	utilities.drawCanvasText(context2D, "ASCII Invaders", 4, 20, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Lives: "+livesLeft, 450, 20, "red", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Score: "+score, 220, 20, "orange", "16px Courier new");
+    utilities.drawCanvasText(context2D, "^ ^", 640, 25, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, " X "+playerFireRate, 670, 25, "white", "bold 16px Courier new");
 	context2D.fillStyle="white";
 	context2D.fillRect(4,34,canvas.width-8,4);
 } // end drawHeading
@@ -1132,24 +1134,24 @@ function drawStart()
 	context2D.fillRect(15,450,canvas.width-30,4); // Bottom
 	context2D.fillRect(15,50,4,400); // Left
 	context2D.fillRect(canvas.width-15,46,4,408); // Right
-    drawCanvasText(context2D, "      --         -----   ----  -----  -----", 200, 80, "white", "16px Courier new");
-    drawCanvasText(context2D, "     /  \\       |       |        |      |", 200, 96, "white", "16px Courier new");
-    drawCanvasText(context2D, "    /    \\      |       |        |      |", 200, 112, "white", "16px Courier new");
-    drawCanvasText(context2D, "   /      \\      ----   |        |      |", 200, 130, "white", "16px Courier new");
-    drawCanvasText(context2D, "  /--------\\         |  |        |      |", 200, 146, "white", "16px Courier new");
-    drawCanvasText(context2D, " /          \\        |  |        |      |", 200, 162, "white", "16px Courier new");
-    drawCanvasText(context2D, "/            \\  -----    ----  -----  -----", 200, 178, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "      --         -----   ----  -----  -----", 200, 80, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "     /  \\       |       |        |      |", 200, 96, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "    /    \\      |       |        |      |", 200, 112, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "   /      \\      ----   |        |      |", 200, 130, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "  /--------\\         |  |        |      |", 200, 146, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, " /          \\        |  |        |      |", 200, 162, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "/            \\  -----    ----  -----  -----", 200, 178, "white", "16px Courier new");
     
-    drawCanvasText(context2D, "-----  |\\      |  \\            /  --        |--\\     |----  |----      -----", 70, 220, "white", "14px Courier new");  //N, V, D  Invaders E, R
-    drawCanvasText(context2D, "  |    | \\     |   \\          /  /  \\       |   \\    |      |    \\    | ", 70, 236, "white", "14px Courier new");
-    drawCanvasText(context2D, "  |    |  \\    |    \\        /  /    \\      |    \\   |      |     \\   | ", 70, 252, "white", "14px Courier new");
-    drawCanvasText(context2D, "  |    |   \\   |     \\      /  /      \\     |     \\  |----  |------    ----", 70, 268, "white", "14px Courier new");
-    drawCanvasText(context2D, "  |    |    \\  |      \\    /  /--------\\    |     /  |      |     \\        |", 70, 284, "white", "14px Courier new");
-    drawCanvasText(context2D, "  |    |     \\ |       \\  /  /          \\   |    /   |      |      \\       |", 70, 300, "white", "14px Courier new");
-    drawCanvasText(context2D, "-----  |      \\|        \\/  /            \\  |---/    |----  |       \\  -----" , 70, 316, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "-----  |\\      |  \\            /  --        |--\\     |----  |----      -----", 70, 220, "white", "14px Courier new");  //N, V, D  Invaders E, R
+    utilities.drawCanvasText(context2D, "  |    | \\     |   \\          /  /  \\       |   \\    |      |    \\    | ", 70, 236, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "  |    |  \\    |    \\        /  /    \\      |    \\   |      |     \\   | ", 70, 252, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "  |    |   \\   |     \\      /  /      \\     |     \\  |----  |------    ----", 70, 268, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "  |    |    \\  |      \\    /  /--------\\    |     /  |      |     \\        |", 70, 284, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "  |    |     \\ |       \\  /  /          \\   |    /   |      |      \\       |", 70, 300, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "-----  |      \\|        \\/  /            \\  |---/    |----  |       \\  -----" , 70, 316, "white", "14px Courier new");
     
-    drawCanvasText(context2D, "Press Enter to Play", 100, 500, "white", "18px Courier new");
-    drawCanvasText(context2D, "Press I for Instructions", 400, 500, "white", "18px Courier new");
+    utilities.drawCanvasText(context2D, "Press Enter to Play", 100, 500, "white", "18px Courier new");
+    utilities.drawCanvasText(context2D, "Press I for Instructions", 400, 500, "white", "18px Courier new");
 } // end drawStart
 
 function drawInstructions()
@@ -1161,15 +1163,15 @@ function drawInstructions()
 	context2D.fillRect(15,450,canvas.width-30,4); // Bottom
 	context2D.fillRect(15,50,4,400); // Left
 	context2D.fillRect(canvas.width-15,46,4,408); // Right
-	drawCanvasText(context2D, "Instructions:", 30, 70, "white", "16px Arial");
-	drawCanvasText(context2D, "Use the left and right arrow keys to move your ship.", 32, 100, "white", "16px Courier new");
-	drawCanvasText(context2D, "Hit the space bar to fire the cannon and destroy the invading enemy force.", 32, 130, "white", "16px Courier new");
-	drawCanvasText(context2D, "1 more thing... Be sure to collect ", 32, 160, "white", "16px Courier new");
-    drawCanvasText(context2D, "***", 380, 160, "yellow", "12px Courier new");
-    drawCanvasText(context2D, "***", 380, 172, "yellow", "12px Courier new");
-    drawCanvasText(context2D, "for a special bonus!", 412, 160, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Instructions:", 30, 70, "white", "16px Arial");
+	utilities.drawCanvasText(context2D, "Use the left and right arrow keys to move your ship.", 32, 100, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Hit the space bar to fire the cannon and destroy the invading enemy force.", 32, 130, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "1 more thing... Be sure to collect ", 32, 160, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "***", 380, 160, "yellow", "12px Courier new");
+    utilities.drawCanvasText(context2D, "***", 380, 172, "yellow", "12px Courier new");
+    utilities.drawCanvasText(context2D, "for a special bonus!", 412, 160, "white", "16px Courier new");
 
-    drawCanvasText(context2D, "Press B to go back", 100, 500, "white", "18px Courier new");
+    utilities.drawCanvasText(context2D, "Press B to go back", 100, 500, "white", "18px Courier new");
 } // end drawInstructions
 
 function drawGameEnd()
@@ -1181,25 +1183,25 @@ function drawGameEnd()
 	context2D.fillRect(15,450,canvas.width-30,4); // Bottom
 	context2D.fillRect(15,50,4,400); // Left
 	context2D.fillRect(canvas.width-15,46,4,408); // Right
-    drawCanvasText(context2D, "      --         -----   ----  -----  -----", 200, 80, "white", "16px Courier new");
-    drawCanvasText(context2D, "     /  \\       |       |        |      |", 200, 96, "white", "16px Courier new");
-    drawCanvasText(context2D, "    /    \\      |       |        |      |", 200, 112, "white", "16px Courier new");
-    drawCanvasText(context2D, "   /      \\      ----   |        |      |", 200, 130, "white", "16px Courier new");
-    drawCanvasText(context2D, "  /--------\\         |  |        |      |", 200, 146, "white", "16px Courier new");
-    drawCanvasText(context2D, " /          \\        |  |        |      |", 200, 162, "white", "16px Courier new");
-    drawCanvasText(context2D, "/            \\  -----    ----  -----  -----", 200, 178, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "      --         -----   ----  -----  -----", 200, 80, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "     /  \\       |       |        |      |", 200, 96, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "    /    \\      |       |        |      |", 200, 112, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "   /      \\      ----   |        |      |", 200, 130, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "  /--------\\         |  |        |      |", 200, 146, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, " /          \\        |  |        |      |", 200, 162, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "/            \\  -----    ----  -----  -----", 200, 178, "white", "16px Courier new");
     
-    drawCanvasText(context2D, "-----  |\\      |  \\            /  --        |--\\     |----  |----      -----", 70, 220, "white", "14px Courier new");  //N, V, D  Invaders E, R
-    drawCanvasText(context2D, "  |    | \\     |   \\          /  /  \\       |   \\    |      |    \\    | ", 70, 236, "white", "14px Courier new");
-    drawCanvasText(context2D, "  |    |  \\    |    \\        /  /    \\      |    \\   |      |     \\   | ", 70, 252, "white", "14px Courier new");
-    drawCanvasText(context2D, "  |    |   \\   |     \\      /  /      \\     |     \\  |----  |------    ----", 70, 268, "white", "14px Courier new");
-    drawCanvasText(context2D, "  |    |    \\  |      \\    /  /--------\\    |     /  |      |     \\        |", 70, 284, "white", "14px Courier new");
-    drawCanvasText(context2D, "  |    |     \\ |       \\  /  /          \\   |    /   |      |      \\       |", 70, 300, "white", "14px Courier new");
-    drawCanvasText(context2D, "-----  |      \\|        \\/  /            \\  |---/    |----  |       \\  -----" , 70, 316, "white", "14px Courier new");
-    drawCanvasText(context2D, "Thanks for playing!", 300, 350, "white", "16px Courier new");
-	drawCanvasText(context2D, "Score: "+score, 300, 370, "white", "16px Courier new");
+    utilities.drawCanvasText(context2D, "-----  |\\      |  \\            /  --        |--\\     |----  |----      -----", 70, 220, "white", "14px Courier new");  //N, V, D  Invaders E, R
+    utilities.drawCanvasText(context2D, "  |    | \\     |   \\          /  /  \\       |   \\    |      |    \\    | ", 70, 236, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "  |    |  \\    |    \\        /  /    \\      |    \\   |      |     \\   | ", 70, 252, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "  |    |   \\   |     \\      /  /      \\     |     \\  |----  |------    ----", 70, 268, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "  |    |    \\  |      \\    /  /--------\\    |     /  |      |     \\        |", 70, 284, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "  |    |     \\ |       \\  /  /          \\   |    /   |      |      \\       |", 70, 300, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "-----  |      \\|        \\/  /            \\  |---/    |----  |       \\  -----" , 70, 316, "white", "14px Courier new");
+    utilities.drawCanvasText(context2D, "Thanks for playing!", 300, 350, "white", "16px Courier new");
+	utilities.drawCanvasText(context2D, "Score: "+score, 300, 370, "white", "16px Courier new");
     
-    drawCanvasText(context2D, "Press E to end game", 100, 500, "white", "18px Courier New");
+    utilities.drawCanvasText(context2D, "Press E to end game", 100, 500, "white", "18px Courier New");
 } // end drawGameEnd
 return exports;
 }
