@@ -227,14 +227,15 @@ function keyUp(evt){
 
 //window.onload = loadGame;
 
-window.addEventListener('mousemove', mouseMoved, true);
-window.addEventListener('mouseup', onMouseUp, true);
-window.addEventListener('mousedown', onMouseDown, true);
+//window.addEventListener('mousemove', mouseMoved, true);
+//window.addEventListener('mouseup', onMouseUp, true);
+//window.addEventListener('mousedown', onMouseDown, true);
 var mouseX = 0;
 var mouseY = 0;
 
 function mouseMoved(e)
 { 
+	e.preventDefault();
 	if (e.pageX || e.pageY)
 	{ 
 		mouseX = e.pageX;
@@ -247,19 +248,61 @@ function mouseMoved(e)
 	} 
 	mouseX -= canvas.offsetLeft;
 	mouseY -= canvas.offsetTop;
+	return false;
 } // end mouseMoved
 
 function onMouseDown(e)
 {
+	e.preventDefault();
+
+	if (e.changedTouches)
+		{
+			mouseX = e.changedTouches[0].pageX;
+			mouseY = e.changedTouches[0].pageY;
+			mouseX -= canvas.offsetLeft;
+			mouseY -= canvas.offsetTop;
+		}
+		else
+			mouseMoved(e);
+
 	prev_mpressed = mpressed;
 	mpressed = true;
+	return false;
 } // end onMouseDown
 
 function onMouseUp(e)
 {
+	e.preventDefault();
+
+	if (e.changedTouches)
+		{
+			mouseX = e.changedTouches[0].pageX;
+			mouseY = e.changedTouches[0].pageY;
+			mouseX -= canvas.offsetLeft;
+			mouseY -= canvas.offsetTop;
+		}
+		else
+			mouseMoved(e);
+
 	prev_mpressed = mpressed;
-    mpressed = false;
+	mpressed = false;
+	return false;
 } // end onMouseUp
+
+function clicked(e)
+{
+	e.preventDefault();	
+	if (e.changedTouches)
+	{
+		mouseX = e.changedTouches[0].pageX;
+		mouseY = e.changedTouches[0].pageY;
+		mouseX -= canvas.offsetLeft;
+		mouseY -= canvas.offsetTop;
+	}
+	else
+		mouseMoved(e);
+	return false;
+}
 
 function Sprite(posX, posY, alive, id)
 {
@@ -282,6 +325,32 @@ function Sprite(posX, posY, alive, id)
 exports.loadGame = function()
 {
 	canvas = document.getElementById('gameBoard');
+	//canvas.addEventListener('mousemove', mouseMoved, true);
+	canvas.addEventListener("click", clicked, true);
+	canvas.addEventListener('mouseup', onMouseUp, true);
+	canvas.addEventListener('mousedown', onMouseDown, true);
+	canvas.addEventListener("touchstart", onMouseDown, false);
+	canvas.addEventListener("touchend", onMouseUp, false);
+	canvas.addEventListener("touchend", clicked, false);
+
+/*
+canvas.addEventListener("touchstart", onMouseDown, false);
+	//}
+	//else
+	//{
+		canvas.addEventListener('mousedown', onMouseDown, true);
+	//}
+	//if ('ontouchend' in document.documentElement)
+	//{
+		canvas.addEventListener("touchend", onMouseUp, false);
+		canvas.addEventListener("touchend", clicked, false);
+	//}
+	//else
+	//{
+		canvas.addEventListener('mouseup', onMouseUp, true);
+		canvas.addEventListener('click', clicked, true);
+*/
+
 	context2D = canvas.getContext('2d');
     
     // Load slot machine chrome

@@ -81,30 +81,32 @@ var utilities = gameUtilities();
 //window.addEventListener('mouseup', onMouseUp, true);
 //window.addEventListener('mousedown', onMouseDown, true);
 //window.addEventListener('click', clicked, true);
-if ('ontouchstart' in document.documentElement)
-{
-	window.addEventListener("touchstart", onMouseDown, false);
-}
-else
-{
-	window.addEventListener('mousedown', onMouseDown, true);
-}
-if ('ontouchend' in document.documentElement)
-{
-	window.addEventListener("touchend", onMouseUp, false);
-	window.addEventListener("touchend", clicked, false);
-}
-else
-{
-	window.addEventListener('mouseup', onMouseUp, true);
-	window.addEventListener('click', clicked, true);
-}
+//if ('ontouchstart' in document.documentElement)
+//{
+	//window.addEventListener("touchstart", onMouseDown, false);
+//}
+//else
+//{
+	//window.addEventListener('mousedown', onMouseDown, true);
+//}
+//if ('ontouchend' in document.documentElement)
+//{
+//	window.addEventListener("touchend", onMouseUp, false);
+//	window.addEventListener("touchend", clicked, false);
+//}
+//else
+//{
+//	window.addEventListener('mouseup', onMouseUp, true);
+//	window.addEventListener('click', clicked, true);
+//}
 var mouseX = 0;
 var mouseY = 0;
 //var mouseImage = null;
 
 function onMouseDown(e)
 {
+	e.preventDefault();
+	
 	if (e.changedTouches)
 	{
 		mouseX = e.changedTouches[0].pageX;
@@ -116,10 +118,13 @@ function onMouseDown(e)
 		mouseMoved(e);
 	prev_mpressed = mpressed;
 	mpressed = true;
+	return false;
 } // end onMouseDown
 
 function onMouseUp(e)
 {
+	e.preventDefault();
+	
 	if (e.changedTouches)
 	{
 		mouseX = e.changedTouches[0].pageX;
@@ -130,7 +135,8 @@ function onMouseUp(e)
 	else
 		mouseMoved(e);
 	prev_mpressed = mpressed;
-    mpressed = false;
+	mpressed = false;
+	return false;
 } // end clicked
 
 function mouseMoved(e)
@@ -151,6 +157,7 @@ function mouseMoved(e)
 
 function clicked(e)
 {
+	e.preventDefault();	
 	if (e.changedTouches)
 	{
 		mouseX = e.changedTouches[0].pageX;
@@ -207,6 +214,7 @@ function clicked(e)
 			} // end is there a collision
 		} // end is ball alive
 	} // end loop through balls
+	return false;
 } // end clicked
 
 
@@ -313,6 +321,21 @@ function Ball(posX, posY, alive)
 exports.loadGame = function()
 {
 	canvas = document.getElementById('gameBoard');
+	canvas.addEventListener("touchstart", onMouseDown, false);
+	//}
+	//else
+	//{
+		canvas.addEventListener('mousedown', onMouseDown, true);
+	//}
+	//if ('ontouchend' in document.documentElement)
+	//{
+		canvas.addEventListener("touchend", onMouseUp, false);
+		canvas.addEventListener("touchend", clicked, false);
+	//}
+	//else
+	//{
+		canvas.addEventListener('mouseup', onMouseUp, true);
+		canvas.addEventListener('click', clicked, true);
 	context2D = canvas.getContext('2d');
 	bgImage = new Image();
 	bgImage.src = SOURCE_BG_IMAGE;
