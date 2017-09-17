@@ -22,5 +22,15 @@ exports.inside = function(x, y, left, top, right, bottom)
 	else
 		return false;
 } // end inside
+
+// Return the x and y position from the mouse event (evt), accounting for canvas offset
+exports.getMousePos = function (canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+}
+
 return exports;
 }

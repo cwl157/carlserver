@@ -109,10 +109,13 @@ function onMouseDown(e)
 	
 	if (e.changedTouches)
 	{
-		mouseX = e.changedTouches[0].pageX;
-		mouseY = e.changedTouches[0].pageY;
-		mouseX -= canvas.offsetLeft;
-		mouseY -= canvas.offsetTop;
+		var pos = utilities.getMousePos(canvas, e);
+		mouseX = pos.x;
+		mouseY = pos.y;
+	//	mouseX = e.changedTouches[0].pageX;
+	//	mouseY = e.changedTouches[0].pageY;
+	//	mouseX -= canvas.offsetLeft;
+	//	mouseY -= canvas.offsetTop;
 	}
 	else
 		mouseMoved(e);
@@ -127,10 +130,13 @@ function onMouseUp(e)
 	
 	if (e.changedTouches)
 	{
-		mouseX = e.changedTouches[0].pageX;
-		mouseY = e.changedTouches[0].pageY;
-		mouseX -= canvas.offsetLeft;
-		mouseY -= canvas.offsetTop;
+	//	mouseX = e.changedTouches[0].pageX;
+	//	mouseY = e.changedTouches[0].pageY;
+	//	mouseX -= canvas.offsetLeft;
+	//	mouseY -= canvas.offsetTop;
+	var pos = utilities.getMousePos(canvas, e);
+	mouseX = pos.x;
+	mouseY = pos.y;
 	}
 	else
 		mouseMoved(e);
@@ -141,18 +147,21 @@ function onMouseUp(e)
 
 function mouseMoved(e)
 { 
-	if (e.pageX || e.pageY)
-	{ 
-		mouseX = e.pageX;
-		mouseY = e.pageY;
-	}
-	else
-	{ 
-		mouseX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
-		mouseY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
-	} 
-	mouseX -= canvas.offsetLeft;
-	mouseY -= canvas.offsetTop;
+	var pos = utilities.getMousePos(canvas, e);
+	mouseX = pos.x;
+	mouseY = pos.y;
+	//if (e.pageX || e.pageY)
+	//{ 
+//		mouseX = e.pageX;
+//		mouseY = e.pageY;
+//	}
+//	else
+//	{ 
+//		mouseX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
+//		mouseY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
+//	} 
+//	mouseX -= canvas.offsetLeft;
+//	mouseY -= canvas.offsetTop;
 } // end mouseMoved
 
 function clicked(e)
@@ -160,10 +169,14 @@ function clicked(e)
 	e.preventDefault();	
 	if (e.changedTouches)
 	{
-		mouseX = e.changedTouches[0].pageX;
-		mouseY = e.changedTouches[0].pageY;
-		mouseX -= canvas.offsetLeft;
-		mouseY -= canvas.offsetTop;
+		var pos = utilities.getMousePos(canvas, e);
+		mouseX = pos.x;
+		mouseY = pos.y;
+			
+		//mouseX = e.changedTouches[0].pageX;
+		//mouseY = e.changedTouches[0].pageY;
+		//mouseX -= canvas.offsetLeft;
+		//mouseY -= canvas.offsetTop;
 	}
 	else
 		mouseMoved(e);
@@ -321,7 +334,7 @@ function Ball(posX, posY, alive)
 exports.loadGame = function()
 {
 	canvas = document.getElementById('gameBoard');
-	canvas.addEventListener("touchstart", onMouseDown, false);
+	//canvas.addEventListener("touchstart", onMouseDown, false);
 	//}
 	//else
 	//{
@@ -329,8 +342,8 @@ exports.loadGame = function()
 	//}
 	//if ('ontouchend' in document.documentElement)
 	//{
-		canvas.addEventListener("touchend", onMouseUp, false);
-		canvas.addEventListener("touchend", clicked, false);
+	//	canvas.addEventListener("touchend", onMouseUp, false);
+	//	canvas.addEventListener("touchend", clicked, false);
 	//}
 	//else
 	//{

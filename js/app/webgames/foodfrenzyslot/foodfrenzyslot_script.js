@@ -236,18 +236,21 @@ var mouseY = 0;
 function mouseMoved(e)
 { 
 	e.preventDefault();
-	if (e.pageX || e.pageY)
-	{ 
-		mouseX = e.pageX;
-		mouseY = e.pageY;
-	}
-	else
-	{ 
-		mouseX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
-		mouseY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
-	} 
-	mouseX -= canvas.offsetLeft;
-	mouseY -= canvas.offsetTop;
+	var pos = utilities.getMousePos(canvas, e);
+	mouseX = pos.x;
+	mouseY = pos.y;
+	//if (e.pageX || e.pageY)
+	//{ 
+//		mouseX = e.pageX;
+//		mouseY = e.pageY;
+//	}
+//	else
+//	{ 
+//		mouseX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
+//		mouseY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
+//	} 
+//	mouseX -= canvas.offsetLeft;
+//	mouseY -= canvas.offsetTop;
 	return false;
 } // end mouseMoved
 
@@ -257,10 +260,13 @@ function onMouseDown(e)
 
 	if (e.changedTouches)
 		{
-			mouseX = e.changedTouches[0].pageX;
-			mouseY = e.changedTouches[0].pageY;
-			mouseX -= canvas.offsetLeft;
-			mouseY -= canvas.offsetTop;
+			var pos = utilities.getMousePos(canvas, e);
+			mouseX = pos.x;
+			mouseY = pos.y;
+			//mouseX = e.changedTouches[0].pageX;
+			//mouseY = e.changedTouches[0].pageY;
+			//mouseX -= canvas.offsetLeft;
+			//mouseY -= canvas.offsetTop;
 		}
 		else
 			mouseMoved(e);
@@ -276,10 +282,13 @@ function onMouseUp(e)
 
 	if (e.changedTouches)
 		{
-			mouseX = e.changedTouches[0].pageX;
-			mouseY = e.changedTouches[0].pageY;
-			mouseX -= canvas.offsetLeft;
-			mouseY -= canvas.offsetTop;
+			var pos = utilities.getMousePos(canvas, e);
+			mouseX = pos.x;
+			mouseY = pos.y;
+			//mouseX = e.changedTouches[0].pageX;
+			//mouseY = e.changedTouches[0].pageY;
+			//mouseX -= canvas.offsetLeft;
+			//mouseY -= canvas.offsetTop;
 		}
 		else
 			mouseMoved(e);
@@ -294,10 +303,13 @@ function clicked(e)
 	e.preventDefault();	
 	if (e.changedTouches)
 	{
-		mouseX = e.changedTouches[0].pageX;
-		mouseY = e.changedTouches[0].pageY;
-		mouseX -= canvas.offsetLeft;
-		mouseY -= canvas.offsetTop;
+		var pos = utilities.getMousePos(canvas, e);
+		mouseX = pos.x;
+		mouseY = pos.y;
+	//	mouseX = e.changedTouches[0].pageX;
+//		mouseY = e.changedTouches[0].pageY;
+//		mouseX -= canvas.offsetLeft;
+//		mouseY -= canvas.offsetTop;
 	}
 	else
 		mouseMoved(e);
@@ -329,9 +341,9 @@ exports.loadGame = function()
 	canvas.addEventListener("click", clicked, true);
 	canvas.addEventListener('mouseup', onMouseUp, true);
 	canvas.addEventListener('mousedown', onMouseDown, true);
-	canvas.addEventListener("touchstart", onMouseDown, false);
-	canvas.addEventListener("touchend", onMouseUp, false);
-	canvas.addEventListener("touchend", clicked, false);
+	//canvas.addEventListener("touchstart", onMouseDown, false);
+	//canvas.addEventListener("touchend", onMouseUp, false);
+	//canvas.addEventListener("touchend", clicked, false);
 
 /*
 canvas.addEventListener("touchstart", onMouseDown, false);

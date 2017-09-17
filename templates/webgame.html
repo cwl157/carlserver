@@ -1,5 +1,7 @@
 <div ng-controller="webgameCtrl" id="webgameTmpl" class="container-fluid" ng-init="init()">
 <ng-include src="'/templates/partials/topnav.html'"></ng-include>
+<div class="row">
+    <div class="col-md-8">
 <div ng-if="id == 1">
 <ng-include src="'/templates/partials/webgames/asciiinvaders.html'" onload="loadGame(1);"></ng-include>
 </div>
@@ -24,4 +26,7 @@
     <div ng-if="id == 8">
     <ng-include src="'/templates/partials/webgames/tetroball.html'" onload="loadGame(8);"></ng-include>
     </div>
+</div>
+<ng-include src="'/templates/partials/rightSidebar.html'"></ng-include> 
+</div>
 </div>

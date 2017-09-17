@@ -122,26 +122,29 @@ function keyUp(evt){
 
 //window.onload = loadGame;
 
-document.addEventListener('mousemove', mouseMoved, true);
-document.addEventListener('mouseup', clicked, true);
-document.addEventListener('mousedown', onMouseDown, true);
+//document.addEventListener('mousemove', mouseMoved, true);
+//document.addEventListener('mouseup', clicked, true);
+//document.addEventListener('mousedown', onMouseDown, true);
 var mouseX = 0;
 var mouseY = 0;
 
 function mouseMoved(e)
 { 
-	if (e.pageX || e.pageY)
-	{ 
-		mouseX = e.pageX;
-		mouseY = e.pageY;
-	}
-	else
-	{ 
-		mouseX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
-		mouseY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
-	} 
-	mouseX -= canvas.offsetLeft;
-	mouseY -= canvas.offsetTop;
+	var pos = utilities.getMousePos(canvas, e);
+	mouseX = pos.x;
+	mouseY = pos.y;
+	//if (e.pageX || e.pageY)
+	//{ 
+	//	mouseX = e.pageX;
+//		mouseY = e.pageY;
+//	}
+//	else
+//	{ 
+//		mouseX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
+//		mouseY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
+//	} 
+//	mouseX -= canvas.offsetLeft;
+//	mouseY -= canvas.offsetTop;
 } // end mouseMoved
 
 function onMouseDown(e)
@@ -421,6 +424,9 @@ function loadGameValues()
 exports.loadGame = function()
 {
 	canvas = document.getElementById('gameBoard');
+	canvas.addEventListener('mousemove', mouseMoved, true);
+	canvas.addEventListener('mouseup', clicked, true);
+	canvas.addEventListener('mousedown', onMouseDown, true);
 	context2D = canvas.getContext('2d');
 	
 	i_image = new Image();

@@ -135,26 +135,14 @@ function keyUp(evt)
     evt.returnValue = false;
 }
 
-window.addEventListener('mousemove', mouseMoved, true);
-window.addEventListener('mouseup', clicked, true);
-window.addEventListener('mousedown', onMouseDown, true);
 var mouseX = 0;
 var mouseY = 0;
 
 function mouseMoved(e)
-{ 
-	if (e.pageX || e.pageY)
-	{ 
-		mouseX = e.pageX;
-		mouseY = e.pageY;
-	}
-	else
-	{ 
-		mouseX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
-		mouseY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; 
-	} 
-	mouseX -= canvas.offsetLeft;
-	mouseY -= canvas.offsetTop;
+{
+	var pos = utilities.getMousePos(canvas, e);
+	mouseX = pos.x;
+	mouseY = pos.y;
 } // end mouseMoved
 
 function onMouseDown(e)
@@ -235,6 +223,9 @@ function resetBlocks()
 exports.loadGame = function()
 {
 	canvas = document.getElementById('gameBoard');
+	canvas.addEventListener('mousemove', mouseMoved, true);
+	canvas.addEventListener('mouseup', clicked, true);
+	canvas.addEventListener('mousedown', onMouseDown, true);
 	context2D = canvas.getContext('2d');
 	
 	canvas.setAttribute("style", "background:black;");
