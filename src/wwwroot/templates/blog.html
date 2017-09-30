@@ -4,12 +4,12 @@
             <ng-include src="'/templates/partials/leftSidebar.html'"></ng-include>
             <div class="col-md-6">
 
-                <div ng-repeat="post in blogData">
+                <div ng-repeat="post in blogData" ng-if="!error">
                     <div class="post" id="{{'post'+post.id}}">
                         <div class="post_title"><h4><a href="{{'/blog/post/'+post.friendlyUri}}">{{post.title}}</a></h4></div>
                         <div>
                                 <i class="icon-calendar" style="float:left;"></i>
-                                <p class="post_date">{{post.publishedDate}}</p>
+                                <p class="post_date">{{post.publishedDate.toLocaleString()}}</p>
                             
                        </div> <!-- end post_date -->
                        <div class="post_body">
@@ -20,6 +20,7 @@
                          <br />
                     </div>
                 </div>
+                <div class="alert alert-danger" ng-if="error">{{error}}</div>
             </div>
             <ng-include src="'/templates/partials/rightSidebar.html'"></ng-include> 
     </div>

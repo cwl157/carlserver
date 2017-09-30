@@ -5,8 +5,9 @@ function PostViewModel()
     this.id = 0;
     this.title = '';
     this.summary = '';
-    this.publishedDate = new Date();
+    this.publishedDate = null;
     this.body = '';
     this.author = '';
     this.friendlyUri = '';
+    this.isPublished = false;
 }

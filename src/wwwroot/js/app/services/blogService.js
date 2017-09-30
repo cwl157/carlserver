@@ -22,7 +22,6 @@ app.service('BlogService',
            // console.log(JSON.stringify(success.data));
            // _this.response = success.data;
             _this.response = new BlogViewModel();
-            console.log("in then");
             var i = 0;
             for (i = 0; i < success.data.length; i++)
             {
@@ -33,17 +32,51 @@ app.service('BlogService',
                 pvm.body = $sce.trustAsHtml(b.body);
                 pvm.summary = $sce.trustAsHtml(b.summary);
                 pvm.author = b.author;
-                pvm.publishedDate = b.publishedDate;
+                pvm.publishedDate = new Date(b.publishedDate);
                 pvm.friendlyUri = b.friendlyUri;
+                pvm.isPublished = b.isPublished;
                 _this.response.posts.push(pvm);
             }
             _this.response.responseCode = success.status;
             _this.response.error = '';
+            console.log(_this.response);
             return _this.response;
         }, function(failure) {
-            console.log("Failed");
-            console.log(JSON.stringify(failure));
-            throw failure;
+            _this.response = new BlogViewModel();
+            _this.response.responseCode = failure.status;
+            _this.response.error = failure.statusText;
+            throw _this.response;
         });
     };
+
+    _this.fetchSingle = function(uri) {
+        var req = {
+            method: 'GET',
+            url: 'api/blog/'+uri,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            timeout: window.timeout
+        };
+        return $http(req).then(function(success) {
+            _this.response = new PostViewModel();
+            _this.response.id = success.data.id;
+            _this.response.title = success.data.title;
+            _this.response.body = $sce.trustAsHtml(success.data.body);
+            _this.response.summary = $sce.trustAsHtml(success.data.summary);
+            _this.response.author = success.data.author;
+            _this.response.publishedDate = new Date(success.data.publishedDate);
+            _this.response.friendlyUri = success.data.friendlyUri;
+            _this.response.isPublished = success.data.isPublished;
+            _this.response.responseCode = success.status;
+            _this.response.error = '';
+            return _this.response;
+        }, function(failure) {
+            _this.response = new PostViewModel();
+            _this.response.responseCode = failure.status;
+            _this.response.error = failure.statusText;
+            throw _this.response;
+        });
+    };
+
 }]);

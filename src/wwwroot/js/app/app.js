@@ -12,7 +12,10 @@ $routeProvider
         .when('/about', {
            templateUrl: '/templates/about.html' })
         .when('/blog', {
-           templateUrl: '/templates/blog.html'});
+           templateUrl: '/templates/blog.html'})
+        .when('/blog/post/:friendlyUri', {
+           templateUrl: '/templates/post.html'
+        });
  $locationProvider.html5Mode(true); 
 }]);
 

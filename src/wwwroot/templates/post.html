@@ -1,0 +1,24 @@
+<div ng-controller="postCtrl" id="postTmpl" class="container-fluid">
+    <ng-include src="'/templates/partials/topnav.html'"></ng-include>
+    <div class="row">
+            <ng-include src="'/templates/partials/leftSidebar.html'"></ng-include>
+            <div class="col-md-6">
+                    <div class="post" id="{{'post'+postData.id}}" ng-if="!error">
+                        <div class="post_title"><h4><a href="{{'/blog/post/'+postData.friendlyUri}}">{{postData.title}}</a></h4></div>
+                        <div>
+                                <i class="icon-calendar" style="float:left;"></i>
+                                <p class="post_date">{{postData.publishedDate.toLocaleString()}}</p>
+                            
+                       </div> <!-- end post_date -->
+                       <div class="post_body">
+                            <p ng-bind-html="postData.body"></p>
+                            
+                         </div>
+                    </div>
+                    <div class="alert alert-danger" ng-if="error">{{error}}</div>
+                </div>
+            <ng-include src="'/templates/partials/rightSidebar.html'"></ng-include> 
+    </div>
+
+
+</div>

@@ -14,16 +14,22 @@ namespace carlserver.Controllers
         public ActionResult Get()
         {
             var s = SetupTestData();
-
+            s = s.OrderByDescending(p => p.PublishedDate).ToList<Post>();
             return Ok(s);
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult Get(int id)
+        [HttpGet("{uri}")]
+        public ActionResult Get(string uri)
         {
             var s = SetupTestData();
-            var entry = s.FirstOrDefault(p => p.Id == id);
+            Console.WriteLine("Inside get");
+            Console.WriteLine(uri);
+            foreach (var p in s)
+            {
+                Console.WriteLine(p.FriendlyUri);
+            }
+            var entry = s.FirstOrDefault(p => p.FriendlyUri == uri);
 
             if (entry != null)
             {
@@ -55,9 +61,9 @@ namespace carlserver.Controllers
         {
             List<Post> result = new List<Post>();
 
-            result.Add(new Post {Id = 1, Title = "Welcome", Summary = "Summary goes here. <a href='https://google.com'>Test embedding html</a>", Body = "Body of first post", Author = "Carl Layton", PublishedDate = DateTime.Now});
+            result.Add(new Post {Id = 1, Title = "Welcome", Summary = "Summary goes here. <a href='https://google.com'>Test embedding html</a>", Body = "Body of first post. <a href='https://google.com'>Test embedded html</a>", Author = "Carl Layton", PublishedDate = new DateTime(2017, 09, 25), IsPublished = true});
 
-            result.Add(new Post {Id = 2, Title = "Welcome 2nd post", Summary = "2nd summary goes here", Body = "Body of second post", Author = "Alyssa Layton", PublishedDate = new DateTime(2017, 09, 26)});
+            result.Add(new Post {Id = 2, Title = "Welcome 2nd post", Summary = "2nd summary goes here", Body = "Body of second post", Author = "Alyssa Layton", PublishedDate = new DateTime(2017, 09, 26), IsPublished = true });
 
             return result;
         }
@@ -71,6 +77,8 @@ namespace carlserver.Controllers
         public string Body { get; set; }
         public string Author { get; set; }
         public DateTime PublishedDate { get; set; }
-        public string FriendlyUri { get { return Title.Replace(' ', '-'); } }
+        public string FriendlyUri { get { return Title.ToLower().Replace(' ', '-'); } }
+
+        public bool IsPublished { get; set; }
     }
 }
