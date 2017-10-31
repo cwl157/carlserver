@@ -6,9 +6,6 @@ $routeProvider
                 templateUrl: '/templates/home.html',
                 controller: 'homeCtrl'
         })
-        .when('/webgames/:gameid', {
-           templateUrl: '/templates/webgame.html',
-           controller: 'webgameCtrl'})
         .when('/about', {
            templateUrl: '/templates/about.html' })
         .when('/blog', {
