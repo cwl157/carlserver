@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace carlserver
+namespace carlserver.web
 {
     public class Program
     {

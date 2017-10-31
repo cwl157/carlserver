@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-namespace carlserver
+namespace carlserver.web
 {
     public class Startup
     {

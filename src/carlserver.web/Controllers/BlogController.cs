@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using carlserver.models.Entities;
 
-namespace carlserver.Controllers
+namespace carlserver.web.Controllers
 {
     [Route("api/[controller]")]
     public class BlogController : Controller
@@ -18,7 +19,7 @@ namespace carlserver.Controllers
             return Ok(s);
         }
 
-        // GET api/values/5
+        // GET api/blog/title
         [HttpGet("{uri}")]
         public ActionResult Get(string uri)
         {
@@ -45,6 +46,18 @@ namespace carlserver.Controllers
         {
         }
 
+        [HttpPost]
+        [Route("addcomment")]
+        public void PostComment([FromBody] Comment requestComment)
+        {
+            Console.WriteLine(requestComment.Id);
+            Console.WriteLine(requestComment.Name);
+            Console.WriteLine(requestComment.Subject);
+            Console.WriteLine(requestComment.Body);
+            Console.WriteLine(requestComment.CreateDate);
+            Console.WriteLine(requestComment.PostId);
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
@@ -67,18 +80,5 @@ namespace carlserver.Controllers
 
             return result;
         }
-    }
-
-     public class Post
-    {
-        public int Id { get; set;  }
-        public string Title { get; set; }
-        public string Summary {get; set; }
-        public string Body { get; set; }
-        public string Author { get; set; }
-        public DateTime PublishedDate { get; set; }
-        public string FriendlyUri { get { return Title.ToLower().Replace(' ', '-'); } }
-
-        public bool IsPublished { get; set; }
     }
 }
