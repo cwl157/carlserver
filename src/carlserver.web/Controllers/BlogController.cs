@@ -4,17 +4,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using carlserver.models.Entities;
+using carlserver.DataAccess;
+using Newtonsoft.Json;
 
 namespace carlserver.web.Controllers
 {
     [Route("api/[controller]")]
     public class BlogController : Controller
     {
+        private BlogReader _br;
+
+        public BlogController()
+        {
+            _br = new BlogReader();
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult Get()
         {
-            var s = SetupTestData();
+            string summaries = _br.GetSummaries();
+            if (string.IsNullOrWhiteSpace(summaries))
+            {
+                return NotFound();
+            }
+            Console.WriteLine("Got summaries in controller: "+summaries);
+            var s = JsonConvert.DeserializeObject<List<Post>>(summaries);
+           // var s = SetupTestData();
             s = s.OrderByDescending(p => p.PublishedDate).ToList<Post>();
             return Ok(s);
         }
@@ -23,21 +39,13 @@ namespace carlserver.web.Controllers
         [HttpGet("{uri}")]
         public ActionResult Get(string uri)
         {
-            var s = SetupTestData();
-            Console.WriteLine("Inside get");
-            Console.WriteLine(uri);
-            foreach (var p in s)
-            {
-                Console.WriteLine(p.FriendlyUri);
-            }
-            var entry = s.FirstOrDefault(p => p.FriendlyUri == uri);
-
-            if (entry != null)
-            {
-                return Ok(entry);
-            }
-
-            return NotFound();
+           string postJson = _br.GetPost(uri);
+           if (string.IsNullOrWhiteSpace(postJson))
+           {
+               return NotFound();
+           }
+           Post entry = JsonConvert.DeserializeObject<Post>(postJson);
+           return Ok(entry);
         }
 
         // POST api/values
@@ -68,17 +76,6 @@ namespace carlserver.web.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
-
-        private List<Post> SetupTestData()
-        {
-            List<Post> result = new List<Post>();
-
-            result.Add(new Post {Id = 1, Title = "Welcome", Summary = "Summary goes here. <a href='https://google.com'>Test embedding html</a>", Body = "Body of first post. <a href='https://google.com'>Test embedded html</a>", Author = "Carl Layton", PublishedDate = new DateTime(2017, 09, 25), IsPublished = true});
-
-            result.Add(new Post {Id = 2, Title = "Welcome 2nd post", Summary = "2nd summary goes here", Body = "Body of second post", Author = "Alyssa Layton", PublishedDate = new DateTime(2017, 09, 26), IsPublished = true });
-
-            return result;
         }
     }
 }

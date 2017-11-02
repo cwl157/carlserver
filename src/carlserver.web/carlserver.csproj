@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\carlserver.models\carlserver.models.csproj" />
+    <ProjectReference Include="..\carlserver.DataAccess\carlserver.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
