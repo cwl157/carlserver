@@ -49,21 +49,24 @@ namespace carlserver.web.Controllers
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
+        // [HttpPost]
+        // public void Post([FromBody]string value)
+        // {
+        // }
 
         [HttpPost]
-        [Route("addcomment")]
-        public void PostComment([FromBody] Comment requestComment)
+        [Route("{id}/addcomment")]
+        public Comment PostComment(int id, [FromBody]Comment requestComment)
         {
-            Console.WriteLine(requestComment.Id);
-            Console.WriteLine(requestComment.Name);
-            Console.WriteLine(requestComment.Subject);
-            Console.WriteLine(requestComment.Body);
-            Console.WriteLine(requestComment.CreateDate);
-            Console.WriteLine(requestComment.PostId);
+            Console.WriteLine("Inside PostComment");
+             Console.WriteLine("Id = "+id);
+             return requestComment;
+            // Console.WriteLine(requestComment.Id);
+            // Console.WriteLine(requestComment.Name);
+            // Console.WriteLine(requestComment.Subject);
+            // Console.WriteLine(requestComment.Body);
+            // Console.WriteLine(requestComment.CreateDate);
+            // Console.WriteLine(requestComment.PostId);
         }
 
         // PUT api/values/5
