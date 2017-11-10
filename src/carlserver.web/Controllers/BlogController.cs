@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using carlserver.models.Entities;
 using carlserver.DataAccess;
 using Newtonsoft.Json;
+using carlserver.commentSender;
 
 namespace carlserver.web.Controllers
 {
@@ -13,10 +14,12 @@ namespace carlserver.web.Controllers
     public class BlogController : Controller
     {
         private BlogReader _br;
+        private CommentSender _commentSender;
 
         public BlogController()
         {
             _br = new BlogReader();
+            _commentSender = new CommentSender();
         }
 
         // GET api/values
@@ -55,18 +58,14 @@ namespace carlserver.web.Controllers
         // }
 
         [HttpPost]
-        [Route("{id}/addcomment")]
-        public Comment PostComment(int id, [FromBody]Comment requestComment)
+        [Route("{friendlyUri}/addcomment")]
+        public Comment PostComment(string friendlyUri, [FromBody]Comment requestComment)
         {
             Console.WriteLine("Inside PostComment");
-             Console.WriteLine("Id = "+id);
+            Console.WriteLine("Friendly = "+friendlyUri);
+            string commentToSend = JsonConvert.SerializeObject(requestComment);
+            _commentSender.SendComment(friendlyUri, commentToSend);
              return requestComment;
-            // Console.WriteLine(requestComment.Id);
-            // Console.WriteLine(requestComment.Name);
-            // Console.WriteLine(requestComment.Subject);
-            // Console.WriteLine(requestComment.Body);
-            // Console.WriteLine(requestComment.CreateDate);
-            // Console.WriteLine(requestComment.PostId);
         }
 
         // PUT api/values/5

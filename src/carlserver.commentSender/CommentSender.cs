@@ -14,16 +14,15 @@ namespace carlserver.commentSender
             _factory = new ConnectionFactory() {HostName = "localhost" };
         }
 
-        public void SendComment(Comment commentToSend)
+        public void SendComment(string friendlyUri, string commentToSend)
         {
-            //var factory = new ConnectionFactory() { HostName = "localhost" };
             using(var connection = _factory.CreateConnection())
             using(var channel = connection.CreateModel())
             {
                 channel.QueueDeclare(queue: "task_queue", durable: true, exclusive: false, autoDelete: false, arguments: null);
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
-                string msg = commentToSend.Name + ", "+commentToSend.Subject+", "+commentToSend.Body+", "+commentToSend.CreateDate.ToString();
+                string msg = commentToSend;
                 var body = Encoding.UTF8.GetBytes(msg);
 
                 channel.BasicPublish(exchange: "", routingKey: "task_queue", basicProperties: properties, body: body);
