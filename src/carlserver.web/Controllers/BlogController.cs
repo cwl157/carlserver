@@ -59,13 +59,20 @@ namespace carlserver.web.Controllers
 
         [HttpPost]
         [Route("{friendlyUri}/addcomment")]
-        public Comment PostComment(string friendlyUri, [FromBody]Comment requestComment)
+        public ActionResult PostComment(string friendlyUri, [FromBody]Comment requestComment)
         {
             Console.WriteLine("Inside PostComment");
             Console.WriteLine("Friendly = "+friendlyUri);
+            bool doesPostExist = _br.DoesPostExist(friendlyUri);
+            if (!doesPostExist)
+            {
+                return NotFound();
+            }
+            requestComment.CreateDate = DateTime.Now.ToUniversalTime();
+            Console.WriteLine(requestComment.CreateDate);
             string commentToSend = JsonConvert.SerializeObject(requestComment);
             _commentSender.SendComment(friendlyUri, commentToSend);
-             return requestComment;
+             return Created(friendlyUri, requestComment);
         }
 
         // PUT api/values/5

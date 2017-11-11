@@ -33,5 +33,28 @@ namespace carlserver.DataAccess
             }
             return result;
         }
+
+        public bool DoesPostExist(string postUri)
+        {
+            bool result = false;
+            try
+            {
+                string[] files = System.IO.Directory.GetFiles(FilePaths.BLOG_FOLDER, postUri+".json");
+                foreach (string s in files)
+                {
+                    Console.WriteLine(s);
+                }
+                if (files.Length > 0)
+                {
+                    result = true;
+                }
+            }
+            catch (Exception e)
+            {
+                result = false;
+            }
+
+            return result;
+        }
     }
 }

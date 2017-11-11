@@ -30,24 +30,31 @@ namespace carlserver.commentReceiver
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine(" [x] Received {0}", message);
                 
-                // Lost post
-                Comment c = JsonConvert.DeserializeObject<Comment>(message);
-                BlogReader br = new BlogReader();
-                string serializedPost = br.GetPost(c.PostUri);
-                Post p = JsonConvert.DeserializeObject<Post>(serializedPost);
+                try
+                {
+                    // Load post
+                    Comment c = JsonConvert.DeserializeObject<Comment>(message);
+                    BlogReader br = new BlogReader();
+                    string serializedPost = br.GetPost(c.PostUri);
+                    Post p = JsonConvert.DeserializeObject<Post>(serializedPost);
 
-                // Add comment, figure out comment id
-                c.Id = p.Comments.Count+1;
-                p.Comments.Add(c);
+                    // Add comment, figure out comment id
+                    c.Id = p.Comments.Count+1;
+                    p.Comments.Add(c);
 
-                // Serialize
-                string postString = JsonConvert.SerializeObject(p);
-                Console.WriteLine("Post to save " + postString);
-                
-                // Save post
-                BlogWriter bw = new BlogWriter();
-                bw.SavePost(p.FriendlyUri, postString); 
+                    // Serialize
+                    string postString = JsonConvert.SerializeObject(p);
+                    Console.WriteLine("Post to save " + postString);
 
+                    // Save post
+                    BlogWriter bw = new BlogWriter();
+                    bw.SavePost(p.FriendlyUri, postString); 
+                }
+                catch (Exception e)
+                {
+                    // Empty for now just so the receiver doesn't crash if there's a problem saving the comment.
+                    // TODO: Replace with logging to keep track of failures
+                }
                 Console.WriteLine(" [x] Done");
 
                 channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
