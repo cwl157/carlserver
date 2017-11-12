@@ -10,4 +10,5 @@ function PostViewModel()
     this.author = '';
     this.friendlyUri = '';
     this.isPublished = false;
+    this.comments = [];
 }

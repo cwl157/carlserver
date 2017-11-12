@@ -15,6 +15,16 @@
                             
                          </div>
                     </div>
+                    <hr />
+                    <h3>Comments</h3>
+                    <div>
+                        <div ng-repeat="comment in postData.comments" ng-if="!error">
+                            <p><strong>{{comment.name}}</strong></p>
+                            <p class="comment-date">{{comment.createDate.toLocaleString()}}</p>
+                        <p>{{comment.message}}</p>
+                        <hr />
+                        </div>
+                    </div>
                     <div class="alert alert-danger" ng-if="error">{{error}}</div>
                 </div>
             <ng-include src="'/templates/partials/rightSidebar.html'"></ng-include> 

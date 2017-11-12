@@ -5,6 +5,7 @@ app.controller('postCtrl', ['$scope', 'BlogService', function($scope, BlogServic
     var postPromise = BlogService.fetchSingle(uri);
     postPromise.then(
         function (success) {
+           
             var data = success;
             if (data.responseCode === 200) 
             {

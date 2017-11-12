@@ -48,6 +48,11 @@ namespace carlserver.web.Controllers
                return NotFound();
            }
            Post entry = JsonConvert.DeserializeObject<Post>(postJson);
+           foreach (Comment c in entry.Comments)
+           {
+               c.Email = null; // don't return commenters email
+           }
+           entry.Comments = entry.Comments.OrderByDescending(c => c.CreateDate).ToList<Comment>();
            return Ok(entry);
         }
 

@@ -18,11 +18,10 @@ app.service('BlogService',
         };
 
         return $http(req).then(function(success) {
-           // console.log(JSON.stringify(success));
-           // console.log(JSON.stringify(success.data));
            // _this.response = success.data;
             _this.response = new BlogViewModel();
             var i = 0;
+            var j = 0;
             for (i = 0; i < success.data.length; i++)
             {
                 var b = success.data[i];
@@ -39,7 +38,6 @@ app.service('BlogService',
             }
             _this.response.responseCode = success.status;
             _this.response.error = '';
-            console.log(_this.response);
             return _this.response;
         }, function(failure) {
             _this.response = new BlogViewModel();
@@ -68,6 +66,19 @@ app.service('BlogService',
             _this.response.publishedDate = new Date(success.data.publishedDate);
             _this.response.friendlyUri = success.data.friendlyUri;
             _this.response.isPublished = success.data.isPublished;
+            if (success.data.comments)
+            {
+                for (j = 0; j < success.data.comments.length; j++)
+                {
+                    var c = new CommentViewModel();
+                    c.id = success.data.comments[j].id;
+                    c.name = success.data.comments[j].name;
+                    c.message = success.data.comments[j].message;
+                    c.postUri = success.data.comments[j].postUri;
+                    c.createDate = new Date(success.data.comments[j].createDate);
+                    _this.response.comments.push(c);
+                }
+            }
             _this.response.responseCode = success.status;
             _this.response.error = '';
             return _this.response;
