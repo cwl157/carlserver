@@ -38,3 +38,5 @@ a,.post_date a,.post_meta a {text-decoration: none;}
 .post_meta a:hover {color: #001;}
 
 .comment-date { color: #c0c0c0; font-size: 80%; }
+
+label .required { color:red; padding-left:5px; }
