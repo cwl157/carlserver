@@ -12,6 +12,9 @@ $routeProvider
            templateUrl: '/templates/blog.html'})
         .when('/blog/post/:friendlyUri', {
            templateUrl: '/templates/post.html'
+        })
+        .when('/disclaimer', {
+                templateUrl: '/templates/disclaimer.html'
         });
  $locationProvider.html5Mode(true); 
 }]);
