@@ -5,10 +5,10 @@
             <div class="col-md-6">
                     <div class="post" id="{{'post'+postData.id}}" ng-if="!error">
                         <div class="post_title"><h4><a href="{{'/blog/post/'+postData.friendlyUri}}">{{postData.title}}</a></h4></div>
-                        <div>
+                        <div class="post_date">
                                 <i class="icon-calendar" style="float:left;"></i>
-                                <p class="post_date">{{postData.publishedDate.toLocaleString()}}</p>
-                            
+                                <p>{{postData.publishedDate.toLocaleString()}}
+                                <ng-include src="'/templates/partials/postShare.html'"></ng-include></p>
                        </div> <!-- end post_date -->
                        <div class="post_body">
                             <p ng-bind-html="postData.body"></p>
