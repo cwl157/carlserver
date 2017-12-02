@@ -6,7 +6,7 @@ namespace carlserver.DataAccess
     {
         public void SavePost(string uri, string post)
         {
-            System.IO.File.WriteAllText(string.Format(FilePaths.BLOG_POST_PATH, uri), post);
+            System.IO.File.WriteAllText(string.Format(FilePaths.BLOG_POST_PATH, FilePaths.ENVIRONMENT, uri), post);
         }
     }
 }

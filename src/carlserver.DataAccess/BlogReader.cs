@@ -9,7 +9,7 @@ namespace carlserver.DataAccess
             string result = "";
             try
             {
-            result = System.IO.File.ReadAllText(FilePaths.BLOG_SUMMARIES_PATH);
+            result = System.IO.File.ReadAllText(string.Format(FilePaths.BLOG_SUMMARIES_PATH, FilePaths.ENVIRONMENT));
             Console.WriteLine("Blog Summary: "+result);
             }
             catch (Exception e)
@@ -24,7 +24,7 @@ namespace carlserver.DataAccess
             string result = "";
             try
             {
-                result = System.IO.File.ReadAllText(string.Format(FilePaths.BLOG_POST_PATH, postUri));
+                result = System.IO.File.ReadAllText(string.Format(FilePaths.BLOG_POST_PATH, FilePaths.ENVIRONMENT, postUri));
                 Console.WriteLine("Post contents: "+result);
             }
             catch (Exception e)
@@ -39,7 +39,7 @@ namespace carlserver.DataAccess
             bool result = false;
             try
             {
-                string[] files = System.IO.Directory.GetFiles(FilePaths.BLOG_FOLDER, postUri+".json");
+                string[] files = System.IO.Directory.GetFiles(string.Format(FilePaths.BLOG_FOLDER, FilePaths.ENVIRONMENT), postUri+".json");
                 foreach (string s in files)
                 {
                     Console.WriteLine(s);
