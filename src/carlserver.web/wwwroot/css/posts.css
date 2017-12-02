@@ -23,9 +23,8 @@ a,.post_date a,.post_meta a {text-decoration: none;}
 }
 
 .post_body p {
-		line-height: 20px;
+		display: block;
 	}
-
 
 .post_meta {
 	background: #E7E7E7;
