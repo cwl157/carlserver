@@ -6,7 +6,7 @@
 
                 <div ng-repeat="post in blogData" ng-if="!error">
                     <div class="post" id="{{'post'+post.id}}">
-                        <div class="post_title"><h4><a href="{{'/blog/post/'+post.friendlyUri}}">{{post.title}}</a></h4></div>
+                        <div class="post_title"><h4><a href="{{'/blog/post/'+post.friendlyUri | uriEncodeString}}">{{post.title}}</a></h4></div>
                         <div>
                                 <i class="icon-calendar" style="float:left;"></i>
                                 <p class="post_date">{{post.publishedDate.toLocaleString()}}</p>
@@ -14,9 +14,8 @@
                        </div> <!-- end post_date -->
                        <div class="post_body">
                             <p ng-bind-html="post.summary"></p>
-                            
                          </div>
-                         <p><a href="{{'/blog/post/'+post.friendlyUri}}">Read More...</a></p>
+                         <p><a href="{{'/blog/post/'+post.friendlyUri | uriEncodeString}}">Read More...</a></p>
                          <br />
                     </div>
                 </div>

@@ -35,6 +35,8 @@ namespace carlserver.commentReceiver
                     // Load post
                     Comment c = JsonConvert.DeserializeObject<Comment>(message);
                     BlogReader br = new BlogReader();
+                    c.PostUri = c.PostUri.Replace("%23", "#");
+                    Console.WriteLine(c.PostUri);
                     string serializedPost = br.GetPost(c.PostUri);
                     Post p = JsonConvert.DeserializeObject<Post>(serializedPost);
 

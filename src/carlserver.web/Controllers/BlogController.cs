@@ -32,7 +32,8 @@ namespace carlserver.web.Controllers
                 return NotFound();
             }
             Console.WriteLine("Got summaries in controller: "+summaries);
-            var s = JsonConvert.DeserializeObject<List<Post>>(summaries);
+            List<Post> s = JsonConvert.DeserializeObject<List<Post>>(summaries);
+            s = s.Where(p => p.IsPublished).ToList();
            // var s = SetupTestData();
             s = s.OrderByDescending(p => p.PublishedDate).ToList<Post>();
             return Ok(s);
@@ -48,6 +49,10 @@ namespace carlserver.web.Controllers
                return NotFound();
            }
            Post entry = JsonConvert.DeserializeObject<Post>(postJson);
+           if (!entry.IsPublished)
+           {
+               return NotFound();
+           }
            foreach (Comment c in entry.Comments)
            {
                c.Email = null; // don't return commenters email
@@ -62,34 +67,34 @@ namespace carlserver.web.Controllers
         // {
         // }
 
-        [HttpPost]
-        [Route("{friendlyUri}/addcomment")]
-        public ActionResult PostComment(string friendlyUri, [FromBody]Comment requestComment)
-        {
-            Console.WriteLine("Inside PostComment");
-            Console.WriteLine("Friendly = "+friendlyUri);
-            bool doesPostExist = _br.DoesPostExist(friendlyUri);
-            if (!doesPostExist)
-            {
-                return NotFound();
-            }
-            requestComment.CreateDate = DateTime.Now.ToUniversalTime();
-            Console.WriteLine(requestComment.CreateDate);
-            string commentToSend = JsonConvert.SerializeObject(requestComment);
-            _commentSender.SendComment(friendlyUri, commentToSend);
-             return Created(friendlyUri, requestComment);
-        }
+        // [HttpPost]
+        // [Route("{friendlyUri}/addcomment")]
+        // public ActionResult PostComment(string friendlyUri, [FromBody]Comment requestComment)
+        // {
+        //     Console.WriteLine("Inside PostComment");
+        //     Console.WriteLine("Friendly = "+friendlyUri);
+        //     bool doesPostExist = _br.DoesPostExist(friendlyUri);
+        //     if (!doesPostExist)
+        //     {
+        //         return NotFound();
+        //     }
+        //     requestComment.CreateDate = DateTime.Now.ToUniversalTime();
+        //     Console.WriteLine(requestComment.CreateDate);
+        //     string commentToSend = JsonConvert.SerializeObject(requestComment);
+        //     _commentSender.SendComment(friendlyUri, commentToSend);
+        //      return Created(friendlyUri, requestComment);
+        // }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        // [HttpPut("{id}")]
+        // public void Put(int id, [FromBody]string value)
+        // {
+        // }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        // // DELETE api/values/5
+        // [HttpDelete("{id}")]
+        // public void Delete(int id)
+        // {
+        // }
     }
 }

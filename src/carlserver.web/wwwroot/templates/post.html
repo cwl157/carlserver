@@ -4,7 +4,7 @@
             <ng-include src="'/templates/partials/leftSidebar.html'"></ng-include>
             <div class="col-md-6">
                     <div class="post" id="{{'post'+postData.id}}" ng-if="!error">
-                        <div class="post_title"><h4><a href="{{'/blog/post/'+postData.friendlyUri}}">{{postData.title}}</a></h4></div>
+                        <div class="post_title"><h4><a href="{{'/blog/post/'+postData.friendlyUri | uriEncodeString}}">{{postData.title}}</a></h4></div>
                         <div class="post_date">
                                 <i class="icon-calendar" style="float:left;"></i>
                                 <p>{{postData.publishedDate.toLocaleString()}}
@@ -19,35 +19,60 @@
                     <br />
                     <br />
                     <hr />
-                    <h3>Comments</h3>
-                    <div>
-                        <div class="panel panel-default" ng-repeat="comment in postData.comments" ng-if="!error">
-                            <div class="panel-body">
-                            <p><strong>{{comment.name}}</strong></p>
-                            <p class="comment-date">{{comment.createDate.toLocaleString()}}</p>
-                        <p>{{comment.message}}</p>
-                        </div>
-                        <!--<hr /> -->
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">Add a Comment</div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <form name="commentForm">
-                                    <label for="commenterName">Name<span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="commenterName" placeholder="Enter Name" ng-model="commenter.name" required>
-                                    <label for="commenterEmail">Email address<span class="required">*</span></label>
-                                    <input type="email" class="form-control" id="commenterEmail" placeholder="Enter email" ng-model="commenter.email" required>
-                                    <label for="commenterComment">Comment<span class="required">*</span></label>
-                                    <textarea class="form-control" id="commenterComment" rows="6" ng-model="commenter.message" required></textarea>
-                                    <br />
-                                    <br />
-                                    <button class="btn btn-primary" ng-click="addComment()" ng-disabled="commentForm.$invalid || commentForm.input.$error.email">Add Comment</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="disqus_thread" ng-if="postData"></div>
+                    <script>
+                    
+                    /**
+                    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                    
+                    var disqus_config = function () {
+                    this.page.url = window.location.href;  // Replace PAGE_URL with your page's canonical URL variable
+                    console.log(this.page.url);
+                    this.page.identifier = window.location.pathname; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                    console.log(this.page.identifier);
+                    };
+                    
+                    (function() { // DON'T EDIT BELOW THIS LINE
+                    var d = document, s = d.createElement('script');
+                    s.src = 'https://carlserver.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                    })();
+                    </script>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                            
+                    <br />
+                    <!-- <br /> -->
+                    <!-- <hr /> -->
+                    <!-- <h3>Comments</h3> -->
+                    <!-- <div> -->
+                        <!-- <div class="panel panel-default" ng-repeat="comment in postData.comments" ng-if="!error"> -->
+                            <!-- <div class="panel-body"> -->
+                            <!-- <p><strong>{{comment.name}}</strong></p> -->
+                            <!-- <p class="comment-date">{{comment.createDate.toLocaleString()}}</p> -->
+                        <!-- <p>{{comment.message}}</p> -->
+                        <!-- </div> -->
+                        <!-- </div> -->
+                        <!-- <div class="panel panel-default"> -->
+                            <!-- <div class="panel-heading">Add a Comment</div> -->
+                            <!-- <div class="panel-body"> -->
+                                <!-- <div class="form-group"> -->
+                                    <!-- <form name="commentForm"> -->
+                                    <!-- <label for="commenterName">Name<span class="required">*</span></label> -->
+                                    <!-- <input type="text" class="form-control" id="commenterName" placeholder="Enter Name" ng-model="commenter.name" required> -->
+                                    <!-- <label for="commenterEmail">Email address<span class="required">*</span></label> -->
+                                    <!-- <input type="email" class="form-control" id="commenterEmail" placeholder="Enter email" ng-model="commenter.email" required> -->
+                                    <!-- <label for="commenterComment">Comment<span class="required">*</span></label> -->
+                                    <!-- <textarea class="form-control" id="commenterComment" rows="6" ng-model="commenter.message" required></textarea> -->
+                                    <!-- <br /> -->
+                                    <!-- <br /> -->
+                                    <!-- <button class="btn btn-primary" ng-click="addComment()" ng-disabled="commentForm.$invalid || commentForm.input.$error.email">Add Comment</button> -->
+                                    <!-- </form> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
                     <div class="alert alert-danger" ng-if="error">{{error}}</div>
                 </div>
             <ng-include src="'/templates/partials/rightSidebar.html'"></ng-include> 
