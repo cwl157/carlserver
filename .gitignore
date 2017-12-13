@@ -33,3 +33,4 @@ msbuild.wrn
 # Custom
 **/private/
 **/dist/
+**/node_modules/

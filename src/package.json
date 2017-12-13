@@ -1,0 +1,14 @@
+{
+    "name": "carlserver-dev",
+    "version": "1.0.0",
+    "description": "dev site for www.carlserver.com",
+   "main": "server.js",
+   "repository": "",
+   "author": "Carl Layton",
+   "scripts": {
+     },
+   "dependencies": {
+     "express": "4.16.2"
+   }
+ }
+ 

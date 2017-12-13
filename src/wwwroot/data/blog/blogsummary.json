@@ -1,34 +1,12 @@
 [
 	{
-		"id": 1,
-		"title": "Using C# dynamic Keyword To Replace Data Transfer Objects",
-		"summary": "For this post I'm going to show 3 examples of using the C# dynamic keyword when deserializing input data instead of using data transfer objects. Many modern applications need to accept data from a variety of sources. Often times we create data transfer objects just to handle requests and responses to and from the data source. Using dynamic in C# reduces the need for data transfer objects and keeps the logic that depends on the 3rd party data source contained to one place.",
-		"body": "",
-		"author": "Carl Layton",
-		"publishedDate": "2017-12-10T06:00:00Z",
-		"friendlyUri": "using-c#-dynamic-keyword-to-replace-data-transfer-objects",
-		"isPublished": true,
-		"comments": []
-	},
-{
-	"id": 2,
-	"title": "Welcome",
-	"summary": "Change on the fly Welcome summary from file",
+	"id": 1,
+	"title": "Using C# dynamic Keyword To Replace Data Transfer Objects",
+	"summary": "For this post I'm going to show 3 examples of using the C# dynamic keyword when deserializing input data instead of using data transfer objects. Many modern applications need to accept data from a variety of sources. Often times we create data transfer objects just to handle requests and responses to and from the data source. Using dynamic in C# reduces the need for data transfer objects and keeps the logic that depends on the 3rd party data source contained to one place.",
 	"body": "",
 	"author": "Carl Layton",
 	"publishedDate": "2017-12-10T06:00:00Z",
-	"friendlyUri": "welcome",
-	"isPublished": true,
-	"comments": []
-},
-{
-	"id": 3,
-	"title": "Welcome 2",
-	"summary": "Welcome summary 2 from file",
-	"body": "",
-	"author": "Carl Layton",
-	"publishedDate": "2017-12-10T06:00:00Z",
-	"friendlyUri": "welcome-2",
+	"friendlyUri": "using-c#-dynamic-keyword-to-replace-data-transfer-objects",
 	"isPublished": true,
 	"comments": []
 }
