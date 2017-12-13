@@ -4,13 +4,12 @@ app.service('BlogService',
   $http, $q, $sce, ViewModelService)
 {
     var _this = this;
-
     _this.response = null;
 
     _this.fetch = function() {
         var req = {
             method: 'GET',
-            url: 'api/blog/',
+            url: '/data/blog/blogsummary.json',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -49,7 +48,7 @@ app.service('BlogService',
     _this.fetchSingle = function(uri) {
         var req = {
             method: 'GET',
-            url: 'api/blog/'+uri,
+            url: '/data/blog/posts/'+uri+'.json',
             headers: {
                 'Content-Type': 'application/json'
             },

@@ -1,4 +1,5 @@
 app.controller('postCtrl', ['$scope', 'BlogService', 'ViewModelService', function($scope, BlogService, ViewModelService) {
+  
     var locationParts = window.location.pathname.split('/');
     var uri = locationParts[locationParts.length-1];
     $scope.commenter = ViewModelService.createCommentVm();

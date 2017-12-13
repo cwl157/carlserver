@@ -1,0 +1,2 @@
+http://carlserver.com/* http://www.carlserver.com/:splat 301!
+/*  /index.html 200

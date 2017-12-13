@@ -1,0 +1,11 @@
+{
+	"id": 2,
+	"title": "Welcome",
+	"summary": "Welcome summary",
+	"body": "Welcome body from file",
+	"author": "Carl Layton",
+	"publishedDate": "2017-12-10T06:00:00Z",
+	"friendlyUri": "welcome",
+	"isPublished": true,
+	"comments": []
+}

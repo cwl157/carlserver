@@ -3,7 +3,6 @@
     <div class="row">
             <ng-include src="'/templates/partials/leftSidebar.html'"></ng-include>
             <div class="col-md-6">
-
                 <div ng-repeat="post in blogData" ng-if="!error">
                     <div class="post" id="{{'post'+post.id}}">
                         <div class="post_title"><h4><a href="{{'/blog/post/'+post.friendlyUri | uriEncodeString}}">{{post.title}}</a></h4></div>

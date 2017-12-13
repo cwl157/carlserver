@@ -1,5 +1,7 @@
 app.controller('blogCtrl', ['$scope', 'BlogService', function($scope, BlogService) {
+ 
     $scope.blogData = new Array();
+    
     var blogPromise = BlogService.fetch();
     blogPromise.then(
         function (success) {
