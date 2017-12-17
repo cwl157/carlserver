@@ -19,8 +19,6 @@ $routeProvider
  $locationProvider.html5Mode(true); 
 }]);
 
-//app.environment = "dev";
-
 
 
 
