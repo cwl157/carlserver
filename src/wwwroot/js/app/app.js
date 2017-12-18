@@ -4,7 +4,6 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 $routeProvider
         .when('/', {
                 templateUrl: '/templates/home.html',
-                controller: 'homeCtrl'
         })
         .when('/about', {
            templateUrl: '/templates/about.html' })
@@ -18,9 +17,6 @@ $routeProvider
         });
  $locationProvider.html5Mode(true); 
 }]);
-
-//app.environment = "dev";
-
 
 
 

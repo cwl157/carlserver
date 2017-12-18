@@ -15,18 +15,7 @@ app.service('ViewModelService',
         postvm.author = '';
         postvm.friendlyUri = '';
         postvm.isPublished = false;
-        postvm.comments = [];
         return postvm;
-    };
-    _this.createCommentVm = function() {
-        var commentvm = {};
-        commentvm.id = 0;
-        commentvm.postUri = "";
-        commentvm.name = "";
-        commentvm.email = "";
-        commentvm.message = "";
-        commentvm.createDate = null;
-        return commentvm;
     };
     _this.createBlogVm = function() {
         var blogvm = {}

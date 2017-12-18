@@ -4,7 +4,6 @@ app.service('BlogService',
   $http, $q, $sce, ViewModelService)
 {
     var _this = this;
-    _this.response = null;
 
     _this.fetch = function() {
         var req = {
@@ -15,9 +14,9 @@ app.service('BlogService',
             },
             timeout: window.timeout
         };
-
+        var response = ViewModelService.createBlogVm();
         return $http(req).then(function(success) {
-           _this.response = ViewModelService.createBlogVm();
+           
             var i = 0;
             var j = 0;
             for (i = 0; i < success.data.length; i++)
@@ -32,16 +31,16 @@ app.service('BlogService',
                 pvm.publishedDate = new Date(b.publishedDate);
                 pvm.friendlyUri = b.friendlyUri;
                 pvm.isPublished = b.isPublished;
-                _this.response.posts.push(pvm);
+                response.posts.push(pvm);
             }
-            _this.response.responseCode = success.status;
-            _this.response.error = '';
-            return _this.response;
+            response.responseCode = success.status;
+            response.error = '';
+            return response;
         }, function(failure) {
-            _this.response = ViewModelService.createBlogVm();
-            _this.response.responseCode = failure.status;
-            _this.response.error = failure.statusText;
-            throw _this.response;
+            response = ViewModelService.createBlogVm();
+            response.responseCode = failure.status;
+            response.error = failure.statusText;
+            throw response;
         });
     };
 
@@ -54,57 +53,25 @@ app.service('BlogService',
             },
             timeout: window.timeout
         };
+        var response = ViewModelService.createPostVm();
         return $http(req).then(function(success) {
-          _this.response = ViewModelService.createPostVm();
-            _this.response.id = success.data.id;
-            _this.response.title = success.data.title;
-            _this.response.body = $sce.trustAsHtml(success.data.body);
-            _this.response.summary = $sce.trustAsHtml(success.data.summary);
-            _this.response.author = success.data.author;
-            _this.response.publishedDate = new Date(success.data.publishedDate);
-            _this.response.friendlyUri = success.data.friendlyUri;
-            _this.response.isPublished = success.data.isPublished;
-            if (success.data.comments)
-            {
-                for (j = 0; j < success.data.comments.length; j++)
-                {
-                var c = ViewModelService.createCommentVm();
-                    c.id = success.data.comments[j].id;
-                    c.name = success.data.comments[j].name;
-                    c.message = success.data.comments[j].message;
-                    c.postUri = success.data.comments[j].postUri;
-                    c.createDate = new Date(success.data.comments[j].createDate);
-                    _this.response.comments.push(c);
-                }
-            }
-            _this.response.responseCode = success.status;
-            _this.response.error = '';
-            return _this.response;
+          
+            response.id = success.data.id;
+            response.title = success.data.title;
+            response.body = $sce.trustAsHtml(success.data.body);
+            response.summary = $sce.trustAsHtml(success.data.summary);
+            response.author = success.data.author;
+            response.publishedDate = new Date(success.data.publishedDate);
+            response.friendlyUri = success.data.friendlyUri;
+            response.isPublished = success.data.isPublished;
+            response.responseCode = success.status;
+            response.error = '';
+            return response;
         }, function(failure) {
-            //_this.response = new PostViewModel();
-            _this.response = ViewModelService.createPostVm();
-            _this.response.responseCode = failure.status;
-            _this.response.error = failure.statusText;
-            throw _this.response;
+            response = ViewModelService.createPostVm();
+            response.responseCode = failure.status;
+            response.error = failure.statusText;
+            throw response;
         });
     };
-
-    _this.createComment = function(uri, comment)
-    {
-        var req = {
-            method: 'POST',
-            url: 'api/blog/'+uri+'/addcomment',
-            data: comment,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            timeout: window.timeout
-        };
-
-        return $http(req).then(function(success) {
-        }, function(failure) {
-            throw failure;
-        });
-    };
-
 }]);
