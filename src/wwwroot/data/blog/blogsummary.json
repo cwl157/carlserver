@@ -5,7 +5,7 @@
 		"summary": "The example in this post shows how the $q service can be used to harness the power of javascript promises to perform application logic in an AngularJS application. This can help keep application code organized and separate responsibilities among controllers and services.",
 		"body": "",
 		"author": "Carl Layton",
-		"publishedDate": "2017-12-15T05:00:00Z",
+		"publishedDate": "2017-12-17T12:00:00Z",
 		"friendlyUri": "using-javascript-promises-for-application-logic-in-an-angularjs-service",
 		"isPublished": true
 	},
