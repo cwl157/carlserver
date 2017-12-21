@@ -11,6 +11,7 @@ app.controller('postCtrl', ['$scope', 'BlogService', 'ViewModelService', functio
             {
                 if (data.isPublished === true) {
                     $scope.postData = data;
+                    console.log(JSON.stringify($scope.postData));
                 }
                 else
                 {

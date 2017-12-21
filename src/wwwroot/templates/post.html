@@ -12,6 +12,17 @@
                        </div> <!-- end post_date -->
                        <div class="post_body">
                             <p ng-bind-html="postData.body"></p>
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-xs-6">
+                            <a href="{{'/blog/post/'+postData.previousPostUri | uriEncodeString}}" ng-if="postData.previousPostUri !== null">{{postData.previousPostTitle}}</a>
+                            <a href="/blog" ng-if="postData.previousPostUri === null">Back to Blog</a>
+                            </div>
+                            <div class="col-xs-6">
+                            <a href="{{'/blog/post/'+postData.nextPostUri | uriEncodeString}}" ng-if="postData.nextPostUri !== null">{{postData.nextPostTitle}}</a>
+                            </div>
+                            </div>
                        </div>
                     </div>
                     <hr />

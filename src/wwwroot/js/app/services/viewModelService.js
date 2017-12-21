@@ -15,6 +15,10 @@ app.service('ViewModelService',
         postvm.author = '';
         postvm.friendlyUri = '';
         postvm.isPublished = false;
+        postvm.previousPostUri = '';
+        postvm.previousPostTitle = '';
+        postvm.nextPostUri = '';
+        postvm.nextPostTitle = '';
         return postvm;
     };
     _this.createBlogVm = function() {

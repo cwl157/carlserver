@@ -19,7 +19,7 @@ app.service('BlogService',
            
             var i = 0;
             var j = 0;
-            for (i = 0; i < success.data.length; i++)
+            for (i = success.data.length-1; i >= 0; i--)
             {
                 var b = success.data[i];
                 var pvm = ViewModelService.createPostVm();
@@ -31,6 +31,8 @@ app.service('BlogService',
                 pvm.publishedDate = new Date(b.publishedDate);
                 pvm.friendlyUri = b.friendlyUri;
                 pvm.isPublished = b.isPublished;
+                pvm.previousPostUri = b.previousPostUri;
+                pvm.nextPostUri = b.nextPostUri;
                 response.posts.push(pvm);
             }
             response.responseCode = success.status;
@@ -65,7 +67,12 @@ app.service('BlogService',
             response.friendlyUri = success.data.friendlyUri;
             response.isPublished = success.data.isPublished;
             response.responseCode = success.status;
+            response.previousPostUri = success.data.previousPostUri;
+            response.previousPostTitle = success.data.previousPostTitle;
+            response.nextPostUri = success.data.nextPostUri;
+            response.nextPostTitle = success.data.nextPostTitle;
             response.error = '';
+            console.log(JSON.stringify(response));
             return response;
         }, function(failure) {
             response = ViewModelService.createPostVm();
