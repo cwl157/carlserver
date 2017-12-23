@@ -2,9 +2,10 @@ app.controller('postCtrl', ['$scope', '$routeParams', 'BlogService', 'ViewModelS
     var uri = $routeParams.friendlyUri;
     uri = EncodeStringService.encodeString(uri);
     var postPromise = BlogService.fetchSingle(uri);
+    $scope.isLoading = true;
     postPromise.then(
         function (success) {
-           
+            $scope.isLoading = false;
             var data = success;
             if (data.responseCode === 200) 
             {
@@ -19,6 +20,7 @@ app.controller('postCtrl', ['$scope', '$routeParams', 'BlogService', 'ViewModelS
             }
         },
         function (failure) {
+            $scope.isLoading = false;
             $scope.error = failure.error;
         }
     );

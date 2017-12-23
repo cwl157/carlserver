@@ -1,4 +1,4 @@
-<div ng-controller="postCtrl" id="postTmpl" class="container-fluid">
+<div id="postTmpl" class="container-fluid">
     <ng-include src="'/templates/partials/topnav.html'"></ng-include>
     <div class="row">
             <ng-include src="'/templates/partials/leftSidebar.html'"></ng-include>
@@ -53,6 +53,7 @@
                             
                     <br />
                     
+                    <div class="loader" ng-if="isLoading"></div>
                     <div class="alert alert-danger" ng-if="error">{{error}}</div>
                 </div>
             <ng-include src="'/templates/partials/rightSidebar.html'"></ng-include> 

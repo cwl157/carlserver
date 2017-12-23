@@ -8,9 +8,11 @@ $routeProvider
         .when('/about', {
            templateUrl: '/templates/about.html' })
         .when('/blog', {
-           templateUrl: '/templates/blog.html'})
+           templateUrl: '/templates/blog.html',
+           controller: 'blogCtrl'})
         .when('/blog/post/:friendlyUri', {
-           templateUrl: '/templates/post.html'
+           templateUrl: '/templates/post.html',
+           controller: 'postCtrl'
         })
         .when('/disclaimer', {
                 templateUrl: '/templates/disclaimer.html'
