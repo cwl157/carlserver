@@ -14,7 +14,8 @@ $routeProvider
         })
         .when('/disclaimer', {
                 templateUrl: '/templates/disclaimer.html'
-        });
+        })
+        .otherwise('/');
  $locationProvider.html5Mode(true); 
 }]);
 
