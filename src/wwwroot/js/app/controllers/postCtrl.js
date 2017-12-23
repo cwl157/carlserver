@@ -1,7 +1,6 @@
-app.controller('postCtrl', ['$scope', 'BlogService', 'ViewModelService', function($scope, BlogService, ViewModelService) {
-  
-    var locationParts = window.location.pathname.split('/');
-    var uri = locationParts[locationParts.length-1];
+app.controller('postCtrl', ['$scope', '$routeParams', 'BlogService', 'ViewModelService', 'EncodeStringService', function($scope, $routeParams, BlogService, ViewModelService, EncodeStringService) {
+    var uri = $routeParams.friendlyUri;
+    uri = EncodeStringService.encodeString(uri);
     var postPromise = BlogService.fetchSingle(uri);
     postPromise.then(
         function (success) {

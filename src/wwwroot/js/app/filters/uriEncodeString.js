@@ -1,8 +1,5 @@
-app.filter('uriEncodeString', function() {
+app.filter('uriEncodeString',['EncodeStringService', function(EncodeStringService) {
     return function(input) {
-        if(input) {
-            return window.encodeURIComponent(input); 
-        }
-        return "";
+        return EncodeStringService.encodeString(input);
     }
-});
+}]);
