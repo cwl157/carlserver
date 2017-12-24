@@ -1,4 +1,4 @@
-var app = angular.module('carlServer', ['ngRoute']);
+var app = angular.module('carlServer', ['ngRoute', 'angular-cookie-law']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 $routeProvider

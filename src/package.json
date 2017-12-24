@@ -1,14 +1,13 @@
 {
-    "name": "carlserver-dev",
-    "version": "1.0.0",
-    "description": "dev site for www.carlserver.com",
-   "main": "server.js",
-   "repository": "",
-   "author": "Carl Layton",
-   "scripts": {
-     },
-   "dependencies": {
-     "express": "4.16.2"
-   }
- }
- 
+  "name": "carlserver-dev",
+  "version": "1.0.0",
+  "description": "dev site for www.carlserver.com",
+  "main": "server.js",
+  "repository": "",
+  "author": "Carl Layton",
+  "scripts": {},
+  "dependencies": {
+    "angular-cookie-law": "^0.2.4",
+    "express": "4.16.2"
+  }
+}
