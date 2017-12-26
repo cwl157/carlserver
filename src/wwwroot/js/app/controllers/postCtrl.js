@@ -1,4 +1,4 @@
-app.controller('postCtrl', ['$scope', '$routeParams', 'BlogService', 'ViewModelService', 'EncodeStringService', function($scope, $routeParams, BlogService, ViewModelService, EncodeStringService) {
+app.controller('postCtrl', ['$scope', '$routeParams', '$timeout', 'BlogService', 'ViewModelService', 'EncodeStringService', function($scope, $routeParams, $timeout, BlogService, ViewModelService, EncodeStringService) {
     var uri = $routeParams.friendlyUri;
     uri = EncodeStringService.encodeString(uri);
     var postPromise = BlogService.fetchSingle(uri);
@@ -11,7 +11,9 @@ app.controller('postCtrl', ['$scope', '$routeParams', 'BlogService', 'ViewModelS
             {
                 if (data.isPublished === true) {
                     $scope.postData = data;
-                    console.log(JSON.stringify($scope.postData));
+                    $timeout(function() {
+                        Prism.highlightAll();
+                    });
                 }
                 else
                 {
