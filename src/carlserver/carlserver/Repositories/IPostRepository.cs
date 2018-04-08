@@ -1,4 +1,5 @@
-﻿using carlserver.Models;
+﻿using carlserver.Models.DomainModels;
+using carlserver.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace carlserver.Repositories
 {
     public interface IPostRepository
     {
-        IEnumerable<Post> GetSummaries(string basePath);
+        IEnumerable<PostViewModel> GetSummaries(string basePath);
         Post GetPostById(int id);
-        Post GetPostByFriendlyName(string basePath, string name);
+        PostViewModel GetPostByFriendlyName(string basePath, string name);
         Post UpdatePostById(int id);
         Post UpdatePostByFriendlyName(string name);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace carlserver.Models
+namespace carlserver.Models.DomainModels
 {
     public class Post
     {

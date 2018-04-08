@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using carlserver.Models;
+using carlserver.Models.DomainModels;
+using carlserver.Models.ViewModels;
 using carlserver.Repositories;
 using Microsoft.AspNetCore.Hosting;
 
@@ -23,8 +24,18 @@ namespace carlserver.Controllers
         public IActionResult Index(string name)
         {
             string filePath = _app.WebRootPath;
-            Post p = _repo.GetPostByFriendlyName(filePath, name);
-            return View(p);
+            PostViewModel pvm = _repo.GetPostByFriendlyName(filePath, name);
+            return View(pvm);
         }
+
+        [HttpPost]
+        public IActionResult UpdatePost(PostViewModel p)
+        {
+            Post result = _repo.UpdatePostByFriendlyName(p.FriendlyUri);
+
+            return RedirectToAction("Index", new { name = result.FriendlyUri });
+        }
+
+        
     }
 }

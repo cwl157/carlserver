@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using carlserver.Models;
+using carlserver.Models.DomainModels;
+using carlserver.Models.ViewModels;
 using carlserver.Repositories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace carlserver.Controllers
         public IActionResult Index()
         {
             string filePath = _appEnvironment.WebRootPath;
-            List<Post> model = _repo.GetSummaries(filePath).ToList();
+            List<PostViewModel> model = _repo.GetSummaries(filePath).ToList();
             return View(model);
         }
 

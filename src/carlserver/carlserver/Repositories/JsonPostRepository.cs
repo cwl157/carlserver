@@ -1,4 +1,5 @@
-﻿using carlserver.Models;
+﻿using carlserver.Models.DomainModels;
+using carlserver.Models.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,19 +10,24 @@ namespace carlserver.Repositories
 {
     public class JsonPostRepository : IPostRepository
     {
-        public IEnumerable<Post> GetSummaries(string basePath)
+        public IEnumerable<PostViewModel> GetSummaries(string basePath)
         {
 
             string blogJsonString = System.IO.File.ReadAllText($@"{basePath}\data\blog\blogsummary.json");
             List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(blogJsonString);
-
-            return posts;
+            List<PostViewModel> result = new List<PostViewModel>();
+            foreach (Post p in posts)
+            {
+                result.Add(mapToViewModel(p));
+            }
+            return result;
         }
 
-        public Post GetPostByFriendlyName(string basePath, string name)
+        public PostViewModel GetPostByFriendlyName(string basePath, string name)
         {
             string jsonString = System.IO.File.ReadAllText($@"{basePath}\data\blog\posts\{name}.json");
-            Post result = JsonConvert.DeserializeObject<Post>(jsonString);
+            Post p = JsonConvert.DeserializeObject<Post>(jsonString);
+            PostViewModel result = mapToViewModel(p);
             return result;
         }
 
@@ -44,6 +50,20 @@ namespace carlserver.Repositories
         public IEnumerable<Post> UpdateSummaries(IEnumerable<Post> posts)
         {
             throw new NotImplementedException();
+        }
+
+        private PostViewModel mapToViewModel(Post p)
+        {
+            PostViewModel pvm = new PostViewModel();
+            pvm.Id = p.Id;
+            pvm.Title = p.Title;
+            pvm.FriendlyUri = p.FriendlyUri;
+            pvm.Summary = p.Summary;
+            pvm.Body = p.Body;
+            pvm.IsPublished = p.IsPublished;
+            pvm.PublishedDate = p.PublishedDate;
+
+            return pvm;
         }
     }
 }

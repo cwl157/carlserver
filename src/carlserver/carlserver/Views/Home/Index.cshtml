@@ -1,4 +1,4 @@
-﻿@model List<Post>
+﻿@model List<PostViewModel>
 @{
     Layout = "_Layout";
 }
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Post p in Model)
+        @foreach (PostViewModel p in Model)
         {
             <tr>
                 <th scope="row">@p.Id</th>
