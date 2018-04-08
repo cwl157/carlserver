@@ -1,0 +1,40 @@
+﻿@model Post
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+    <div class="md-col-6">
+    <form>
+        <div class="form-group">
+            <label asp-for="Title">Title</label>
+            <input asp-for="Title" type="text" class="form-control" placeholder="Post Title" />
+        </div>
+        <div class="form-group">
+            <label asp-for="FriendlyUri">Friendly Name</label>
+            <input asp-for="FriendlyUri" type="text" class="form-control" placeholder="Friendly Uri" />
+        </div>
+        <div class="form-group">
+            <label asp-for="IsPublished">Is Published</label>
+            <input type="checkbox" asp-for="IsPublished" />
+        </div>
+        <div class="form-group">
+            <label asp-for="PublishedDate">Published Date</label>
+            <input type="text" asp-for="PublishedDate" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Summary">Summary</label>
+            <textarea asp-for="Summary" class="form-control" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+            <label asp-for="Body">Body</label>
+            <textarea asp-for="Body" class="form-control" rows="100"></textarea>
+        </div>
+        <button class="btn btn-primary">Cancel</button>
+        <button class="btn btn-primary">Save</button>
+    </form>
+    </div>
+    </div>
+</div>
+

@@ -1,0 +1,31 @@
+﻿@model List<Post>
+@{
+    Layout = "_Layout";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Friendly Name</th>
+            <th scope="col">Is Published</th>
+            <th scope="col">Publish Date</th>
+            <th scope="col">Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Post p in Model)
+        {
+            <tr>
+                <th scope="row">@p.Id</th>
+                <td>@p.Title</td>
+                <td>@p.FriendlyUri</td>
+                <td>@p.IsPublished</td>
+                <td>@p.PublishedDate</td>
+                <td><a asp-controller="Edit" asp-action="Index" asp-route-name="@p.FriendlyUri">Edit</a></td>
+            </tr>
+
+        }
+    </tbody>
+</table>
