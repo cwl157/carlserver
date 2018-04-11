@@ -33,6 +33,7 @@ app.service('BlogService',
                 pvm.isPublished = b.isPublished;
                 pvm.previousPostUri = b.previousPostUri;
                 pvm.nextPostUri = b.nextPostUri;
+                pvm.tags = b.tags;
                 response.posts.push(pvm);
             }
             response.responseCode = success.status;
@@ -71,6 +72,7 @@ app.service('BlogService',
             response.previousPostTitle = success.data.previousPostTitle;
             response.nextPostUri = success.data.nextPostUri;
             response.nextPostTitle = success.data.nextPostTitle;
+            response.tags = success.data.tags;
             response.error = '';
             console.log(JSON.stringify(response));
             return response;

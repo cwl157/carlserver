@@ -19,6 +19,7 @@ app.service('ViewModelService',
         postvm.previousPostTitle = '';
         postvm.nextPostUri = '';
         postvm.nextPostTitle = '';
+        postvm.tags = [];
         return postvm;
     };
     _this.createBlogVm = function() {
