@@ -13,25 +13,30 @@ namespace carlserver.Controllers
     public class EditController : Controller
     {
         IHostingEnvironment _app;
-        JsonPostRepository _repo;
+        IPostRepository _repo;
 
-        public EditController(IHostingEnvironment a)
+        public EditController(IHostingEnvironment a, IPostRepository r)
         {
             _app = a;
-            _repo = new JsonPostRepository();
+            _repo = r;
         }
 
-        public IActionResult Index(string name)
+        public IActionResult Index(string name = null)
         {
-            string filePath = _app.WebRootPath;
-            PostViewModel pvm = _repo.GetPostByFriendlyName(filePath, name);
+            PostViewModel pvm = new PostViewModel();
+            if (name != null)
+            {
+                string filePath = _app.WebRootPath;
+                pvm = _repo.GetPostByFriendlyName(filePath, name);
+            }
             return View(pvm);
         }
 
         [HttpPost]
         public IActionResult UpdatePost(PostViewModel p)
         {
-            Post result = _repo.UpdatePostByFriendlyName(p.FriendlyUri);
+            string filePath = _app.WebRootPath;
+            PostViewModel result = _repo.UpdatePost(filePath, p);
 
             return RedirectToAction("Index", new { name = result.FriendlyUri });
         }
