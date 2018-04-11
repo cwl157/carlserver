@@ -7,17 +7,18 @@ namespace carlserver.Models.DomainModels
 {
     public class Post
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Summary { get; set; }
-        public string Body { get; set; }
-        public string Author { get; set; }
-        public string PublishedDate { get; set; }
-        public string FriendlyUri { get; set; }
-        public bool IsPublished { get; set; }
-        public string PreviousPostUri { get; set; }
-        public string PreviousPostTitle { get; set; }
-        public string NextPostUri { get; set; }
-        public string NextPostTitle { get; set; }
+        public int id { get; set; }
+        public string title { get; set; }
+        public string summary { get; set; }
+        public string body { get; set; }
+        public string author { get; set; }
+        public string publishedDate { get; set; }
+        public string friendlyUri { get; set; }
+        public bool isPublished { get; set; }
+        public string previousPostUri { get; set; }
+        public string previousPostTitle { get; set; }
+        public string nextPostUri { get; set; }
+        public string nextPostTitle { get; set; }
+        public List<string> tags { get; set; }
     }
 }

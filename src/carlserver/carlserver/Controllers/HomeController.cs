@@ -13,11 +13,11 @@ namespace carlserver.Controllers
     public class HomeController : Controller
     {
         private readonly IHostingEnvironment _appEnvironment;
-        private JsonPostRepository _repo;
+        private IPostRepository _repo;
 
-        public HomeController(IHostingEnvironment e)
+        public HomeController(IHostingEnvironment e, IPostRepository r)
         {
-            _repo = new JsonPostRepository();
+            _repo = r;
             _appEnvironment = e;
         }
 

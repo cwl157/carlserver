@@ -33,10 +33,18 @@ $routeProvider
                 }
         }
         })
-        .when('/blog/post/:friendlyUri', {
+    .when('/blog/tags/:tag', {
+        templateUrl: '/templates/blog.html',
+        controller: 'blogCtrl'
+    })
+    .when('/blog/post/:friendlyUri', {
            templateUrl: '/templates/post.html',
            controller: 'postCtrl'
-        })
+    })
+    .when('/blog/tags/:tag/post/:friendlyUri', {
+        templateUrl: 'templates/post.html',
+        controller: 'postCtrl'
+    })
         .when('/disclaimer', {
                 templateUrl: '/templates/disclaimer.html',
                 data: {
