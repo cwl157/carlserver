@@ -1,4 +1,5 @@
-var app = angular.module('carlServer', ['ngRoute', 'angular-cookie-law', 'ngMeta']);
+//var app = angular.module('carlServer', ['ngRoute', 'angular-cookie-law', 'ngMeta']);
+var app = angular.module('carlServer', ['ngRoute', 'ngMeta']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 $routeProvider
