@@ -4,7 +4,6 @@ app.service('BlogService',
   $http, $q, $sce, ViewModelService)
 {
     var _this = this;
-
     _this.fetch = function() {
         var req = {
             method: 'GET',
