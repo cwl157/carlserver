@@ -1,5 +1,5 @@
-//var app = angular.module('carlServer', ['ngRoute', 'angular-cookie-law', 'ngMeta']);
-var app = angular.module('carlServer', ['ngRoute', 'ngMeta']);
+var app = angular.module('carlServer', ['ngRoute', 'angular-cookie-law', 'ngMeta']);
+//var app = angular.module('carlServer', ['ngRoute', 'ngMeta']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 $routeProvider
@@ -57,10 +57,66 @@ $routeProvider
         })
         .otherwise('/');
  $locationProvider.html5Mode(true); 
+
 }]);
 
-app.run(['ngMeta', function(ngMeta) { 
+app.run(['$rootScope', 'ngMeta', 'CookieLawService', 'ScriptLoaderService', function($rootScope, ngMeta, CookieLawService, ScriptLoaderService) { 
         ngMeta.init();
+
+       // alert(CookieLawService.isEnabled());
+       // alert(CookieLawService.isAccepted());
+       // alert(CookieLawService.isDeclined());
+
+         if (CookieLawService.isEnabled()) {
+                 if (CookieLawService.isAccepted()) {
+                         ScriptLoaderService.load("/js/vendor/autotrack.js");
+                         ScriptLoaderService.load("/js/vendor/ga.js");
+                         ScriptLoaderService.load("//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js");
+                    //     ScriptLoaderService.load("//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js");
+                 }
+         }
+
+        // var scriptUrl = "/js/vendor/autotrack.js";
+        // var gaScriptUrl = "/js/vendor/ga.js";
+        // var scriptEl = document.createElement('script');
+        //         scriptEl.onload = function() {
+        //             console.log(scriptUrl + " loaded");
+        //         };
+        //         scriptEl.src = scriptUrl;
+        //         document.head.appendChild(scriptEl);
+        // var gaScriptEl = document.createElement('script');
+        // gaScriptEl.onload = function() {
+        //         console.log(gaScriptUrl + " loaded");
+        // };
+        // gaScriptEl.src = gaScriptUrl;
+        // document.head.appendChild(gaScriptEl);
+        $rootScope.$on('cookieLaw.decline', function() {
+                //window.location.reload();
+                //callback function
+                //alert("declined");
+        });
+        $rootScope.$on('cookieLaw.accept', function() {
+                ScriptLoaderService.load("/js/vendor/autotrack.js");
+                ScriptLoaderService.load("/js/vendor/ga.js");
+                ScriptLoaderService.load("//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js");
+                //callback function
+                //alert("Accepted");
+                //window.location.reload();
+                // var scriptUrl = "/js/vendor/autotrack.js";
+        //var gaScriptUrl = "/js/vendor/ga.js";
+        // var scriptEl = document.createElement('script');
+        //         scriptEl.onload = function() {
+        //             console.log(scriptUrl + " loaded");
+        //         };
+        //         scriptEl.src = scriptUrl;
+        //         document.head.appendChild(scriptEl);
+        //var gaScriptEl = document.createElement('script');
+        //gaScriptEl.onload = function() {
+        //        console.log(gaScriptUrl + " loaded");
+        //};
+        //gaScriptEl.src = gaScriptUrl;
+        //document.head.appendChild(gaScriptEl);
+        });
 }]);
 
 
