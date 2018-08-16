@@ -1,7 +1,7 @@
 // TODO: Do everyting with js view models. Construct the js view model from whatever the service gets and return that to the controller. The controller decides how to use the view model
 app.service('BlogService',
-['$http', '$q', '$sce', 'ViewModelService', function(
-  $http, $q, $sce, ViewModelService)
+['$http', '$q', '$sce', 'ViewModelService', 'EncodeStringService', function(
+  $http, $q, $sce, ViewModelService, EncodeStringService)
 {
     var _this = this;
     _this.fetch = function() {
@@ -30,8 +30,8 @@ app.service('BlogService',
                 pvm.publishedDate = new Date(b.publishedDate);
                 pvm.friendlyUri = b.friendlyUri;
                 pvm.isPublished = b.isPublished;
-                pvm.previousPostUri = b.previousPostUri;
-                pvm.nextPostUri = b.nextPostUri;
+                pvm.previousPostUri = EncodeStringService.encodeString(b.previousPostUri);
+                pvm.nextPostUri = EncodeStringService.encodeString(b.nextPostUri);
                 pvm.tags = b.tags;
                 response.posts.push(pvm);
             }
@@ -67,9 +67,9 @@ app.service('BlogService',
             response.friendlyUri = success.data.friendlyUri;
             response.isPublished = success.data.isPublished;
             response.responseCode = success.status;
-            response.previousPostUri = success.data.previousPostUri;
+            response.previousPostUri = EncodeStringService.encodeString(success.data.previousPostUri);
             response.previousPostTitle = success.data.previousPostTitle;
-            response.nextPostUri = success.data.nextPostUri;
+            response.nextPostUri = EncodeStringService.encodeString(success.data.nextPostUri);
             response.nextPostTitle = success.data.nextPostTitle;
             response.tags = success.data.tags;
             response.error = '';
