@@ -20,10 +20,10 @@
     <hr />
     <ng-include src="'/templates/partials/tipJar.html'"></ng-include>
     <hr />
-      <div ng-if="tags">
+    <div ng-if="tags">
     <h3>Tags</h3>
     <ul>
-        <li ng-repeat="t in tags"><a href="/blog/tags/{{t | uriEncodeString}}">{{t}}</a></li>
+        <li ng-repeat="t in tags | orderBy:t"><a href="/blog/tags/{{t | uriEncodeString}}">{{t}}</a></li>
     </ul>
     </div>
 </div>

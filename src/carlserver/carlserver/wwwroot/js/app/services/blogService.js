@@ -33,6 +33,12 @@ app.service('BlogService',
                 pvm.previousPostUri = EncodeStringService.encodeString(b.previousPostUri);
                 pvm.nextPostUri = EncodeStringService.encodeString(b.nextPostUri);
                 pvm.tags = b.tags;
+				pvm.isFeatured = b.isFeatured;
+				// if (i % 2 === 0) {
+					// pvm.isFeatured = 1;
+				// } else {
+					// pvm.isFeatured = 0;
+				// }
                 response.posts.push(pvm);
             }
             response.responseCode = success.status;

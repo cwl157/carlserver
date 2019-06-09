@@ -5,6 +5,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 $routeProvider
         .when('/', {
                 templateUrl: '/templates/home.html',
+				controller: 'blogCtrl',
                 data: {
                         meta: {
                           'title': 'CarlServer',

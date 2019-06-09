@@ -14,6 +14,7 @@ namespace carlserver.Models.ViewModels
         public string PublishedDate { get; set; }
         public string FriendlyUri { get; set; }
         public bool IsPublished { get; set; }
+        public bool isFeatured { get; set; }
         public string Tags { get; set; }
     }
 }

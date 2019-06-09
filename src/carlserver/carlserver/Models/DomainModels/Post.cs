@@ -19,6 +19,7 @@ namespace carlserver.Models.DomainModels
         public string previousPostTitle { get; set; }
         public string nextPostUri { get; set; }
         public string nextPostTitle { get; set; }
+        public bool isFeatured { get; set; }
         public List<string> tags { get; set; }
     }
 }

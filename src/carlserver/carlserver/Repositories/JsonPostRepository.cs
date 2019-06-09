@@ -52,6 +52,7 @@ namespace carlserver.Repositories
                 newPost.isPublished = vm.IsPublished;
                 newPost.publishedDate = vm.PublishedDate;
                 newPost.friendlyUri = vm.FriendlyUri;
+                newPost.isFeatured = vm.isFeatured;
                 newPost.tags = vm.Tags.Split(',').ToList();
                 // Set next and previous
                 Post previousPost = posts.FirstOrDefault(p => p.id == newPost.id - 1);
@@ -105,6 +106,7 @@ namespace carlserver.Repositories
                 p.isPublished = vm.IsPublished;
                 p.summary = vm.Summary;
                 p.publishedDate = vm.PublishedDate;
+                p.isFeatured = vm.isFeatured;
                 p.tags = vm.Tags.Split(',').ToList();
                 // Serialize it
                 string updatedPostJson = JsonConvert.SerializeObject(p);
@@ -119,6 +121,7 @@ namespace carlserver.Repositories
                     summaryPost.body = "";
                     summaryPost.publishedDate = p.publishedDate;
                     summaryPost.isPublished = p.isPublished;
+                    summaryPost.isFeatured = p.isFeatured;
                     summaryPost.tags = p.tags;
                     // Serialize it
                     string updatedSummaryJson = JsonConvert.SerializeObject(posts);
@@ -142,6 +145,7 @@ namespace carlserver.Repositories
             pvm.Summary = p.summary;
             pvm.Body = p.body;
             pvm.IsPublished = p.isPublished;
+            pvm.isFeatured = p.isFeatured;
             pvm.PublishedDate = p.publishedDate;
             if (p.tags != null)
             {

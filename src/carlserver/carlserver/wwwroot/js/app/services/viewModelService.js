@@ -15,6 +15,7 @@ app.service('ViewModelService',
         postvm.author = '';
         postvm.friendlyUri = '';
         postvm.isPublished = false;
+		postvm.isFeatured = false;
         postvm.previousPostUri = '';
         postvm.previousPostTitle = '';
         postvm.nextPostUri = '';
