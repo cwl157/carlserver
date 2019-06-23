@@ -23,6 +23,8 @@
                         <br />
                     </div>
                 </div>
+				<div class="loader" ng-if="isLoading"></div>
+                <div class="alert alert-danger" ng-if="error">{{error}}</div>
   </div>
   <ng-include src="'/templates/partials/rightSidebar.html'"></ng-include>
 
