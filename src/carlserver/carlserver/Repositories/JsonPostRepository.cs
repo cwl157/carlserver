@@ -38,7 +38,7 @@ namespace carlserver.Repositories
             string summaryPath = $@"{basePath}\data\blog\blogsummary.json";
             string blogSummaryJson = System.IO.File.ReadAllText(summaryPath);
             List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(blogSummaryJson);
-
+            
             if (vm.Id == 0)
             {
                 Post lastPost = posts.OrderByDescending(p => p.id).FirstOrDefault();
@@ -97,6 +97,7 @@ namespace carlserver.Repositories
             }
             else
             {
+                posts = posts.OrderByDescending(pp => pp.id).ToList();
                 // Read it
                 string jsonString = System.IO.File.ReadAllText(filePath);
                 Post p = JsonConvert.DeserializeObject<Post>(jsonString);
@@ -108,6 +109,21 @@ namespace carlserver.Repositories
                 p.publishedDate = vm.PublishedDate;
                 p.isFeatured = vm.isFeatured;
                 p.tags = vm.Tags.Split(',').ToList();
+                Post previousPost = posts.FirstOrDefault(pp => pp.id < p.id && pp.isPublished);
+                if (previousPost != null)
+                {
+                    Console.WriteLine("previous post title = "+ previousPost.title);
+                    p.previousPostUri = previousPost.friendlyUri;
+                    p.previousPostTitle = previousPost.title;
+                }
+                posts = posts.OrderBy(pp => pp.id).ToList();
+                Post nextPost = posts.FirstOrDefault(pp => pp.id > p.id && pp.isPublished);
+                if (nextPost != null)
+                {
+                    Console.WriteLine("next post title = "+ nextPost.title);
+                    p.nextPostUri = nextPost.friendlyUri;
+                    p.nextPostTitle = nextPost.title;
+                }
                 // Serialize it
                 string updatedPostJson = JsonConvert.SerializeObject(p);
                 // Save it
