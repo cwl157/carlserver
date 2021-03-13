@@ -34,7 +34,7 @@ namespace carlserver.Repositories
         public PostViewModel UpdatePost(string basePath, PostViewModel vm)
         {
             PostViewModel result = null;
-            string filePath = $@"{basePath}\data\blog\posts\{vm.FriendlyUri}.json";
+          //  string filePath = $@"{basePath}\data\blog\posts\{vm.FriendlyUri}.json";
             string summaryPath = $@"{basePath}\data\blog\blogsummary.json";
             string blogSummaryJson = System.IO.File.ReadAllText(summaryPath);
             List<Post> posts = JsonConvert.DeserializeObject<List<Post>>(blogSummaryJson);
@@ -70,6 +70,7 @@ namespace carlserver.Repositories
                 // Serialize it
                 string updatedPostJson = JsonConvert.SerializeObject(newPost);
                 // Save it
+                string filePath = $@"{basePath}\data\blog\posts\{newPost.friendlyUri}.json";
                 System.IO.File.WriteAllText(filePath, updatedPostJson);
                 // Add summary   
                 newPost.body = "";
@@ -98,7 +99,10 @@ namespace carlserver.Repositories
             else
             {
                 posts = posts.OrderByDescending(pp => pp.id).ToList();
+                var currentPost = posts.FirstOrDefault(cp => cp.id == vm.Id);
+                var currentFriendlyUrl = currentPost.friendlyUri;
                 // Read it
+                string filePath = $@"{basePath}\data\blog\posts\{currentPost.friendlyUri}.json";
                 string jsonString = System.IO.File.ReadAllText(filePath);
                 Post p = JsonConvert.DeserializeObject<Post>(jsonString);
                 // Update it
@@ -109,6 +113,7 @@ namespace carlserver.Repositories
                 p.publishedDate = vm.PublishedDate;
                 p.isFeatured = vm.isFeatured;
                 p.tags = vm.Tags.Split(',').ToList();
+                p.friendlyUri = vm.FriendlyUri;
                 Post previousPost = posts.FirstOrDefault(pp => pp.id < p.id && pp.isPublished);
                 if (previousPost != null)
                 {
@@ -127,6 +132,22 @@ namespace carlserver.Repositories
                 // Serialize it
                 string updatedPostJson = JsonConvert.SerializeObject(p);
                 // Save it
+                if (currentPost.friendlyUri != p.friendlyUri)
+                {
+                    // Update previous post's next url
+                    string previousFilePath = $@"{basePath}\data\blog\posts\{previousPost.friendlyUri}.json";
+                    string previousPostJsonString = System.IO.File.ReadAllText(previousFilePath);
+                    Post fullPreviousPost = JsonConvert.DeserializeObject<Post>(previousPostJsonString);
+                    fullPreviousPost.nextPostTitle = p.title;
+                    fullPreviousPost.nextPostUri = p.friendlyUri;
+                    string updatedPreviousPostJson = JsonConvert.SerializeObject(fullPreviousPost);
+                    System.IO.File.WriteAllText(previousFilePath, updatedPreviousPostJson);
+
+                    filePath = $@"{basePath}\data\blog\posts\{p.friendlyUri}.json";
+
+                    // Rename old file with _DELETE
+                    System.IO.File.Move($@"{basePath}\data\blog\posts\{currentPost.friendlyUri}.json", $@"{basePath}\data\blog\posts\{currentPost.friendlyUri}.json_DELETE");
+                }
                 System.IO.File.WriteAllText(filePath, updatedPostJson);
                 // Update summary
                 Post summaryPost = posts.FirstOrDefault(ps => ps.id == p.id);
@@ -139,6 +160,10 @@ namespace carlserver.Repositories
                     summaryPost.isPublished = p.isPublished;
                     summaryPost.isFeatured = p.isFeatured;
                     summaryPost.tags = p.tags;
+                   // if (summaryPost.friendlyUri != p.friendlyUri)
+                   // {
+                        summaryPost.friendlyUri = p.friendlyUri;
+                   // }
                     // Serialize it
                     string updatedSummaryJson = JsonConvert.SerializeObject(posts);
                     // Save it
