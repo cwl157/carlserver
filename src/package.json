@@ -9,7 +9,7 @@
     "start": "http-server-spa .\\app"
   },
   "dependencies": {
-    "angular": "^1.6.9",
+    "angular": "^1.8.0",
     "angular-cookie-law": "^0.2.4",
     "angular-route": "^1.6.9",
     "bootstrap": "^3.3.7",
