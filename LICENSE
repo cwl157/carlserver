@@ -1,4 +1,4 @@
-MIT License
+MIT License (Modified)
 
 Copyright (c) 2017 Carl Layton
 
@@ -11,6 +11,8 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+The data directory and all files and sub directories belongs to Carl Layton and cannot be copied or redistributed.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
