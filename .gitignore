@@ -34,3 +34,4 @@ msbuild.wrn
 **/private/
 **/dist/
 **/node_modules/
+/src/**/data/
