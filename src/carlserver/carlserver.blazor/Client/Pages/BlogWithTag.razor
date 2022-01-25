@@ -1,0 +1,93 @@
+﻿@page "/blog/tags/{Tag}"
+@inject HttpClient Http
+@using carlserver.blazor.Client.Helpers
+@using carlserver.blazor.Client.Models
+
+<PageTitle>CarlServer-Blog</PageTitle>
+<HeadContent>
+    <meta name="description" content="Summaries of blog posts on CarlServer. Topics include angularjs, javascript, csharp, and general programming tutorials, tips, and best practices. Code examples are includes with each blog post." />
+    <meta name="keywords" content="@Tag,blog,tutorials,code examples,programming,carlserver" />
+    <meta name="author" content="Carl Layton" />
+</HeadContent>
+
+<div class="col-md-8">
+@if (IsLoading)
+{
+        <div class="loader"></div>
+    }
+    else
+    {
+        if (IsError)
+        {
+             <div class="alert alert-danger">@ErrorMessage</div>
+        }
+        else
+        {
+            <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+                    <li class="active breadcrumb-item">@Tag</li>
+                </ol>
+            <PostList Posts="filteredPosts" />
+            @*@foreach (PostModel p in filteredPosts)
+            {
+                <div class="post" id="@("post" + p.Id)">
+                    <div class="post_title"><h4><a href="@CreatePostUrl(p.FriendlyUri)">@p.Title</a></h4></div>
+                <div>
+                    <i class="icon-calendar" style="float:left;"></i>
+                    <p class="post_date">@GetLocalTimeString(p.PublishedDate)</p>
+                </div> <!-- end post_date -->
+                <div class="post_body">
+                    <p>@((MarkupString)p.Summary)</p>
+                </div>
+                <p><a href="@CreatePostUrl(p.FriendlyUri)">Read More...</a></p>
+                <br />
+            </div>
+            }*@
+    }
+}
+</div>
+
+@code {
+    [Parameter] public string Tag { get; set; }
+    private List<PostModel> blog = new List<PostModel>();
+    private List<PostModel> filteredPosts = new List<PostModel>();
+    private bool IsLoading = false;
+    private bool IsError = false;
+    private string ErrorMessage = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            var blogData = await Http.GetFromJsonAsync<List<PostModel>>("/data/blog/blogsummary.json") ?? new List<PostModel>();
+            foreach (PostModel p in blogData)
+            {
+                if (p.IsPublished)
+                {
+                    blog.Add(p);
+                }
+            }
+            blog.Reverse();
+            IsLoading = false;
+        }
+        catch (Exception e)
+        {
+            IsLoading = false;
+            IsError = true;
+            ErrorMessage = "Unable to load blog posts";
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        filteredPosts.Clear();
+        foreach (PostModel p in blog)
+        {
+            if (p.Tags.Contains(Tag))
+            {
+                filteredPosts.Add(p);
+            }
+        }
+    }
+}

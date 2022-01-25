@@ -1,0 +1,13 @@
+﻿@using carlserver.blazor.Client.Helpers
+<h3>Tags</h3>
+
+<ul>
+@foreach (string s in Tags)
+{
+        <li><a href="/blog/tags/@StringEncoder.EncodeString(s)">@s</a></li>
+}
+</ul>
+
+@code {
+    [Parameter] public List<string> Tags {  get;  set; }
+}

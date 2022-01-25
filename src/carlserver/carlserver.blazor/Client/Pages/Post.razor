@@ -1,0 +1,173 @@
+﻿@page "/blog/post/{FriendlyUri}"
+
+@using carlserver.blazor.Client.Helpers
+@using carlserver.blazor.Client.Models
+@inject HttpClient Http
+
+<PageTitle>@Title</PageTitle>
+<HeadContent>
+    <meta name="description" content="@Content.Summary" />
+    <meta name="keywords" content="@string.Join(',', @Content.Tags)" />
+    <meta name="author" content="Carl Layton" />
+</HeadContent>
+
+<div class="col-md-8">
+    @if (IsLoading)
+    {
+        <div class="loader"></div>
+    }
+    else
+    {
+        if (IsError)
+        {
+            <div class="alert alert-danger">@ErrorMessage</div>
+        }
+        else
+        {
+           
+                 <div class="post_date">
+                        <p>Tags: 
+                            @foreach (string s in Tags)
+                            {
+                                <a href="/blog/tags/@s" style="display:inline; margin-left: 5px; margin-right:5px;">@s</a>
+                            }
+                        </p>
+                </div> <!-- end post_date -->
+           
+            <div class="post" id="mainPost">
+                <div class="post_title"><h4>@Content.Title</h4></div>
+                <div class="post_date">
+                        <i class="icon-calendar" style="float:left;"></i>
+                        <p>
+                            @GetLocalTimeString(Content.PublishedDate)
+                            <span style="float:right; padding-right: 1em;">Share On:
+                                <a target="_blank" href="https://twitter.com/intent/tweet?url=https://www.carlserver.com/blog/post/@StringEncoder.EncodeString(Content.FriendlyUri)&text=@StringEncoder.EncodeString(Content.Title)&via=carllayton">Twitter</a> | <a target="_blank" href="https://www.facebook.com/sharer.php?u=https://www.carlserver.com/blog/post/+@StringEncoder.EncodeString(Content.FriendlyUri)&quote=@StringEncoder.EncodeString(Content.Title)">Facebook</a></span>
+                        </p>
+                </div> <!-- end post_date -->
+                <div class="post_body">
+                        <p>@((MarkupString)Content.Body)</p>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <a href="/blog/post/@Content.PreviousPostUri">@Content.PreviousPostTitle</a>
+                            </div>
+                            <div class="col-xs-offset-4 col-xs-4">
+                                <a href="/blog/post/@Content.NextPostUri">@Content.NextPostTitle</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>  
+             <hr />
+                <p>If you enjoyed this article...</p>
+                <TipJar />
+                <br />
+                <br />
+                <hr />
+
+                 <div id="disqus_thread"></div>
+                @*<script>
+
+                    /**
+                    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+                    var disqus_config = function () {
+                        this.page.url = window.location.href;  // Replace PAGE_URL with your page's canonical URL variable
+                        this.page.identifier = window.location.pathname; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                    };
+
+                    (function () { // DON'T EDIT BELOW THIS LINE
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://carlserver.disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+                <br />*@
+        }
+    }
+</div>
+
+
+
+
+@code {
+    //[Parameter] public string FriendlyUri { get; set; }
+    [Parameter] public string FriendlyUri { get; set; }
+    // [Parameter] public string PostUri {get;set;}
+
+    private PostModel Content = new PostModel();
+    private bool IsLoading = false;
+    private bool IsError = false;
+    private string ErrorMessage = "";
+    private bool isCodeHighlighted;
+    private bool isDisqusRendered;
+    private List<string> Tags = new List<string>();
+    private string Title = "CarlServer-";
+
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            isCodeHighlighted = false;
+            isDisqusRendered = false;
+            IsLoading = true;
+            Tags.Clear();
+            string uri = StringEncoder.EncodeString(FriendlyUri);
+            Content = await Http.GetFromJsonAsync<PostModel>("/data/blog/posts/" + uri + ".json") ?? new PostModel();
+            foreach (string s in Content.Tags)
+            {
+                Tags.Add(s);
+            }
+            Title = "CarlServer-" + Content.Title;
+
+            IsLoading = false;
+        }
+        catch (Exception e)
+        {
+            IsLoading = false;
+            IsError = true;
+            ErrorMessage = "Failed to load post";
+        }
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!isCodeHighlighted)
+        {
+            Object el = await JSRuntime.InvokeAsync<Object>("document.getElementById", "mainPost");
+            if (el != null)
+            {
+                await JSRuntime.InvokeVoidAsync("Prism.highlightAll");
+                isCodeHighlighted = true;
+            }
+        }
+
+        if (!isDisqusRendered)
+        {
+            Object el = await JSRuntime.InvokeAsync<Object>("document.getElementById", "disqus_thread");
+            if (el != null)
+            {
+                await JSRuntime.InvokeVoidAsync("csAddDisqusComments");
+                isDisqusRendered = true;
+            }
+        }
+    }
+
+     private string GetLocalTimeString(Nullable<DateTime> dt)
+    {
+        if (!dt.HasValue)
+        {
+            return "";
+        }
+
+        return dt.Value.ToLocalTime().ToString();
+    }
+}
