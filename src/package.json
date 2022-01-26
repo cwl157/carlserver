@@ -12,7 +12,7 @@
     "angular": "^1.6.9",
     "angular-cookie-law": "^0.2.4",
     "angular-route": "^1.6.9",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "jquery": "^3.3.1",
     "ng-meta": "^1.0.2"
   },
