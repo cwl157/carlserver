@@ -1,0 +1,49 @@
+﻿@inject HttpClient Http
+@using carlserver.blazor.Client.Helpers
+@using carlserver.blazor.Client.Models
+
+@foreach (PostModel p in Posts)
+        {
+                <div class="post" id="@("post" + p.Id)">
+                    <div class="post_title"><h4><a href="@CreatePostUrl(p.FriendlyUri)">@p.Title</a></h4></div>
+                    <div>
+                        <i class="icon-calendar" style="float:left;"></i>
+                        <p class="post_date">@GetLocalTimeString(p.PublishedDate)</p>
+                    </div> <!-- end post_date -->
+                    <div class="post_body">
+                        <p>@((MarkupString)p.Summary)</p>
+                    </div>
+                    <p><a href="@CreatePostUrl(p.FriendlyUri)">Read More...</a></p>
+                    <br />
+                </div>
+        }
+
+@code {
+    [Parameter] public List<PostModel> Posts { get; set; }
+
+    private string CreatePostUrl(string friendlyUri)
+    {
+        string url = "";
+        string encodedUri = StringEncoder.EncodeString(friendlyUri);
+        Console.WriteLine("encodedString = " + encodedUri);
+        // /blog/tags/:tag/post/:friendlyUri
+        // /blog/post/'+post.friendlyUri
+
+        //if ($scope.selectedTag) {
+        //    url = '/blog/tags/' + $scope.selectedTag + '/post/' + friendlyUri;
+        //} else {
+        url = "/blog/post/" + encodedUri;
+        //}
+        return url;
+    }
+
+    private string GetLocalTimeString(Nullable<DateTime> dt)
+    {
+        if (!dt.HasValue)
+        {
+            return "";
+        }
+
+        return dt.Value.ToLocalTime().ToString();
+    }
+}

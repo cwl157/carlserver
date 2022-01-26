@@ -1,0 +1,94 @@
+﻿@page "/"
+@inject HttpClient Http
+@using carlserver.blazor.Client.Helpers
+@using carlserver.blazor.Client.Models
+
+<HeadContent>
+    <meta name="description" content="Blog about full stack programming. Topics include angularjs, javascript, csharp, and general programming tutorials, tips, and best practices. Code examples are includes with each blog post." />
+    <meta name="keywords" content="programming,web,apps,blog,carlserver" />
+    <meta name="author" content="Carl Layton" />
+</HeadContent>
+
+<div class="col-md-8">
+	<h1>Welcome to CarlServer</h1>
+	<p>Learn about me and see what I'm up to.</p>	
+	<h3>Featured Articles</h3>
+	<hr />
+
+	@if (IsLoading)
+	{
+		<div class="loader"></div>
+	}
+
+	else
+{
+    if (IsError)
+    {
+        <div class="alert alert-danger">@ErrorMessage</div>
+    }
+    else
+    {
+        <PostList Posts="blog" />       
+    }
+}
+</div>
+
+@code {
+    private List<PostModel> blog = new List<PostModel>();
+    private bool IsLoading = false;
+    private bool IsError = false;
+    private string ErrorMessage = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            var blogData = await Http.GetFromJsonAsync<List<PostModel>>("/data/blog/blogsummary.json") ?? new List<PostModel>();
+            foreach (PostModel p in blogData)
+            {
+                if (p.IsPublished && p.IsFeatured)
+                {
+                    blog.Add(p);
+                }
+            }
+            blog.Reverse();
+            IsLoading = false;
+        }
+        catch (Exception e)
+        {
+            IsLoading = false;
+            IsError = true;
+            ErrorMessage = "Unable to load blog posts";
+        }
+    }
+
+    //private string CreatePostUrl(string friendlyUri)
+    //{
+    //    string url = "";
+    //    string encodedUri = StringEncoder.EncodeString(friendlyUri);
+    //    Console.WriteLine("encodedString = " + encodedUri);
+    //    // /blog/tags/:tag/post/:friendlyUri
+    //    // /blog/post/'+post.friendlyUri
+
+    //    //if ($scope.selectedTag) {
+    //    //    url = '/blog/tags/' + $scope.selectedTag + '/post/' + friendlyUri;
+    //    //} else {
+    //    url = "/blog/post/" + encodedUri;
+    //    //}
+    //    return url;
+    //}
+
+    //private string GetLocalTimeString(Nullable<DateTime> dt)
+    //{
+    //    if (!dt.HasValue)
+    //    {
+    //        return "";
+    //    }
+
+    //    return dt.Value.ToLocalTime().ToString();
+    //}
+}
+
+
+

@@ -1,0 +1,72 @@
+﻿@using carlserver.blazor.Client.Models
+@inject HttpClient Http
+ 
+@if (IsLoading)
+{
+    <div class="loader"></div>
+}
+else
+{
+   
+<div class="col-md-3">
+    <img src="/img/web1.png" width=25% class="img-rounded" />
+    <p style="padding-top:15px;">
+        My name is Carl. I am a software engineer and architect. I blog about C#, .NET, Javascript, AngularJS, nodejs, and more.
+        Thanks for visiting!
+    </p>
+    <div class="col-xs-1">
+        <a href="https://twitter.com/carllayton" class="zocial twitter icon"></a>
+    </div>
+    <div class="col-xs-1">
+        <a href="https://github.com/cwl157" class="zocial github icon"></a>
+    </div>
+    <div class="col-xs-1">
+        <a href="https://www.linkedin.com/in/carllayton/" class="zocial linkedin icon"></a>
+    </div>
+      <br />
+    <hr />
+    <TipJar />
+    <hr />
+    <TagList Tags="tagData" />
+</div>
+}
+
+@code {
+    private bool IsLoading;
+    private List<string> tagData = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            var blogData = await Http.GetFromJsonAsync<List<PostModel>>("/data/blog/blogsummary.json") ?? new List<PostModel>();
+
+            foreach (PostModel p in blogData)
+            {
+                foreach (string s in p.Tags)
+                {
+                    if (p.IsPublished && !tagData.Contains(s))
+                    {
+                        tagData.Add(s);
+                    }
+                }
+            }
+            tagData.OrderBy(t => t);
+            IsLoading = false;
+            //for (s in data.posts[i].tags) {
+            //                if ($scope.tags.indexOf(data.posts[i].tags[s]) === -1) {
+            //                    $scope.tags.push(data.posts[i].tags[s]);
+            //                }
+            //            }
+
+            Console.WriteLine("in LeftSidebar OnInitializedAsync");
+        }
+        catch (Exception e)
+        {
+            IsLoading = false;
+        }
+        //tagData.Add("Test");
+        //tagData.Add("Test1");
+    }
+}

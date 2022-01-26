@@ -1,0 +1,30 @@
+﻿@inherits LayoutComponentBase
+
+<div id="homeTmpl" class="container-fluid">
+    <div id="consent-banner" class="consent-banner">
+        <p>Do you allow this website to use cookies to track analytics?
+            <br>
+            <a href="" class="allow" onclick="allowClick()">I allow</a>
+            <a href="" class="disallow" onclick="disallowClick()">I do not allow</a>
+            <a href="/disclaimer" class="policies">Website Policies</a></p>
+    </div>
+    <TopNav />
+    <div class="row">
+        <LeftSidebar />
+        @Body
+    </div>
+    <Footer />
+</div>
+
+@code {
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("firstRenderCheckConsentAndLoadScripts");
+        }
+    }
+}
