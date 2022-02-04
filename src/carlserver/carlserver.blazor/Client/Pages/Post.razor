@@ -3,6 +3,7 @@
 @using carlserver.blazor.Client.Helpers
 @using carlserver.blazor.Client.Models
 @inject HttpClient Http
+@inject BlogService blogService
 
 <PageTitle>@Title</PageTitle>
 <HeadContent>
@@ -11,14 +12,9 @@
     <meta name="author" content="Carl Layton" />
 </HeadContent>
 
-<div class="col-md-8">
-    @if (IsLoading)
-    {
-        <div class="loader"></div>
-    }
-    else
-    {
-        if (IsError)
+<div class="col-md-6">
+
+        @if (IsError)
         {
             <div class="alert alert-danger">@ErrorMessage</div>
         }
@@ -48,14 +44,14 @@
                         <p>@((MarkupString)Content.Body)</p>
                         <br />
                         <br />
-                        <div class="row">
+                        @*<div class="row">
                             <div class="col-xs-4">
                                 <a href="/blog/post/@Content.PreviousPostUri">@Content.PreviousPostTitle</a>
                             </div>
                             <div class="col-xs-offset-4 col-xs-4">
                                 <a href="/blog/post/@Content.NextPostUri">@Content.NextPostTitle</a>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
             </div>  
              <hr />
@@ -88,7 +84,6 @@
 
                 <br />*@
         }
-    }
 </div>
 
 
@@ -100,7 +95,6 @@
     // [Parameter] public string PostUri {get;set;}
 
     private PostModel Content = new PostModel();
-    private bool IsLoading = false;
     private bool IsError = false;
     private string ErrorMessage = "";
     private bool isCodeHighlighted;
@@ -117,21 +111,25 @@
         {
             isCodeHighlighted = false;
             isDisqusRendered = false;
-            IsLoading = true;
             Tags.Clear();
             string uri = StringEncoder.EncodeString(FriendlyUri);
-            Content = await Http.GetFromJsonAsync<PostModel>("/data/blog/posts/" + uri + ".json") ?? new PostModel();
+            Console.WriteLine(uri);
+            //  Content = await Http.GetFromJsonAsync<PostModel>("/data/blog/posts/" + uri + ".json") ?? new PostModel();
+            Content = blogService.Posts.FirstOrDefault(p => StringEncoder.EncodeString(p.FriendlyUri) == uri) ?? new PostModel();
+            if (Content.Id == 0)
+            {
+                IsError = true;
+                ErrorMessage = "Failed to load post";
+            }
             foreach (string s in Content.Tags)
             {
                 Tags.Add(s);
             }
             Title = "CarlServer-" + Content.Title;
 
-            IsLoading = false;
         }
         catch (Exception e)
         {
-            IsLoading = false;
             IsError = true;
             ErrorMessage = "Failed to load post";
         }

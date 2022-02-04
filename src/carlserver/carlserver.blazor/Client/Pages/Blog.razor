@@ -1,5 +1,5 @@
 ﻿@page "/blog"
-@inject HttpClient Http
+@inject BlogService blogService
 @using carlserver.blazor.Client.Helpers
 @using carlserver.blazor.Client.Models
 
@@ -11,51 +11,32 @@
 </HeadContent>
 
 <div class="col-md-8">
-@if (IsLoading)
+@*@if (IsLoading)
 {
     <div class="loader"></div>
-}
+}*@
 
-else
-{
-    if (IsError)
+
+    @if (IsError)
     {
         <div class="alert alert-danger">@ErrorMessage</div>
     }
     else
     {
         <PostList Posts="blog" />
-       @* @foreach (PostModel p in blog)
-        {
-                <div class="post" id="@("post" + p.Id)">
-                    <div class="post_title"><h4><a href="@CreatePostUrl(p.FriendlyUri)">@p.Title</a></h4></div>
-                    <div>
-                        <i class="icon-calendar" style="float:left;"></i>
-                        <p class="post_date">@GetLocalTimeString(p.PublishedDate)</p>
-                    </div> <!-- end post_date -->
-                    <div class="post_body">
-                        <p>@((MarkupString)p.Summary)</p>
-                    </div>
-                    <p><a href="@CreatePostUrl(p.FriendlyUri)">Read More...</a></p>
-                    <br />
-                </div>
-        }*@
     }
-}
 </div>
 
 @code {
     private List<PostModel> blog = new List<PostModel>();
-    private bool IsLoading = false;
     private bool IsError = false;
     private string ErrorMessage = "";
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         try
         {
-            IsLoading = true;
-            var blogData = await Http.GetFromJsonAsync<List<PostModel>>("/data/blog/blogsummary.json") ?? new List<PostModel>();
+            var blogData = blogService.Posts;
             foreach (PostModel p in blogData)
             {
                 if (p.IsPublished)
@@ -64,11 +45,9 @@ else
                 }
             }
             blog.Reverse();
-            IsLoading = false;
         }
         catch (Exception e)
         {
-            IsLoading = false;
             IsError = true;
             ErrorMessage = "Unable to load blog posts";
         }

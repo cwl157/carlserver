@@ -35,3 +35,7 @@ msbuild.wrn
 **/dist/
 **/node_modules/
 /src/**/data/
+/publish/**
+
+# Local Netlify folder
+.netlify

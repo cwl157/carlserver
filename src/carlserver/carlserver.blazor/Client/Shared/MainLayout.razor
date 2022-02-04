@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject BlogService blogService
 
 <div id="homeTmpl" class="container-fluid">
     <div id="consent-banner" class="consent-banner">
@@ -10,8 +11,13 @@
     </div>
     <TopNav />
     <div class="row">
+        @if (blogService.IsError) {
+            <div class="alert alert-danger">@blogService.ErrorMessage</div>
+        }
+        else {
         <LeftSidebar />
         @Body
+        }
     </div>
     <Footer />
 </div>

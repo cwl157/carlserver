@@ -1,13 +1,7 @@
 ﻿@using carlserver.blazor.Client.Models
-@inject HttpClient Http
+@inject BlogService blogService
  
-@if (IsLoading)
-{
-    <div class="loader"></div>
-}
-else
-{
-   
+ 
 <div class="col-md-3">
     <img src="/img/web1.png" width=25% class="img-rounded" />
     <p style="padding-top:15px;">
@@ -29,18 +23,16 @@ else
     <hr />
     <TagList Tags="tagData" />
 </div>
-}
+
 
 @code {
-    private bool IsLoading;
     private List<string> tagData = new List<string>();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            IsLoading = true;
-            var blogData = await Http.GetFromJsonAsync<List<PostModel>>("/data/blog/blogsummary.json") ?? new List<PostModel>();
+            var blogData = blogService.Posts;
 
             foreach (PostModel p in blogData)
             {
@@ -53,7 +45,6 @@ else
                 }
             }
             tagData.OrderBy(t => t);
-            IsLoading = false;
             //for (s in data.posts[i].tags) {
             //                if ($scope.tags.indexOf(data.posts[i].tags[s]) === -1) {
             //                    $scope.tags.push(data.posts[i].tags[s]);
@@ -64,7 +55,7 @@ else
         }
         catch (Exception e)
         {
-            IsLoading = false;
+            
         }
         //tagData.Add("Test");
         //tagData.Add("Test1");

@@ -1,5 +1,5 @@
 ﻿@page "/blog/tags/{Tag}"
-@inject HttpClient Http
+@inject BlogService blogService
 @using carlserver.blazor.Client.Helpers
 @using carlserver.blazor.Client.Models
 
@@ -11,13 +11,7 @@
 </HeadContent>
 
 <div class="col-md-8">
-@if (IsLoading)
-{
-        <div class="loader"></div>
-    }
-    else
-    {
-        if (IsError)
+       @if (IsError)
         {
              <div class="alert alert-danger">@ErrorMessage</div>
         }
@@ -44,14 +38,12 @@
             </div>
             }*@
     }
-}
 </div>
 
 @code {
     [Parameter] public string Tag { get; set; }
     private List<PostModel> blog = new List<PostModel>();
     private List<PostModel> filteredPosts = new List<PostModel>();
-    private bool IsLoading = false;
     private bool IsError = false;
     private string ErrorMessage = "";
 
@@ -59,8 +51,7 @@
     {
         try
         {
-            IsLoading = true;
-            var blogData = await Http.GetFromJsonAsync<List<PostModel>>("/data/blog/blogsummary.json") ?? new List<PostModel>();
+            var blogData = blogService.Posts;
             foreach (PostModel p in blogData)
             {
                 if (p.IsPublished)
@@ -69,11 +60,9 @@
                 }
             }
             blog.Reverse();
-            IsLoading = false;
         }
         catch (Exception e)
         {
-            IsLoading = false;
             IsError = true;
             ErrorMessage = "Unable to load blog posts";
         }

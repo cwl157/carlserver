@@ -1,2 +1,4 @@
 https://carlserver.com/* https://www.carlserver.com/:splat 301!
+/data/blog/posts/img/:title/* https://carlserverdata.blob.core.windows.net/:title/:splat 200
+/data/blog.json https://carlserverdata.blob.core.windows.net/data/blog.json 200
 /*  /index.html 200

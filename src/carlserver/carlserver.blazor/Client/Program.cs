@@ -1,4 +1,5 @@
 using carlserver.blazor.Client;
+using carlserver.blazor.Client.Models;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -7,5 +8,12 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddSingleton(s => new BlogService());
 
-await builder.Build().RunAsync();
+var host = builder.Build();
+
+var blobService = host.Services.GetRequiredService<BlogService>();
+var httpClient = host.Services.GetRequiredService<HttpClient>();
+await blobService.InitializeBlogService(httpClient);
+
+await host.RunAsync();
