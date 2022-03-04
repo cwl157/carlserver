@@ -22,21 +22,6 @@
                     <li class="active breadcrumb-item">@Tag</li>
                 </ol>
             <PostList Posts="filteredPosts" />
-            @*@foreach (PostModel p in filteredPosts)
-            {
-                <div class="post" id="@("post" + p.Id)">
-                    <div class="post_title"><h4><a href="@CreatePostUrl(p.FriendlyUri)">@p.Title</a></h4></div>
-                <div>
-                    <i class="icon-calendar" style="float:left;"></i>
-                    <p class="post_date">@GetLocalTimeString(p.PublishedDate)</p>
-                </div> <!-- end post_date -->
-                <div class="post_body">
-                    <p>@((MarkupString)p.Summary)</p>
-                </div>
-                <p><a href="@CreatePostUrl(p.FriendlyUri)">Read More...</a></p>
-                <br />
-            </div>
-            }*@
     }
 </div>
 

@@ -2,7 +2,7 @@
 {
     public static class StringEncoder
     {
-      public static string EncodeString(string toEncode)
+        public static string EncodeString(string toEncode)
         {
             if (!string.IsNullOrEmpty(toEncode))
             {

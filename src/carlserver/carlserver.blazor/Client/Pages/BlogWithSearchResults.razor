@@ -1,0 +1,123 @@
+﻿@page "/blog/search/{Query}"
+@using System.Text.Json
+@using carlserver.blazor.Client.Helpers
+@using carlserver.blazor.Client.Models
+@inject HttpClient Http
+
+<PageTitle>CarlServer-Search Results</PageTitle>
+<HeadContent>
+    <meta name="description" content="Summaries of blog posts on CarlServer based on search criteria." />
+    <meta name="keywords" content="blog,tutorials,code examples,programming,carlserver" />
+    <meta name="author" content="Carl Layton" />
+</HeadContent>
+
+<div class="col-md-8">
+       @if (IsError)
+        {
+             <div class="alert alert-danger">@ErrorMessage</div>
+        }
+        else
+        {
+            <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+                    <li class="active breadcrumb-item">@Query</li>
+                </ol>
+            <h4>Results: @ResultCount</h4>
+            <PostList Posts="Posts" />
+        }
+</div>
+
+@code {
+    [Parameter] public string Query { get; set; }
+    public string ResultCount { get; set; }
+    public List<PostModel> Posts { get; set; }
+    public bool IsError { get; set; }
+    public string ErrorMessage {  get;  set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Posts = new List<PostModel>();
+        await ExecuteSearch();
+    }
+
+    private async Task ExecuteSearch()
+    {
+        string query = Query;
+        try
+        {
+            if (String.IsNullOrEmpty(query))
+            {
+                query = "*";
+            }
+
+            var requestMessage = new HttpRequestMessage()
+                {
+                    Method = new HttpMethod("GET"),
+                    RequestUri = new Uri("https://carlserver-search.search.windows.net/indexes/azureblob-index/docs?api-version=2020-06-30&$count=true&search=" + StringEncoder.EncodeString(query) + "&$filter=isPublished eq true")
+                };
+
+            requestMessage.Headers.Add("api-key", Constants.ApiKey);
+
+            var response = await Http.SendAsync(requestMessage);
+            var responseStatusCode = response.StatusCode;
+
+            string? responseBody = await response.Content.ReadAsStringAsync();
+
+            ParseSearchResults(responseBody);
+        }
+        catch (Exception e)
+        {
+            IsError = true;
+            ErrorMessage = e.Message;
+        }
+    }
+
+    private void ParseSearchResults(string? responseBody)
+    {
+        if (responseBody != null)
+        {
+            using (JsonDocument doc = JsonDocument.Parse(responseBody))
+            {
+                foreach (var d in doc.RootElement.EnumerateObject())
+                {
+                    if (d.Name == "@odata.count")
+                    {
+                        ResultCount = d.Value.ToString();
+                    }
+
+                    if (d.Name == "value")
+                    {
+                        foreach (var p in d.Value.EnumerateArray())
+                        {
+                            PostModel np = new PostModel();
+                            foreach (var el in p.EnumerateObject())
+                            {
+                                if (el.Name == "title")
+                                {
+                                    np.Title = el.Value.ToString();
+                                }
+                                else if (el.Name == "summary")
+                                {
+                                    np.Summary = el.Value.ToString();
+                                }
+                                else if (el.Name == "author")
+                                {
+                                    np.Author = el.Value.ToString();
+                                }
+                                else if (el.Name == "publishedDate")
+                                {
+                                    np.PublishedDate = DateTime.Parse(el.Value.ToString());
+                                }
+                                else if (el.Name == "friendlyUri")
+                                {
+                                    np.FriendlyUri = el.Value.ToString();
+                                }
+                            }
+                            Posts.Add(np);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
